@@ -1,14 +1,22 @@
 import { useState } from "react";
 import type { Route } from "../App";
 import { THEMES } from "../data/content";
-import { setChild, themeStatus } from "../store";
-import type { AppStore, Domain, Theme } from "../types";
+import { QUESTION_STEP } from "../data/stepMap";
+import { buildMission, stepMastery, type MissionQuestion } from "../lib/engine";
+import { setChild } from "../store";
+import type { AppStore, Theme } from "../types";
 
-const STATUS_LABEL = { none: "À découvrir", started: "En cours", mastered: "Maîtrisé ✓" } as const;
+const YEARS = [5, 6, 7, 8];
+
+function themeQuestions(theme: Theme): MissionQuestion[] {
+  return theme.questions
+    .map((question) => ({ question, stepId: QUESTION_STEP[question.id], theme }))
+    .filter((mq) => mq.stepId !== undefined);
+}
 
 function ThemeCard({ theme, store, go }: { theme: Theme; store: AppStore; go: (r: Route) => void }) {
-  const result = store.results[theme.id];
-  const status = themeStatus(result);
+  const stepIds = [...new Set(theme.questions.map((q) => QUESTION_STEP[q.id]).filter(Boolean))];
+  const mastered = stepIds.filter((id) => stepMastery(store, id) === "mastered").length;
   return (
     <div className={`card theme-card ${theme.domain}`}>
       <div className="theme-head">
@@ -19,17 +27,21 @@ function ThemeCard({ theme, store, go }: { theme: Theme; store: AppStore; go: (r
         </div>
       </div>
       <div className="theme-meta">
-        <span className="per-chip" title="Objectif du Plan d'études romand">{theme.perCode}</span>
-        <span className={`status status-${status}`}>
-          {STATUS_LABEL[status]}
-          {result ? ` · ${result.best}/${result.total}` : ""}
+        <span className="per-chip">{theme.perCode}</span>
+        <span className="muted small">
+          {mastered}/{stepIds.length} étapes maîtrisées
         </span>
       </div>
       <div className="theme-actions">
         <button className="btn ghost" onClick={() => go({ view: "fiche", id: theme.id })}>
           📚 Fiche
         </button>
-        <button className="btn primary" onClick={() => go({ view: "quiz", id: theme.id })}>
+        <button
+          className="btn primary"
+          onClick={() =>
+            go({ view: "mission", title: theme.title, emoji: theme.emoji, questions: themeQuestions(theme) })
+          }
+        >
           ▶ Quizz
         </button>
       </div>
@@ -37,38 +49,19 @@ function ThemeCard({ theme, store, go }: { theme: Theme; store: AppStore; go: (r
   );
 }
 
-function DomainSection({ domain, title, store, go }: {
-  domain: Domain; title: string; store: AppStore; go: (r: Route) => void;
-}) {
-  const themes = THEMES.filter((t) => t.domain === domain);
-  const mastered = themes.filter((t) => themeStatus(store.results[t.id]) === "mastered").length;
-  return (
-    <section className="domain-section">
-      <div className="domain-title">
-        <h2>{title}</h2>
-        <span className="muted">{mastered}/{themes.length} maîtrisés</span>
-      </div>
-      <div className="grid">
-        {themes.map((t) => (
-          <ThemeCard key={t.id} theme={t} store={store} go={go} />
-        ))}
-      </div>
-    </section>
-  );
-}
-
 export function HomeView({ store, go }: { store: AppStore; go: (r: Route) => void }) {
   const [name, setName] = useState("");
+  const [year, setYear] = useState(6);
 
   if (!store.child) {
     return (
       <div className="card welcome">
         <h1>Salut ! 👋</h1>
-        <p>Ici, tu peux réviser ce que tu apprends en 6P et montrer tes progrès.</p>
+        <p>Ici, tu peux réviser le programme de l'école et montrer tes progrès.</p>
         <form
           onSubmit={(e) => {
             e.preventDefault();
-            if (name.trim()) setChild(name.trim());
+            if (name.trim()) setChild(name.trim(), year);
           }}
         >
           <label htmlFor="child-name">Comment tu t'appelles ?</label>
@@ -80,20 +73,113 @@ export function HomeView({ store, go }: { store: AppStore; go: (r: Route) => voi
               placeholder="Ton prénom"
               autoFocus
             />
-            <button className="btn primary" type="submit" disabled={!name.trim()}>
-              C'est parti !
-            </button>
           </div>
+          <label className="year-label">En quelle année es-tu ?</label>
+          <div className="row year-row">
+            {YEARS.map((y) => (
+              <button
+                key={y}
+                type="button"
+                className={`year-chip ${year === y ? "selected" : ""}`}
+                onClick={() => setYear(y)}
+              >
+                {y}P
+              </button>
+            ))}
+          </div>
+          <button className="btn primary big" type="submit" disabled={!name.trim()}>
+            C'est parti !
+          </button>
         </form>
       </div>
     );
   }
 
+  const child = store.child;
+  const seenCount = Object.keys(store.seen).length;
+  const mission = buildMission(store, { kind: "current" });
+  const pastYears = YEARS.filter((y) => y < child.year);
+
   return (
     <>
-      <h1 className="hello">Salut {store.child} ! Prêt·e à réviser ? 🚀</h1>
-      <DomainSection domain="maths" title="🧮 Mathématiques" store={store} go={go} />
-      <DomainSection domain="francais" title="📝 Français" store={store} go={go} />
+      <h1 className="hello">Salut {child.name} ! 🚀</h1>
+
+      <div className="card mission-card">
+        <div className="mission-head">
+          <span className="theme-emoji big">🎯</span>
+          <div>
+            <h2>Ma mission du jour — {child.year}P</h2>
+            {seenCount === 0 ? (
+              <p className="muted">
+                Avant de commencer, un parent doit indiquer dans le{" "}
+                <strong>Programme</strong> ce qui a déjà été vu en classe cette année.
+              </p>
+            ) : mission.length === 0 ? (
+              <p className="muted">
+                Rien à tester pour l'instant sur les étapes vues en classe — reviens après le
+                prochain positionnement !
+              </p>
+            ) : (
+              <p className="muted">
+                {mission.length} questions choisies pour toi : d'abord ce qui n'a jamais été testé,
+                puis ce qui est encore fragile.
+              </p>
+            )}
+          </div>
+        </div>
+        <div className="row">
+          {mission.length > 0 && (
+            <button
+              className="btn primary big"
+              onClick={() =>
+                go({ view: "mission", title: `Mission du jour — ${child.year}P`, emoji: "🎯", questions: mission })
+              }
+            >
+              ▶ Lancer ma mission
+            </button>
+          )}
+          <button className="btn ghost" onClick={() => go({ view: "programme" })}>
+            🗺️ {seenCount === 0 ? "Faire le positionnement" : "Voir le programme"}
+          </button>
+        </div>
+      </div>
+
+      {pastYears.length > 0 && (
+        <div className="card past-card">
+          <h2>🔄 Se retester sur les années précédentes</h2>
+          <p className="muted">
+            Là, pas besoin de positionnement : tout le programme de l'année est testé.
+          </p>
+          <div className="row">
+            {pastYears.map((y) => {
+              const m = buildMission(store, { kind: "pastYear", year: y });
+              return (
+                <button
+                  key={y}
+                  className="btn ghost"
+                  disabled={m.length === 0}
+                  onClick={() =>
+                    go({ view: "mission", title: `Retest ${y}P — tout le programme`, emoji: "🔄", questions: m })
+                  }
+                >
+                  Tester la {y}P {m.length === 0 ? "(bientôt)" : ""}
+                </button>
+              );
+            })}
+          </div>
+        </div>
+      )}
+
+      <section className="domain-section">
+        <div className="domain-title">
+          <h2>💪 M'entraîner par thème</h2>
+        </div>
+        <div className="grid">
+          {THEMES.map((t) => (
+            <ThemeCard key={t.id} theme={t} store={store} go={go} />
+          ))}
+        </div>
+      </section>
     </>
   );
 }

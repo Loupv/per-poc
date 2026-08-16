@@ -29,15 +29,16 @@ export interface Theme {
   questions: Question[];
 }
 
-export interface ThemeResult {
-  attempts: number;
-  best: number;
-  last: number;
-  total: number;
+export interface StepHistory {
+  /** Derniers résultats, 1 = juste, 0 = faux (max 5, le plus récent en dernier). */
+  r: number[];
   lastAt: string;
 }
 
 export interface AppStore {
-  child: string;
-  results: Record<string, ThemeResult>;
+  child: { name: string; year: number } | null;
+  /** stepId -> vu en classe (positionnement parent, année en cours). */
+  seen: Record<number, boolean>;
+  /** stepId -> historique des réponses. */
+  hist: Record<number, StepHistory>;
 }

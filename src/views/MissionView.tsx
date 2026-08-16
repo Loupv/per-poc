@@ -1,28 +1,56 @@
 import { useState } from "react";
 import type { Route } from "../App";
-import { recordResult } from "../store";
-import type { Question, Theme } from "../types";
+import { stepInfo, type MissionQuestion } from "../lib/engine";
+import { recordAnswer } from "../store";
+import type { Question } from "../types";
 
 const normalize = (s: string) =>
-  s.toLowerCase().replace(/['\s ]/g, "").replace(/,/g, ".");
+  s.toLowerCase().replace(/['\s ]/g, "").replace(/,/g, ".");
 
 const isCorrectInput = (q: Question, value: string) =>
   (q.accepted ?? []).some((a) => normalize(a) === normalize(value));
 
-export function QuizView({ theme, go }: { theme: Theme; go: (r: Route) => void }) {
+interface Outcome {
+  mq: MissionQuestion;
+  correct: boolean;
+}
+
+export function MissionView({
+  title,
+  emoji,
+  questions,
+  go,
+}: {
+  title: string;
+  emoji: string;
+  questions: MissionQuestion[];
+  go: (r: Route) => void;
+}) {
   const [index, setIndex] = useState(0);
-  const [score, setScore] = useState(0);
+  const [outcomes, setOutcomes] = useState<Outcome[]>([]);
   const [answered, setAnswered] = useState<null | { correct: boolean; picked?: number }>(null);
   const [inputValue, setInputValue] = useState("");
   const [finished, setFinished] = useState(false);
 
-  const questions = theme.questions;
-  const q = questions[index];
+  if (questions.length === 0) {
+    return (
+      <div className="card quiz-end">
+        <h1>Rien à tester ici pour l'instant</h1>
+        <button className="btn primary" onClick={() => go({ view: "home" })}>
+          🏠 Accueil
+        </button>
+      </div>
+    );
+  }
+
+  const mq = questions[index];
+  const q = mq.question;
 
   const submit = (correct: boolean, picked?: number) => {
     if (answered) return;
     setAnswered({ correct, picked });
-    if (correct) setScore((s) => s + 1);
+    setOutcomes((o) => [...o, { mq, correct }]);
+    recordAnswer(mq.stepId, correct);
   };
 
   const next = () => {
@@ -31,44 +59,52 @@ export function QuizView({ theme, go }: { theme: Theme; go: (r: Route) => void }
       setAnswered(null);
       setInputValue("");
     } else {
-      const finalScore = score;
-      recordResult(theme.id, finalScore, questions.length);
       setFinished(true);
     }
   };
 
   if (finished) {
+    const score = outcomes.filter((o) => o.correct).length;
     const ratio = score / questions.length;
     const msg =
-      ratio >= 0.8
-        ? "Bravo, c'est maîtrisé ! 🎉"
-        : ratio >= 0.5
-          ? "Bien joué, encore un petit effort ! 💪"
-          : "Courage, relis la fiche et réessaie ! 🌱";
+      ratio >= 0.8 ? "Bravo ! 🎉" : ratio >= 0.5 ? "Bien joué, continue ! 💪" : "Courage, on y retourne ! 🌱";
     return (
-      <div className={`card quiz-end ${theme.domain}`}>
-        <span className="theme-emoji big">{theme.emoji}</span>
+      <div className="card quiz-end">
+        <span className="theme-emoji big">{emoji}</span>
         <h1>{msg}</h1>
         <p className="score-big">
           {score} / {questions.length}
         </p>
+        <div className="mission-recap">
+          {outcomes.map((o, i) => {
+            const info = stepInfo(o.mq.stepId);
+            return (
+              <div key={i} className={`recap-line ${o.correct ? "ok" : "ko"}`}>
+                <span>{o.correct ? "✅" : "❌"}</span>
+                <span className="recap-step">
+                  {info ? info.step.text : o.mq.question.prompt}
+                  <span className="per-chip">{info?.objective.code}</span>
+                </span>
+              </div>
+            );
+          })}
+        </div>
         <div className="row center">
-          <button className="btn ghost" onClick={() => go({ view: "fiche", id: theme.id })}>
-            📚 Revoir la fiche
-          </button>
-          <button className="btn primary" onClick={() => go({ view: "quiz", id: theme.id })}>
-            ↻ Rejouer
-          </button>
-          <button className="btn ghost" onClick={() => go({ view: "home" })}>
+          <button className="btn primary" onClick={() => go({ view: "home" })}>
             🏠 Accueil
+          </button>
+          <button className="btn ghost" onClick={() => go({ view: "dashboard" })}>
+            👪 Voir la progression
           </button>
         </div>
       </div>
     );
   }
 
+  const passage = mq.theme.passage;
+
   return (
-    <div className={`quiz ${theme.domain}`}>
+    <div className={`quiz ${mq.theme.domain}`}>
       <button className="btn ghost back" onClick={() => go({ view: "home" })}>
         ← Quitter
       </button>
@@ -77,13 +113,13 @@ export function QuizView({ theme, go }: { theme: Theme; go: (r: Route) => void }
         <div className="quiz-progress-bar" style={{ width: `${(index / questions.length) * 100}%` }} />
       </div>
       <p className="muted quiz-counter">
-        Question {index + 1} sur {questions.length} · {theme.title}
+        {emoji} {title} · question {index + 1} sur {questions.length}
       </p>
 
-      {theme.passage && (
+      {passage && (
         <details className="passage-details" open={index === 0}>
           <summary>📖 Relire le texte</summary>
-          <p>{theme.passage}</p>
+          <p>{passage}</p>
         </details>
       )}
 
@@ -134,6 +170,10 @@ export function QuizView({ theme, go }: { theme: Theme; go: (r: Route) => void }
           <div className={`feedback ${answered.correct ? "ok" : "ko"}`}>
             <strong>{answered.correct ? "✅ Juste !" : "❌ Pas tout à fait…"}</strong>
             <p>{q.explanation}</p>
+            <p className="muted small">
+              Étape du PER : {stepInfo(mq.stepId)?.step.text.slice(0, 110)}…{" "}
+              <span className="per-chip">{stepInfo(mq.stepId)?.objective.code}</span>
+            </p>
             <button className="btn primary" onClick={next} autoFocus>
               {index + 1 < questions.length ? "Question suivante →" : "Voir mon score 🏁"}
             </button>

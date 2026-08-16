@@ -1,5 +1,7 @@
-// Ingestion du Plan d'études romand depuis l'API publique per.ciip.ch
-// Cible POC : cycle 2, année 6P, domaines Mathématiques (MSN 21-25) et Français (L1 21-28).
+// Ingestion du Plan d'études romand depuis l'API publique per.ciip.ch — v2 "par étapes"
+// Cible : cycle 2 (années 5-8), domaines Mathématiques (MSN 21-25) et Français (L1).
+// Chaque "étape" = une progression d'apprentissage du PER, avec son id officiel,
+// ses années, son groupe (attentes fondamentales liées) et sa section nommée.
 // Sortie : src/data/per.json
 //
 // NOTE légale : données © CIIP — usage commercial à clarifier avec la CIIP avant tout lancement.
@@ -9,7 +11,6 @@ import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const API = "https://per.ciip.ch/api";
-const TARGET_YEAR = 6;
 const CODE_PREFIXES = ["MSN 21", "MSN 22", "MSN 23", "MSN 24", "MSN 25", "L1 2"];
 
 const stripHtml = (html) =>
@@ -33,54 +34,56 @@ const fetchJson = async (path) => {
 const yearsOf = (yearDistributions) =>
   [...new Set((yearDistributions ?? []).flatMap((yd) => (yd.years ?? []).map((y) => y.year)))].sort();
 
-// Aplatit l'arbre progressionSections -> progressions -> {learnings, fundamentalExpectations}
-function collectProgressions(sections, out = []) {
+// Aplatit l'arbre en "groupes" = une progression du PER (ligne du tableau officiel),
+// portant ses étapes (learnings) et ses attentes fondamentales.
+function collectGroups(sections, path, out) {
   for (const s of sections ?? []) {
+    const name = stripHtml(s.name);
+    const nextPath = name ? [...path, name] : path;
     for (const prog of s.progressions ?? []) {
-      const learnings = (prog.learnings ?? [])
-        .map((l) => ({ text: stripHtml(l.content?.html), years: yearsOf(l.yearDistributions) }))
-        .filter((l) => l.text && !/^Manuels \d/.test(l.text));
-      const attentes = (prog.fundamentalExpectations ?? [])
-        .map((fe) => stripHtml(fe.content?.html))
-        .filter(Boolean);
-      if (learnings.length || attentes.length) out.push({ learnings, attentes });
+      const steps = (prog.learnings ?? [])
+        .map((l) => ({
+          id: l.id,
+          text: stripHtml(l.content?.html),
+          years: yearsOf(l.yearDistributions),
+        }))
+        .filter((l) => l.text && !/^Manuels? \d/.test(l.text));
+      const attentes = [
+        ...new Map(
+          (prog.fundamentalExpectations ?? [])
+            .map((fe) => [fe.id, stripHtml(fe.content?.html)])
+            .filter(([, t]) => t)
+        ).entries(),
+      ].map(([id, text]) => ({ id, text }));
+      if (steps.length) out.push({ id: prog.id, path: nextPath, steps, attentes });
     }
-    collectProgressions(s.children, out);
+    collectGroups(s.children, nextPath, out);
   }
   return out;
 }
 
 const cycle2 = await fetchJson("/cycles/2");
-const targets = new Map(); // dédoublonne par id (MSN 25 apparaît deux fois dans la liste)
+const targets = new Map();
 for (const lo of cycle2.learningObjectives) {
   if (CODE_PREFIXES.some((p) => lo.code.startsWith(p))) targets.set(lo.id, lo);
 }
 
 const objectives = [];
+let stepCount = 0;
 for (const [id, brief] of targets) {
   process.stdout.write(`  ${brief.code} ... `);
   const full = await fetchJson(`/learning-objectives/${id}`);
-  const progressions = collectProgressions(full.progressionSections);
-
-  // Ne garder que ce qui concerne l'année cible ; les attentes d'une progression
-  // sont conservées dès qu'au moins un apprentissage de la progression touche la 6e.
-  const kept = progressions
-    .map((p) => ({
-      learnings: p.learnings.filter((l) => l.years.includes(TARGET_YEAR) || l.years.length === 0),
-      attentes: p.attentes,
-    }))
-    .filter((p) => p.learnings.length > 0)
-    .map((p) => ({ ...p, attentes: [...new Set(p.attentes)] }));
-
+  const groups = collectGroups(full.progressionSections, [], []);
+  const n = groups.reduce((acc, g) => acc + g.steps.length, 0);
+  stepCount += n;
   objectives.push({
     id,
     code: full.code,
     name: full.name,
     domain: full.domain?.name,
-    thematicAxes: (full.thematicAxes ?? []).map((a) => a.name),
-    progressions: kept,
+    groups,
   });
-  console.log(`${kept.length} progressions retenues`);
+  console.log(`${groups.length} groupes, ${n} étapes`);
 }
 
 objectives.sort((a, b) => a.code.localeCompare(b.code, "fr"));
@@ -90,11 +93,11 @@ const out = {
   copyright: "© CIIP — Plan d'études romand. POC interne, usage commercial à clarifier.",
   fetchedAt: new Date().toISOString(),
   cycle: 2,
-  targetYear: TARGET_YEAR,
+  years: [5, 6, 7, 8],
   objectives,
 };
 
 const dir = join(dirname(fileURLToPath(import.meta.url)), "..", "src", "data");
 mkdirSync(dir, { recursive: true });
 writeFileSync(join(dir, "per.json"), JSON.stringify(out, null, 1));
-console.log(`\nOK -> src/data/per.json (${objectives.length} objectifs)`);
+console.log(`\nOK -> src/data/per.json (${objectives.length} objectifs, ${stepCount} étapes)`);

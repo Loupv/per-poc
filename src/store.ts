@@ -1,7 +1,8 @@
 import { useSyncExternalStore } from "react";
-import type { AppStore, ThemeResult } from "./types";
+import type { AppStore } from "./types";
 
-const KEY = "per-poc-store-v1";
+const KEY = "per-poc-store-v2";
+const HIST_MAX = 5;
 
 const load = (): AppStore => {
   try {
@@ -10,7 +11,7 @@ const load = (): AppStore => {
   } catch {
     /* stockage corrompu : on repart de zéro */
   }
-  return { child: "", results: {} };
+  return { child: null, seen: {}, hist: {} };
 };
 
 let state = load();
@@ -21,26 +22,34 @@ const emit = () => {
   listeners.forEach((l) => l());
 };
 
-export const setChild = (name: string) => {
-  state = { ...state, child: name };
+export const setChild = (name: string, year: number) => {
+  state = { ...state, child: { name, year } };
   emit();
 };
 
-export const recordResult = (themeId: string, score: number, total: number) => {
-  const prev = state.results[themeId];
-  const next: ThemeResult = {
-    attempts: (prev?.attempts ?? 0) + 1,
-    best: Math.max(prev?.best ?? 0, score),
-    last: score,
-    total,
-    lastAt: new Date().toISOString(),
+/** Marque une liste d'étapes comme vues (ou non vues) en classe. */
+export const setSeen = (stepIds: number[], seen: boolean) => {
+  const next = { ...state.seen };
+  for (const id of stepIds) {
+    if (seen) next[id] = true;
+    else delete next[id];
+  }
+  state = { ...state, seen: next };
+  emit();
+};
+
+export const recordAnswer = (stepId: number, correct: boolean) => {
+  const prev = state.hist[stepId];
+  const r = [...(prev?.r ?? []), correct ? 1 : 0].slice(-HIST_MAX);
+  state = {
+    ...state,
+    hist: { ...state.hist, [stepId]: { r, lastAt: new Date().toISOString() } },
   };
-  state = { ...state, results: { ...state.results, [themeId]: next } };
   emit();
 };
 
 export const resetAll = () => {
-  state = { child: "", results: {} };
+  state = { child: null, seen: {}, hist: {} };
   emit();
 };
 
@@ -52,10 +61,3 @@ export const useStore = (): AppStore =>
     },
     () => state
   );
-
-export type ThemeStatus = "none" | "started" | "mastered";
-
-export const themeStatus = (r?: ThemeResult): ThemeStatus => {
-  if (!r) return "none";
-  return r.best / r.total >= 0.8 ? "mastered" : "started";
-};

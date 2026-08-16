@@ -1,7 +1,18 @@
 import type { Route } from "../App";
+import { QUESTION_STEP } from "../data/stepMap";
 import type { Theme } from "../types";
 
 export function FicheView({ theme, go }: { theme: Theme; go: (r: Route) => void }) {
+  const launchQuiz = () =>
+    go({
+      view: "mission",
+      title: theme.title,
+      emoji: theme.emoji,
+      questions: theme.questions
+        .map((question) => ({ question, stepId: QUESTION_STEP[question.id], theme }))
+        .filter((mq) => mq.stepId !== undefined),
+    });
+
   return (
     <div className={`fiche ${theme.domain}`}>
       <button className="btn ghost back" onClick={() => go({ view: "home" })}>
@@ -40,7 +51,7 @@ export function FicheView({ theme, go }: { theme: Theme; go: (r: Route) => void 
         ))}
 
         <div className="fiche-cta">
-          <button className="btn primary big" onClick={() => go({ view: "quiz", id: theme.id })}>
+          <button className="btn primary big" onClick={launchQuiz}>
             ▶ Je suis prêt·e, lance le quizz !
           </button>
         </div>
