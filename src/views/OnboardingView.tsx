@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { setChild, setRole } from "../store";
+import { addChild, setRole } from "../store";
 import type { AppStore, Role } from "../types";
 
 const YEARS = [5, 6, 7, 8];
@@ -21,7 +21,7 @@ export function OnboardingView({ store }: { store: AppStore }) {
             className="role-card"
             onClick={() => {
               // Profil déjà créé (ex. par un parent) : l'enfant entre directement
-              if (store.child) {
+              if (store.children.length > 0) {
                 setRole("child");
               } else setLocalRole("child");
             }}
@@ -33,7 +33,7 @@ export function OnboardingView({ store }: { store: AppStore }) {
           <button
             className="role-card"
             onClick={() => {
-              if (store.child) {
+              if (store.children.length > 0) {
                 setRole("parent");
               } else setLocalRole("parent");
             }}
@@ -56,7 +56,7 @@ export function OnboardingView({ store }: { store: AppStore }) {
         onSubmit={(e) => {
           e.preventDefault();
           if (!name.trim()) return;
-          setChild(name.trim(), year);
+          addChild(name.trim(), year);
           setRole(role);
         }}
       >

@@ -6,6 +6,7 @@ export function FicheView({ theme, go }: { theme: Theme; go: (r: Route) => void 
   const launchQuiz = () =>
     go({
       view: "mission",
+      mode: "practice",
       title: theme.title,
       emoji: theme.emoji,
       questions: theme.questions

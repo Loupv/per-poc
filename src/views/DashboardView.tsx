@@ -1,7 +1,6 @@
 import type { Route } from "../App";
 import { OBJECTIVES, objectiveStats } from "../lib/engine";
-import { resetAll } from "../store";
-import type { AppStore } from "../types";
+import type { ChildProfile } from "../types";
 
 function Bar({ value, max, color }: { value: number; max: number; color: string }) {
   const pct = max === 0 ? 0 : Math.round((value / max) * 100);
@@ -15,19 +14,10 @@ function Bar({ value, max, color }: { value: number; max: number; color: string 
   );
 }
 
-export function DashboardView({ store, go }: { store: AppStore; go: (r: Route) => void }) {
-  const year = store.child?.year ?? 6;
-  const perObjective = OBJECTIVES.map((o) => ({ o, s: objectiveStats(store, o, year) })).filter(
+export function DashboardView({ child, go }: { child: ChildProfile; go: (r: Route) => void }) {
+  const year = child.year;
+  const perObjective = OBJECTIVES.map((o) => ({ o, s: objectiveStats(child, o, year) })).filter(
     ({ s }) => s.total > 0
-  );
-  const totals = perObjective.reduce(
-    (acc, { s }) => ({
-      total: acc.total + s.total,
-      seen: acc.seen + s.seen,
-      tested: acc.tested + s.tested,
-      mastered: acc.mastered + s.mastered,
-    }),
-    { total: 0, seen: 0, tested: 0, mastered: 0 }
   );
 
   return (
@@ -35,37 +25,38 @@ export function DashboardView({ store, go }: { store: AppStore; go: (r: Route) =
       <button className="btn ghost back" onClick={() => go({ view: "home" })}>
         ← Retour
       </button>
-      <h1>Espace parents</h1>
+      <h1>Tableau de bord — {child.name}, {year}P</h1>
       <p className="muted">
-        Progression {store.child ? `de ${store.child.name}` : ""} en {year}P, étape par étape sur le
-        référentiel officiel du PER. Une étape est « maîtrisée » après deux bonnes réponses
-        consécutives.
+        Progression officielle par objectif du PER. « Évalué » = contrôlé ou validé par un parent ;
+        « maîtrisé » = dernier contrôle réussi ou étape validée. L'entraînement libre de {child.name}{" "}
+        n'est pas comptabilisé ici.
       </p>
 
-      <div className="kpis">
-        <div className="kpi">
-          <span className="kpi-num">{totals.seen}</span>
-          <span className="kpi-label">étapes vues en classe (sur {totals.total})</span>
-        </div>
-        <div className="kpi">
-          <span className="kpi-num">{totals.tested}</span>
-          <span className="kpi-label">étapes testées</span>
-        </div>
-        <div className="kpi">
-          <span className="kpi-num">{totals.mastered}</span>
-          <span className="kpi-label">étapes maîtrisées</span>
-        </div>
-      </div>
-
-      {totals.seen === 0 && (
-        <div className="card notice">
-          <strong>Commencez par le positionnement :</strong> indiquez dans le programme ce qui a déjà
-          été vu en classe cette année — c'est ce qui permet de cibler les missions.
-          <div className="row" style={{ marginTop: 10 }}>
-            <button className="btn primary" onClick={() => go({ view: "programme" })}>
-              🗺️ Ouvrir le programme
-            </button>
-          </div>
+      {child.tests.length > 0 && (
+        <div className="card">
+          <h2>📈 Historique des contrôles</h2>
+          <table className="results-table">
+            <thead>
+              <tr>
+                <th>Contrôle</th>
+                <th>Date</th>
+                <th>Score</th>
+              </tr>
+            </thead>
+            <tbody>
+              {[...child.tests].reverse().map((t) => (
+                <tr key={t.id}>
+                  <td>{t.title}</td>
+                  <td>{new Date(t.at).toLocaleDateString("fr-CH")}</td>
+                  <td>
+                    <strong>
+                      {t.score}/{t.total}
+                    </strong>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
       )}
 
@@ -84,8 +75,8 @@ export function DashboardView({ store, go }: { store: AppStore; go: (r: Route) =
               <Bar value={s.seen} max={s.total} color="var(--accent)" />
             </div>
             <div className="bar-row">
-              <span className="bar-title">Testé</span>
-              <Bar value={s.tested} max={s.total} color="var(--francais)" />
+              <span className="bar-title">Évalué</span>
+              <Bar value={s.evaluated} max={s.total} color="var(--francais)" />
             </div>
             <div className="bar-row">
               <span className="bar-title">Maîtrisé</span>
@@ -95,7 +86,7 @@ export function DashboardView({ store, go }: { store: AppStore; go: (r: Route) =
           <p className="muted small">
             {s.withQuestions} étapes sur {s.total} sont testables en quizz dans ce POC
             {s.observe > 0 &&
-              ` · ${s.observe} étapes « à observer » (production, manipulation), dont ${s.validated} validées par un parent`}
+              ` · ${s.observe} étapes « à observer », dont ${s.validated} validées par un parent`}
             .
           </p>
         </div>
@@ -105,14 +96,6 @@ export function DashboardView({ store, go }: { store: AppStore; go: (r: Route) =
         Source : Plan d'études romand © CIIP, API publique per.ciip.ch — POC, ne remplace pas
         l'évaluation scolaire officielle.
       </p>
-      <button
-        className="btn danger"
-        onClick={() => {
-          if (window.confirm("Effacer toute la progression enregistrée sur cet appareil ?")) resetAll();
-        }}
-      >
-        Réinitialiser la progression
-      </button>
     </div>
   );
 }

@@ -1,8 +1,10 @@
 import type { Route } from "../App";
 import { THEMES } from "../data/content";
 import { QUESTION_STEP } from "../data/stepMap";
-import { buildMission, stepMastery, type MissionQuestion } from "../lib/engine";
-import type { AppStore, Theme } from "../types";
+import { buildMission, practiceLevel, questionById, type MissionQuestion } from "../lib/engine";
+import { entitlements } from "../lib/plan";
+import { setActiveChild } from "../store";
+import type { AppStore, ChildProfile, Theme } from "../types";
 
 const YEARS = [5, 6, 7, 8];
 
@@ -12,9 +14,9 @@ function themeQuestions(theme: Theme): MissionQuestion[] {
     .filter((mq) => mq.stepId !== undefined);
 }
 
-function ThemeCard({ theme, store, go }: { theme: Theme; store: AppStore; go: (r: Route) => void }) {
+function ThemeCard({ theme, child, go }: { theme: Theme; child: ChildProfile; go: (r: Route) => void }) {
   const stepIds = [...new Set(theme.questions.map((q) => QUESTION_STEP[q.id]).filter(Boolean))];
-  const mastered = stepIds.filter((id) => stepMastery(store, id) === "mastered").length;
+  const trained = stepIds.filter((id) => practiceLevel(child, id) === "mastered").length;
   return (
     <div className={`card theme-card ${theme.domain}`}>
       <div className="theme-head">
@@ -27,7 +29,7 @@ function ThemeCard({ theme, store, go }: { theme: Theme; store: AppStore; go: (r
       <div className="theme-meta">
         <span className="per-chip">{theme.perCode}</span>
         <span className="muted small">
-          {mastered}/{stepIds.length} étapes maîtrisées
+          {trained}/{stepIds.length} étapes bien entraînées
         </span>
       </div>
       <div className="theme-actions">
@@ -37,7 +39,13 @@ function ThemeCard({ theme, store, go }: { theme: Theme; store: AppStore; go: (r
         <button
           className="btn primary"
           onClick={() =>
-            go({ view: "mission", title: theme.title, emoji: theme.emoji, questions: themeQuestions(theme) })
+            go({
+              view: "mission",
+              mode: "practice",
+              title: theme.title,
+              emoji: theme.emoji,
+              questions: themeQuestions(theme),
+            })
           }
         >
           ▶ Quizz
@@ -47,35 +55,75 @@ function ThemeCard({ theme, store, go }: { theme: Theme; store: AppStore; go: (r
   );
 }
 
-/** Accueil enfant : mission du jour, retest des années précédentes, entraînement, fiches. */
-export function HomeView({ store, go }: { store: AppStore; go: (r: Route) => void }) {
-  const child = store.child!;
-  const seenCount = Object.keys(store.seen).length;
-  const mission = buildMission(store, { kind: "current" });
+/** Accueil enfant : contrôles à faire, mission d'entraînement, retest, thèmes. */
+export function HomeView({ store, child, go }: { store: AppStore; child: ChildProfile; go: (r: Route) => void }) {
+  const seenCount = Object.keys(child.seen).length;
+  const mission = buildMission(child, { kind: "current" });
   const pastYears = YEARS.filter((y) => y < child.year);
 
   return (
     <>
-      <h1 className="hello">Salut {child.name} ! 🚀</h1>
+      <div className="row hello-row">
+        <h1 className="hello">Salut {child.name} ! 🚀</h1>
+        {store.children.length > 1 && (
+          <div className="row child-switch">
+            {store.children.map((c) => (
+              <button
+                key={c.id}
+                className={`year-chip ${c.id === child.id ? "selected" : ""}`}
+                onClick={() => setActiveChild(c.id)}
+              >
+                {c.name}
+              </button>
+            ))}
+          </div>
+        )}
+      </div>
+
+      {child.planned.length > 0 && (
+        <div className="card test-card">
+          <h2>📝 Contrôles à faire</h2>
+          <p className="muted">
+            Préparés par tes parents. Un contrôle se fait en une fois : les réponses sont corrigées à
+            la fin. Entraîne-toi avant si tu veux !
+          </p>
+          {child.planned.map((p) => {
+            const qs = p.questionIds.map(questionById).filter(Boolean) as MissionQuestion[];
+            return (
+              <div className="row planned-row" key={p.id}>
+                <span className="planned-title">
+                  {p.title} <span className="muted small">· {qs.length} questions</span>
+                </span>
+                <button
+                  className="btn primary"
+                  onClick={() =>
+                    go({ view: "mission", mode: "test", planId: p.id, title: p.title, emoji: "📝", questions: qs })
+                  }
+                >
+                  ▶ Commencer
+                </button>
+              </div>
+            );
+          })}
+        </div>
+      )}
 
       <div className="card mission-card">
         <div className="mission-head">
           <span className="theme-emoji big">🎯</span>
           <div>
-            <h2>Ma mission du jour — {child.year}P</h2>
+            <h2>Ma mission d'entraînement — {child.year}P</h2>
             {seenCount === 0 ? (
               <p className="muted">
                 Demande à un parent d'indiquer dans l'<strong>espace parents</strong> ce que tu as
                 déjà vu en classe : ta mission sera prête juste après !
               </p>
             ) : mission.length === 0 ? (
-              <p className="muted">
-                Rien à tester pour l'instant sur les étapes vues en classe — reviens bientôt !
-              </p>
+              <p className="muted">Rien à réviser pour l'instant — reviens bientôt !</p>
             ) : (
               <p className="muted">
-                {mission.length} questions choisies pour toi : d'abord ce qui n'a jamais été testé,
-                puis ce qui est encore fragile.
+                {mission.length} questions pour t'entraîner, avec les explications à chaque réponse.
+                Ça ne compte pas comme un contrôle !
               </p>
             )}
           </div>
@@ -85,10 +133,16 @@ export function HomeView({ store, go }: { store: AppStore; go: (r: Route) => voi
             <button
               className="btn primary big"
               onClick={() =>
-                go({ view: "mission", title: `Mission du jour — ${child.year}P`, emoji: "🎯", questions: mission })
+                go({
+                  view: "mission",
+                  mode: "practice",
+                  title: `Entraînement — ${child.year}P`,
+                  emoji: "🎯",
+                  questions: mission,
+                })
               }
             >
-              ▶ Lancer ma mission
+              ▶ M'entraîner
             </button>
           )}
           <button className="btn ghost" onClick={() => go({ view: "programme" })}>
@@ -97,22 +151,28 @@ export function HomeView({ store, go }: { store: AppStore; go: (r: Route) => voi
         </div>
       </div>
 
-      {pastYears.length > 0 && (
+      {pastYears.length > 0 && entitlements.canRetestPastYears && (
         <div className="card past-card">
           <h2>🔄 Se retester sur les années précédentes</h2>
           <p className="muted">
-            Là, pas besoin de positionnement : tout le programme de l'année est testé.
+            Là, pas besoin de positionnement : tout le programme de l'année est révisé.
           </p>
           <div className="row">
             {pastYears.map((y) => {
-              const m = buildMission(store, { kind: "pastYear", year: y });
+              const m = buildMission(child, { kind: "pastYear", year: y });
               return (
                 <button
                   key={y}
                   className="btn ghost"
                   disabled={m.length === 0}
                   onClick={() =>
-                    go({ view: "mission", title: `Retest ${y}P — tout le programme`, emoji: "🔄", questions: m })
+                    go({
+                      view: "mission",
+                      mode: "practice",
+                      title: `Retest ${y}P — tout le programme`,
+                      emoji: "🔄",
+                      questions: m,
+                    })
                   }
                 >
                   Tester la {y}P {m.length === 0 ? "(bientôt)" : ""}
@@ -129,7 +189,7 @@ export function HomeView({ store, go }: { store: AppStore; go: (r: Route) => voi
         </div>
         <div className="grid">
           {THEMES.map((t) => (
-            <ThemeCard key={t.id} theme={t} store={store} go={go} />
+            <ThemeCard key={t.id} theme={t} child={child} go={go} />
           ))}
         </div>
       </section>

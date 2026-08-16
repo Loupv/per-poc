@@ -1,8 +1,8 @@
 import { useState } from "react";
 import type { Route } from "../App";
 import { stepInfo, type MissionQuestion } from "../lib/engine";
-import { recordAnswer } from "../store";
-import type { Question } from "../types";
+import { recordPractice, recordTest } from "../store";
+import type { Question, TestAnswer } from "../types";
 
 const normalize = (s: string) =>
   s.toLowerCase().replace(/['\s ]/g, "").replace(/,/g, ".");
@@ -10,17 +10,30 @@ const normalize = (s: string) =>
 const isCorrectInput = (q: Question, value: string) =>
   (q.accepted ?? []).some((a) => normalize(a) === normalize(value));
 
+export type RunMode = "practice" | "test";
+
 interface Outcome {
   mq: MissionQuestion;
   correct: boolean;
 }
 
+/**
+ * Runner commun. En entraînement : feedback immédiat, chaque réponse nourrit
+ * l'historique d'entraînement. En contrôle : aucune correction avant la fin,
+ * résultat enregistré en une fois (immuable), le contrôle planifié est consommé.
+ */
 export function MissionView({
+  childId,
+  mode,
+  planId = null,
   title,
   emoji,
   questions,
   go,
 }: {
+  childId: string;
+  mode: RunMode;
+  planId?: string | null;
   title: string;
   emoji: string;
   questions: MissionQuestion[];
@@ -31,6 +44,8 @@ export function MissionView({
   const [answered, setAnswered] = useState<null | { correct: boolean; picked?: number }>(null);
   const [inputValue, setInputValue] = useState("");
   const [finished, setFinished] = useState(false);
+
+  const isTest = mode === "test";
 
   if (questions.length === 0) {
     return (
@@ -50,15 +65,23 @@ export function MissionView({
     if (answered) return;
     setAnswered({ correct, picked });
     setOutcomes((o) => [...o, { mq, correct }]);
-    recordAnswer(mq.stepId, correct);
+    if (!isTest) recordPractice(childId, mq.stepId, correct);
   };
 
-  const next = () => {
+  const next = (allOutcomes: Outcome[]) => {
     if (index + 1 < questions.length) {
       setIndex(index + 1);
       setAnswered(null);
       setInputValue("");
     } else {
+      if (isTest) {
+        const answers: TestAnswer[] = allOutcomes.map((o) => ({
+          questionId: o.mq.question.id,
+          stepId: o.mq.stepId,
+          correct: o.correct,
+        }));
+        recordTest(childId, planId, title, answers);
+      }
       setFinished(true);
     }
   };
@@ -66,8 +89,13 @@ export function MissionView({
   if (finished) {
     const score = outcomes.filter((o) => o.correct).length;
     const ratio = score / questions.length;
-    const msg =
-      ratio >= 0.8 ? "Bravo ! 🎉" : ratio >= 0.5 ? "Bien joué, continue ! 💪" : "Courage, on y retourne ! 🌱";
+    const msg = isTest
+      ? "Contrôle terminé et enregistré ! 📝"
+      : ratio >= 0.8
+        ? "Bravo ! 🎉"
+        : ratio >= 0.5
+          ? "Bien joué, continue ! 💪"
+          : "Courage, on y retourne ! 🌱";
     return (
       <div className="card quiz-end">
         <span className="theme-emoji big">{emoji}</span>
@@ -75,6 +103,12 @@ export function MissionView({
         <p className="score-big">
           {score} / {questions.length}
         </p>
+        {isTest && (
+          <p className="muted">
+            Le résultat est enregistré pour tes parents — un contrôle ne se refait pas, mais tu peux
+            t'entraîner autant que tu veux !
+          </p>
+        )}
         <div className="mission-recap">
           {outcomes.map((o, i) => {
             const info = stepInfo(o.mq.stepId);
@@ -82,7 +116,8 @@ export function MissionView({
               <div key={i} className={`recap-line ${o.correct ? "ok" : "ko"}`}>
                 <span>{o.correct ? "✅" : "❌"}</span>
                 <span className="recap-step">
-                  {info ? info.step.text : o.mq.question.prompt}
+                  {o.mq.question.prompt}
+                  {!o.correct && <em className="recap-expl"> — {o.mq.question.explanation}</em>}
                   <span className="per-chip">{info?.objective.code}</span>
                 </span>
               </div>
@@ -93,9 +128,6 @@ export function MissionView({
           <button className="btn primary" onClick={() => go({ view: "home" })}>
             🏠 Accueil
           </button>
-          <button className="btn ghost" onClick={() => go({ view: "dashboard" })}>
-            👪 Voir la progression
-          </button>
         </div>
       </div>
     );
@@ -105,15 +137,18 @@ export function MissionView({
 
   return (
     <div className={`quiz ${mq.theme.domain}`}>
-      <button className="btn ghost back" onClick={() => go({ view: "home" })}>
-        ← Quitter
-      </button>
+      {!isTest && (
+        <button className="btn ghost back" onClick={() => go({ view: "home" })}>
+          ← Quitter
+        </button>
+      )}
 
       <div className="quiz-progress">
         <div className="quiz-progress-bar" style={{ width: `${(index / questions.length) * 100}%` }} />
       </div>
       <p className="muted quiz-counter">
         {emoji} {title} · question {index + 1} sur {questions.length}
+        {isTest && " · mode contrôle : les réponses sont corrigées à la fin"}
       </p>
 
       {passage && (
@@ -131,7 +166,8 @@ export function MissionView({
             {q.choices!.map((c, i) => {
               let cls = "choice";
               if (answered) {
-                if (i === q.answerIndex) cls += " correct";
+                if (isTest) cls += i === answered.picked ? " picked" : " dim";
+                else if (i === q.answerIndex) cls += " correct";
                 else if (i === answered.picked) cls += " wrong";
                 else cls += " dim";
               }
@@ -167,15 +203,25 @@ export function MissionView({
         )}
 
         {answered && (
-          <div className={`feedback ${answered.correct ? "ok" : "ko"}`}>
-            <strong>{answered.correct ? "✅ Juste !" : "❌ Pas tout à fait…"}</strong>
-            <p>{q.explanation}</p>
-            <p className="muted small">
-              Étape du PER : {stepInfo(mq.stepId)?.step.text.slice(0, 110)}…{" "}
-              <span className="per-chip">{stepInfo(mq.stepId)?.objective.code}</span>
-            </p>
-            <button className="btn primary" onClick={next} autoFocus>
-              {index + 1 < questions.length ? "Question suivante →" : "Voir mon score 🏁"}
+          <div className={`feedback ${isTest ? "neutral" : answered.correct ? "ok" : "ko"}`}>
+            {isTest ? (
+              <strong>Réponse enregistrée ✔</strong>
+            ) : (
+              <>
+                <strong>{answered.correct ? "✅ Juste !" : "❌ Pas tout à fait…"}</strong>
+                <p>{q.explanation}</p>
+                <p className="muted small">
+                  Étape du PER : {stepInfo(mq.stepId)?.step.text.slice(0, 110)}…{" "}
+                  <span className="per-chip">{stepInfo(mq.stepId)?.objective.code}</span>
+                </p>
+              </>
+            )}
+            <button className="btn primary" onClick={() => next(outcomes)} autoFocus>
+              {index + 1 < questions.length
+                ? "Question suivante →"
+                : isTest
+                  ? "Terminer le contrôle 🏁"
+                  : "Voir mon score 🏁"}
             </button>
           </div>
         )}

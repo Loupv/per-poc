@@ -2,7 +2,7 @@ import classification from "../data/classification.json";
 import per from "../data/per.json";
 import { THEMES } from "../data/content";
 import { QUESTION_STEP } from "../data/stepMap";
-import type { AppStore, Question, Theme } from "../types";
+import type { ChildProfile, Domain, Question, Theme } from "../types";
 
 // ── Classification quiz / à observer ────────────────────────────────
 
@@ -55,6 +55,23 @@ export const stepInfo = (id: number) => STEP_INDEX.get(id);
 export const stepInYear = (step: PerStep, year: number) =>
   step.years.length === 0 || step.years.includes(year);
 
+/** Matière (au sens de l'app) d'un objectif PER. */
+export const objectiveDomain = (code: string): Domain =>
+  code.startsWith("L1")
+    ? "francais"
+    : code.startsWith("SHS")
+      ? "shs"
+      : /^MSN 2[678]/.test(code)
+        ? "sciences"
+        : "maths";
+
+export const DOMAIN_LABEL: Record<Domain, string> = {
+  maths: "Maths",
+  francais: "Français",
+  sciences: "Sciences",
+  shs: "Histoire-Géo",
+};
+
 // ── Questions indexées par étape ────────────────────────────────────
 
 export interface MissionQuestion {
@@ -71,6 +88,9 @@ export const ALL_QUESTIONS: MissionQuestion[] = THEMES.flatMap((theme) =>
   }))
 ).filter((mq) => mq.stepId !== undefined);
 
+const QUESTION_BY_ID = new Map(ALL_QUESTIONS.map((mq) => [mq.question.id, mq]));
+export const questionById = (id: string) => QUESTION_BY_ID.get(id);
+
 const QUESTIONS_BY_STEP = new Map<number, MissionQuestion[]>();
 for (const mq of ALL_QUESTIONS) {
   const list = QUESTIONS_BY_STEP.get(mq.stepId) ?? [];
@@ -80,21 +100,40 @@ for (const mq of ALL_QUESTIONS) {
 
 export const stepHasQuestions = (stepId: number) => QUESTIONS_BY_STEP.has(stepId);
 
-// ── Maîtrise par étape ──────────────────────────────────────────────
+// ── Résultats de contrôle par étape (source officielle) ─────────────
 
+export type TestOutcome = "none" | "ok" | "ko";
+
+/** Dernier résultat de contrôle sur une étape (les contrôles sont immuables). */
+export function testOutcome(child: ChildProfile, stepId: number): TestOutcome {
+  let latest: { at: string; correct: boolean } | null = null;
+  for (const t of child.tests)
+    for (const a of t.answers)
+      if (a.stepId === stepId && (!latest || t.at > latest.at)) latest = { at: t.at, correct: a.correct };
+  return latest === null ? "none" : latest.correct ? "ok" : "ko";
+}
+
+/** Statut officiel d'une étape (parent) : contrôles + validations uniquement. */
 export type Mastery = "untested" | "fragile" | "mastered";
 
-export const stepMastery = (store: AppStore, stepId: number): Mastery => {
-  if (store.validated[stepId]) return "mastered"; // validé par un parent (étape "à observer")
-  const h = store.hist[stepId];
+export const stepStatus = (child: ChildProfile, stepId: number): Mastery => {
+  if (child.validated[stepId]) return "mastered";
+  const t = testOutcome(child, stepId);
+  if (t === "ok") return "mastered";
+  if (t === "ko") return "fragile";
+  return "untested";
+};
+
+/** Niveau d'entraînement (pour guider les missions — n'engage rien). */
+export const practiceLevel = (child: ChildProfile, stepId: number): Mastery => {
+  const h = child.practice[stepId];
   if (!h || h.r.length === 0) return "untested";
   const r = h.r;
   if (r.length >= 2 && r[r.length - 1] === 1 && r[r.length - 2] === 1) return "mastered";
-  if (r.length === 1 && r[0] === 1) return "fragile"; // un seul succès : à confirmer
   return "fragile";
 };
 
-// ── Moteur de mission ───────────────────────────────────────────────
+// ── Moteur de mission (entraînement) ────────────────────────────────
 
 const shuffle = <T,>(arr: T[]): T[] => {
   const a = [...arr];
@@ -109,34 +148,26 @@ export type MissionMode = { kind: "current" } | { kind: "pastYear"; year: number
 
 export const MISSION_SIZE = 10;
 
-/**
- * Sélectionne les questions de la mission :
- * - année en cours : uniquement les étapes marquées "vues en classe" ;
- * - année précédente : toutes les étapes de l'année (on teste tout).
- * Priorité : jamais testé > fragile > maîtrisé (le plus ancien d'abord).
- */
-export function buildMission(store: AppStore, mode: MissionMode): MissionQuestion[] {
-  const year = mode.kind === "current" ? store.child!.year : mode.year;
+export function buildMission(child: ChildProfile, mode: MissionMode): MissionQuestion[] {
+  const year = mode.kind === "current" ? child.year : mode.year;
 
-  const candidates: { stepId: number; mastery: Mastery; lastAt: string }[] = [];
+  const candidates: { stepId: number; level: Mastery; lastAt: string }[] = [];
   for (const [stepId, info] of STEP_INDEX) {
     if (!stepInYear(info.step, year)) continue;
     if (!QUESTIONS_BY_STEP.has(stepId)) continue;
-    if (mode.kind === "current" && !store.seen[stepId]) continue;
+    if (mode.kind === "current" && !child.seen[stepId]) continue;
     candidates.push({
       stepId,
-      mastery: stepMastery(store, stepId),
-      lastAt: store.hist[stepId]?.lastAt ?? "",
+      level: practiceLevel(child, stepId),
+      lastAt: child.practice[stepId]?.lastAt ?? "",
     });
   }
 
-  const rank = { untested: 0, fragile: 1, mastered: 2 } as const;
   const ordered = [
-    ...shuffle(candidates.filter((c) => c.mastery === "untested")),
-    ...shuffle(candidates.filter((c) => c.mastery === "fragile")),
-    ...candidates.filter((c) => c.mastery === "mastered").sort((a, b) => a.lastAt.localeCompare(b.lastAt)),
+    ...shuffle(candidates.filter((c) => c.level === "untested")),
+    ...shuffle(candidates.filter((c) => c.level === "fragile")),
+    ...candidates.filter((c) => c.level === "mastered").sort((a, b) => a.lastAt.localeCompare(b.lastAt)),
   ];
-  void rank;
 
   const picked: MissionQuestion[] = [];
   for (const c of ordered) {
@@ -150,53 +181,111 @@ export function buildMission(store: AppStore, mode: MissionMode): MissionQuestio
   return picked;
 }
 
-// ── Statistiques pour le dashboard / programme ──────────────────────
+// ── Construction d'un contrôle (parent) ─────────────────────────────
+
+export const TEST_SIZE = 10;
+
+/**
+ * Choisit les questions d'un contrôle : étapes de l'année, de la matière demandée,
+ * en privilégiant celles bien entraînées mais jamais contrôlées, puis les vues
+ * jamais contrôlées, puis le reste. Une question par étape autant que possible.
+ */
+export function buildTest(child: ChildProfile, domain: Domain | "toutes"): MissionQuestion[] {
+  const candidates: { stepId: number; prio: number }[] = [];
+  for (const [stepId, info] of STEP_INDEX) {
+    if (!stepInYear(info.step, child.year)) continue;
+    if (!QUESTIONS_BY_STEP.has(stepId)) continue;
+    if (domain !== "toutes" && objectiveDomain(info.objective.code) !== domain) continue;
+    if (Object.keys(child.seen).length > 0 && !child.seen[stepId]) continue;
+    const t = testOutcome(child, stepId);
+    const p = practiceLevel(child, stepId);
+    const prio = t === "none" && p === "mastered" ? 0 : t === "none" ? 1 : t === "ko" ? 2 : 3;
+    candidates.push({ stepId, prio });
+  }
+  const ordered = [0, 1, 2, 3].flatMap((p) => shuffle(candidates.filter((c) => c.prio === p)));
+  const picked: MissionQuestion[] = [];
+  for (const c of ordered) {
+    if (picked.length >= TEST_SIZE) break;
+    picked.push(shuffle(QUESTIONS_BY_STEP.get(c.stepId)!)[0]);
+  }
+  return picked;
+}
+
+// ── Recommandations (parent) ────────────────────────────────────────
+
+export interface Recommendations {
+  readyToTest: StepInfo[]; // bien entraîné, jamais contrôlé -> planifier un contrôle
+  toRework: StepInfo[]; // raté au dernier contrôle -> fiche + entraînement
+  toPractice: StepInfo[]; // vu en classe, jamais entraîné -> lancer des missions
+}
+
+export function recommendations(child: ChildProfile, limit = 5): Recommendations {
+  const out: Recommendations = { readyToTest: [], toRework: [], toPractice: [] };
+  for (const [stepId, info] of STEP_INDEX) {
+    if (!stepInYear(info.step, child.year)) continue;
+    if (stepKind(stepId) === "observe") continue;
+    const t = testOutcome(child, stepId);
+    const p = practiceLevel(child, stepId);
+    if (t === "ko" && out.toRework.length < limit) out.toRework.push(info);
+    else if (t === "none" && p === "mastered" && out.readyToTest.length < limit) out.readyToTest.push(info);
+    else if (
+      t === "none" &&
+      p === "untested" &&
+      child.seen[stepId] &&
+      QUESTIONS_BY_STEP.has(stepId) &&
+      out.toPractice.length < limit
+    )
+      out.toPractice.push(info);
+  }
+  return out;
+}
+
+// ── Statistiques ────────────────────────────────────────────────────
 
 export interface ObjectiveStats {
   total: number;
   seen: number;
-  tested: number;
-  mastered: number;
+  evaluated: number; // contrôlé ou validé par un parent
+  mastered: number; // dernier contrôle juste, ou validé
   withQuestions: number;
   observe: number;
   validated: number;
 }
 
-export function globalStats(store: AppStore, year: number): ObjectiveStats {
-  return OBJECTIVES.reduce(
-    (acc, o) => {
-      const s = objectiveStats(store, o, year);
-      return {
-        total: acc.total + s.total,
-        seen: acc.seen + s.seen,
-        tested: acc.tested + s.tested,
-        mastered: acc.mastered + s.mastered,
-        withQuestions: acc.withQuestions + s.withQuestions,
-        observe: acc.observe + s.observe,
-        validated: acc.validated + s.validated,
-      };
-    },
-    { total: 0, seen: 0, tested: 0, mastered: 0, withQuestions: 0, observe: 0, validated: 0 }
-  );
-}
+const EMPTY: ObjectiveStats = {
+  total: 0, seen: 0, evaluated: 0, mastered: 0, withQuestions: 0, observe: 0, validated: 0,
+};
 
-export function objectiveStats(store: AppStore, objective: PerObjective, year: number): ObjectiveStats {
-  const s: ObjectiveStats = {
-    total: 0, seen: 0, tested: 0, mastered: 0, withQuestions: 0, observe: 0, validated: 0,
-  };
+export function objectiveStats(child: ChildProfile, objective: PerObjective, year: number): ObjectiveStats {
+  const s = { ...EMPTY };
   for (const group of objective.groups)
     for (const step of group.steps) {
       if (!stepInYear(step, year)) continue;
       s.total++;
-      if (store.seen[step.id]) s.seen++;
+      if (child.seen[step.id]) s.seen++;
       if (QUESTIONS_BY_STEP.has(step.id)) s.withQuestions++;
       if (stepKind(step.id) === "observe") {
         s.observe++;
-        if (store.validated[step.id]) s.validated++;
+        if (child.validated[step.id]) s.validated++;
       }
-      const m = stepMastery(store, step.id);
-      if (m !== "untested") s.tested++;
+      const m = stepStatus(child, step.id);
+      if (m !== "untested") s.evaluated++;
       if (m === "mastered") s.mastered++;
     }
   return s;
+}
+
+export function globalStats(child: ChildProfile, year: number): ObjectiveStats {
+  return OBJECTIVES.reduce((acc, o) => {
+    const s = objectiveStats(child, o, year);
+    return {
+      total: acc.total + s.total,
+      seen: acc.seen + s.seen,
+      evaluated: acc.evaluated + s.evaluated,
+      mastered: acc.mastered + s.mastered,
+      withQuestions: acc.withQuestions + s.withQuestions,
+      observe: acc.observe + s.observe,
+      validated: acc.validated + s.validated,
+    };
+  }, { ...EMPTY });
 }

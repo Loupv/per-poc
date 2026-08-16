@@ -1,4 +1,5 @@
 export type Domain = "maths" | "francais" | "sciences" | "shs";
+export type Role = "child" | "parent";
 
 export interface Question {
   id: string;
@@ -30,21 +31,55 @@ export interface Theme {
 }
 
 export interface StepHistory {
-  /** Derniers résultats, 1 = juste, 0 = faux (max 5, le plus récent en dernier). */
+  /** Derniers résultats d'entraînement, 1 = juste, 0 = faux (max 5, le plus récent en dernier). */
   r: number[];
   lastAt: string;
 }
 
-export type Role = "child" | "parent";
+export interface TestAnswer {
+  questionId: string;
+  stepId: number;
+  correct: boolean;
+}
 
-export interface AppStore {
-  /** Mode actif sur cet appareil (commutable : l'appareil passe de main en main). */
-  role: Role | null;
-  child: { name: string; year: number } | null;
+/** Un contrôle passé : enregistré en une fois, jamais modifié ni repassé. */
+export interface TestRecord {
+  id: string;
+  planId: string | null;
+  title: string;
+  at: string;
+  answers: TestAnswer[];
+  score: number;
+  total: number;
+}
+
+/** Un contrôle planifié par un parent, en attente d'être passé. */
+export interface PlannedTest {
+  id: string;
+  title: string;
+  domain: Domain | "toutes";
+  questionIds: string[];
+  createdAt: string;
+}
+
+export interface ChildProfile {
+  id: string;
+  name: string;
+  year: number;
   /** stepId -> vu en classe (positionnement parent, année en cours). */
   seen: Record<number, boolean>;
-  /** stepId -> historique des réponses. */
-  hist: Record<number, StepHistory>;
-  /** stepId -> date de validation parent (étapes « à observer » : il/elle sait le faire). */
+  /** stepId -> historique d'entraînement (n'engage pas les résultats officiels). */
+  practice: Record<number, StepHistory>;
+  /** stepId -> date de validation parent (étapes « à observer »). */
   validated: Record<number, string>;
+  /** Contrôles passés (immuables). */
+  tests: TestRecord[];
+  /** Contrôles planifiés, en attente. */
+  planned: PlannedTest[];
+}
+
+export interface AppStore {
+  role: Role | null;
+  activeChildId: string | null;
+  children: ChildProfile[];
 }

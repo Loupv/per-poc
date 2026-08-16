@@ -6,17 +6,17 @@ import {
   stepHasQuestions,
   stepInYear,
   stepKind,
-  stepMastery,
+  stepStatus,
   type PerGroup,
   type PerObjective,
 } from "../lib/engine";
 import { setSeen, setValidated } from "../store";
-import type { AppStore } from "../types";
+import type { ChildProfile } from "../types";
 
 const YEARS = [5, 6, 7, 8];
 
 const MASTERY_ICON = { untested: "⚪", fragile: "🟡", mastered: "🟢" } as const;
-const MASTERY_LABEL = { untested: "non testé", fragile: "fragile", mastered: "maîtrisé" } as const;
+const MASTERY_LABEL = { untested: "non évalué", fragile: "fragile", mastered: "maîtrisé" } as const;
 
 const groupLabel = (g: PerGroup) => {
   if (g.path.length) return g.path[g.path.length - 1];
@@ -26,13 +26,13 @@ const groupLabel = (g: PerGroup) => {
 
 function GroupBlock({
   group,
-  store,
+  child,
   year,
   positioning,
   canEdit,
 }: {
   group: PerGroup;
-  store: AppStore;
+  child: ChildProfile;
   year: number;
   positioning: boolean;
   canEdit: boolean;
@@ -40,8 +40,8 @@ function GroupBlock({
   const steps = group.steps.filter((s) => stepInYear(s, year));
   if (steps.length === 0) return null;
   const ids = steps.map((s) => s.id);
-  const allSeen = ids.every((id) => store.seen[id]);
-  const someSeen = ids.some((id) => store.seen[id]);
+  const allSeen = ids.every((id) => child.seen[id]);
+  const someSeen = ids.some((id) => child.seen[id]);
 
   return (
     <div className="prog-group">
@@ -54,7 +54,7 @@ function GroupBlock({
               ref={(el) => {
                 if (el) el.indeterminate = !allSeen && someSeen;
               }}
-              onChange={(e) => setSeen(ids, e.target.checked)}
+              onChange={(e) => setSeen(child.id, ids, e.target.checked)}
             />
             <span>Vu en classe</span>
           </label>
@@ -69,9 +69,9 @@ function GroupBlock({
       </div>
       <ul className="prog-steps">
         {steps.map((step) => {
-          const m = stepMastery(store, step.id);
+          const m = stepStatus(child, step.id);
           return (
-            <li key={step.id} className={`prog-step ${store.seen[step.id] || !positioning ? "" : "unseen"}`}>
+            <li key={step.id} className={`prog-step ${child.seen[step.id] || !positioning ? "" : "unseen"}`}>
               <span className="mastery" title={MASTERY_LABEL[m]}>
                 {MASTERY_ICON[m]}
               </span>
@@ -79,15 +79,15 @@ function GroupBlock({
               {stepKind(step.id) === "observe" ? (
                 canEdit ? (
                   <button
-                    className={`badge observe ${store.validated[step.id] ? "validated" : ""}`}
+                    className={`badge observe ${child.validated[step.id] ? "validated" : ""}`}
                     title="Étape non testable en quizz (production, manipulation…) : un parent valide quand l'enfant sait le faire"
-                    onClick={() => setValidated(step.id, !store.validated[step.id])}
+                    onClick={() => setValidated(child.id, step.id, !child.validated[step.id])}
                   >
-                    {store.validated[step.id] ? "✓ validé" : "à observer"}
+                    {child.validated[step.id] ? "✓ validé" : "à observer"}
                   </button>
                 ) : (
-                  <span className={`badge observe ${store.validated[step.id] ? "validated" : ""}`}>
-                    {store.validated[step.id] ? "✓ validé" : "à observer"}
+                  <span className={`badge observe ${child.validated[step.id] ? "validated" : ""}`}>
+                    {child.validated[step.id] ? "✓ validé" : "à observer"}
                   </span>
                 )
               ) : stepHasQuestions(step.id) ? (
@@ -100,8 +100,8 @@ function GroupBlock({
                   type="checkbox"
                   className="step-seen"
                   title="Vu en classe"
-                  checked={!!store.seen[step.id]}
-                  onChange={(e) => setSeen([step.id], e.target.checked)}
+                  checked={!!child.seen[step.id]}
+                  onChange={(e) => setSeen(child.id, [step.id], e.target.checked)}
                 />
               )}
             </li>
@@ -114,18 +114,18 @@ function GroupBlock({
 
 function ObjectiveBlock({
   objective,
-  store,
+  child,
   year,
   positioning,
   canEdit,
 }: {
   objective: PerObjective;
-  store: AppStore;
+  child: ChildProfile;
   year: number;
   positioning: boolean;
   canEdit: boolean;
 }) {
-  const stats = objectiveStats(store, objective, year);
+  const stats = objectiveStats(child, objective, year);
   if (stats.total === 0) return null;
   return (
     <details className="card objective prog-objective">
@@ -134,7 +134,7 @@ function ObjectiveBlock({
         <span className="prog-obj-name">{objective.name}</span>
         <span className="prog-obj-stats muted">
           {positioning && `${stats.seen}/${stats.total} vues · `}
-          {stats.mastered}🟢 {stats.tested - stats.mastered}🟡 · {stats.total} étapes
+          {stats.mastered}🟢 {stats.evaluated - stats.mastered}🟡 · {stats.total} étapes
         </span>
       </summary>
       {positioning && canEdit && (
@@ -143,6 +143,7 @@ function ObjectiveBlock({
             className="btn ghost small-btn"
             onClick={() =>
               setSeen(
+                child.id,
                 objective.groups.flatMap((g) => g.steps.filter((s) => stepInYear(s, year)).map((s) => s.id)),
                 true
               )
@@ -154,6 +155,7 @@ function ObjectiveBlock({
             className="btn ghost small-btn"
             onClick={() =>
               setSeen(
+                child.id,
                 objective.groups.flatMap((g) => g.steps.filter((s) => stepInYear(s, year)).map((s) => s.id)),
                 false
               )
@@ -164,7 +166,7 @@ function ObjectiveBlock({
         </div>
       )}
       {objective.groups.map((g) => (
-        <GroupBlock key={g.id} group={g} store={store} year={year} positioning={positioning} canEdit={canEdit} />
+        <GroupBlock key={g.id} group={g} child={child} year={year} positioning={positioning} canEdit={canEdit} />
       ))}
       {objective.groups.some((g) => g.attentes.length > 0) && (
         <details className="attentes">
@@ -183,17 +185,17 @@ function ObjectiveBlock({
 }
 
 export function ProgrammeView({
-  store,
+  child,
   go,
   initialYear,
   canEdit,
 }: {
-  store: AppStore;
+  child: ChildProfile;
   go: (r: Route) => void;
   initialYear?: number;
   canEdit: boolean;
 }) {
-  const childYear = store.child?.year ?? 6;
+  const childYear = child.year;
   const [year, setYear] = useState(initialYear ?? childYear);
   const positioning = year === childYear;
   const domains = [...new Set(OBJECTIVES.map((o) => o.domain))];
@@ -209,7 +211,7 @@ export function ProgrammeView({
         {positioning && canEdit ? (
           <>
             Pour l'année en cours ({childYear}P), cochez ce qui a <strong>déjà été vu en classe</strong> :
-            les missions ne testent que ces étapes.
+            les missions et contrôles ne portent que sur ces étapes.
           </>
         ) : positioning ? (
           <>Année en cours ({childYear}P). Le positionnement se fait dans l'espace parents.</>
@@ -231,16 +233,15 @@ export function ProgrammeView({
       </div>
 
       <p className="muted small legend">
-        ⚪ non testé · 🟡 fragile · 🟢 maîtrisé · « testable » = des questions existent déjà dans le
-        POC · « à observer » = production ou manipulation, cliquez pour valider quand l'enfant sait
-        le faire
+        ⚪ non évalué · 🟡 fragile · 🟢 maîtrisé (contrôle réussi ou validation parent) · « testable » =
+        des questions existent déjà dans le POC · « à observer » = production ou manipulation
       </p>
 
       {domains.map((d) => (
         <section key={d}>
           <h2 className="prog-domain">{d}</h2>
           {OBJECTIVES.filter((o) => o.domain === d).map((o) => (
-            <ObjectiveBlock key={o.id} objective={o} store={store} year={year} positioning={positioning} canEdit={canEdit} />
+            <ObjectiveBlock key={o.id} objective={o} child={child} year={year} positioning={positioning} canEdit={canEdit} />
           ))}
         </section>
       ))}
