@@ -76,6 +76,8 @@ export interface ChildProfile {
   tests: TestRecord[];
   /** Contrôles planifiés, en attente. */
   planned: PlannedTest[];
+  /** Programmes de révision préparés par un parent (rejouables, mode entraînement). */
+  revisions: PlannedTest[];
 }
 
 export interface AppStore {

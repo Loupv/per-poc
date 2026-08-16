@@ -80,6 +80,30 @@ export function HomeView({ store, child, go }: { store: AppStore; child: ChildPr
         )}
       </div>
 
+      {child.revisions.length > 0 && (
+        <div className="card">
+          <h2>📚 Révisions préparées par tes parents</h2>
+          {child.revisions.map((p) => {
+            const qs = p.questionIds.map(questionById).filter(Boolean) as MissionQuestion[];
+            return (
+              <div className="row planned-row" key={p.id}>
+                <span className="planned-title">
+                  {p.title} <span className="muted small">· {qs.length} questions · rejouable</span>
+                </span>
+                <button
+                  className="btn primary small-btn"
+                  onClick={() =>
+                    go({ view: "mission", mode: "practice", title: p.title, emoji: "📚", questions: qs })
+                  }
+                >
+                  ▶ Réviser
+                </button>
+              </div>
+            );
+          })}
+        </div>
+      )}
+
       {child.planned.length > 0 && (
         <div className="card test-card">
           <h2>📝 Contrôles à faire</h2>

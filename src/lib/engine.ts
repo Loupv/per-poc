@@ -275,6 +275,55 @@ export function objectiveStats(child: ChildProfile, objective: PerObjective, yea
   return s;
 }
 
+/** Répartition par état des étapes d'une matière — pour le dashboard parent. */
+export interface DomainStats {
+  total: number;
+  toPosition: number; // pas encore marquées vues
+  inProgress: number; // vues en classe, pas encore évaluées
+  toReview: number; // raté au dernier contrôle
+  mastered: number; // contrôle réussi ou validation parent
+}
+
+export function domainStats(child: ChildProfile, domain: Domain, year: number): DomainStats {
+  const s: DomainStats = { total: 0, toPosition: 0, inProgress: 0, toReview: 0, mastered: 0 };
+  for (const [stepId, info] of STEP_INDEX) {
+    if (!stepInYear(info.step, year)) continue;
+    if (objectiveDomain(info.objective.code) !== domain) continue;
+    s.total++;
+    const m = stepStatus(child, stepId);
+    if (m === "mastered") s.mastered++;
+    else if (m === "fragile") s.toReview++;
+    else if (child.seen[stepId]) s.inProgress++;
+    else s.toPosition++;
+  }
+  return s;
+}
+
+/**
+ * Questions d'un programme de révision : priorité aux étapes ratées en contrôle,
+ * puis aux vues jamais entraînées, puis aux fragiles à l'entraînement.
+ */
+export function buildRevision(child: ChildProfile, domain: Domain | "toutes"): MissionQuestion[] {
+  const candidates: { stepId: number; prio: number }[] = [];
+  for (const [stepId, info] of STEP_INDEX) {
+    if (!stepInYear(info.step, child.year)) continue;
+    if (!QUESTIONS_BY_STEP.has(stepId)) continue;
+    if (domain !== "toutes" && objectiveDomain(info.objective.code) !== domain) continue;
+    if (Object.keys(child.seen).length > 0 && !child.seen[stepId]) continue;
+    const t = testOutcome(child, stepId);
+    const p = practiceLevel(child, stepId);
+    const prio = t === "ko" ? 0 : p === "untested" ? 1 : p === "fragile" ? 2 : 3;
+    candidates.push({ stepId, prio });
+  }
+  const ordered = [0, 1, 2, 3].flatMap((p) => shuffle(candidates.filter((c) => c.prio === p)));
+  const picked: MissionQuestion[] = [];
+  for (const c of ordered) {
+    if (picked.length >= MISSION_SIZE) break;
+    picked.push(shuffle(QUESTIONS_BY_STEP.get(c.stepId)!)[0]);
+  }
+  return picked;
+}
+
 export function globalStats(child: ChildProfile, year: number): ObjectiveStats {
   return OBJECTIVES.reduce((acc, o) => {
     const s = objectiveStats(child, o, year);

@@ -16,6 +16,7 @@ const emptyChild = (name: string, year: number): ChildProfile => ({
   validated: {},
   tests: [],
   planned: [],
+  revisions: [],
 });
 
 interface V2Store {
@@ -31,7 +32,11 @@ const load = (): AppStore => {
     const raw = localStorage.getItem(KEY);
     if (raw) {
       const parsed = JSON.parse(raw) as AppStore;
-      return { ...parsed, parentPinHash: parsed.parentPinHash ?? null };
+      return {
+        ...parsed,
+        parentPinHash: parsed.parentPinHash ?? null,
+        children: parsed.children.map((c) => ({ ...c, revisions: c.revisions ?? [] })),
+      };
     }
     // Migration depuis la v2 (un seul enfant, entraînement = ancien historique)
     const old = localStorage.getItem(OLD_KEY);
@@ -144,6 +149,18 @@ export const planTest = (childId: string, plan: Omit<PlannedTest, "id" | "create
 
 export const deletePlannedTest = (childId: string, planId: string) => {
   mutateChild(childId, (c) => ({ ...c, planned: c.planned.filter((p) => p.id !== planId) }));
+};
+
+/** Parent : prépare un programme de révision (rejouable, mode entraînement). */
+export const planRevision = (childId: string, plan: Omit<PlannedTest, "id" | "createdAt">) => {
+  mutateChild(childId, (c) => ({
+    ...c,
+    revisions: [...c.revisions, { ...plan, id: newId(), createdAt: new Date().toISOString() }],
+  }));
+};
+
+export const deleteRevision = (childId: string, planId: string) => {
+  mutateChild(childId, (c) => ({ ...c, revisions: c.revisions.filter((p) => p.id !== planId) }));
 };
 
 /**
