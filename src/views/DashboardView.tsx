@@ -1,40 +1,44 @@
 import type { Route } from "../App";
-import { OBJECTIVES, objectiveStats } from "../lib/engine";
-import type { ChildProfile } from "../types";
+import { Donut, ScoreLine, StatusBar } from "../components/charts";
+import {
+  DOMAIN_LABEL,
+  domainStats,
+  OBJECTIVES,
+  objectiveBreakdown,
+  objectiveDomain,
+} from "../lib/engine";
+import type { ChildProfile, Domain } from "../types";
 
-function Bar({ value, max, color }: { value: number; max: number; color: string }) {
-  const pct = max === 0 ? 0 : Math.round((value / max) * 100);
-  return (
-    <div className="bar">
-      <div className="bar-fill" style={{ width: `${pct}%`, background: color }} />
-      <span className="bar-label">
-        {value}/{max}
-      </span>
-    </div>
-  );
-}
+const DOMAINS: Domain[] = ["maths", "francais", "sciences", "shs"];
 
 export function DashboardView({ child, go }: { child: ChildProfile; go: (r: Route) => void }) {
   const year = child.year;
-  const perObjective = OBJECTIVES.map((o) => ({ o, s: objectiveStats(child, o, year) })).filter(
-    ({ s }) => s.total > 0
-  );
 
   return (
     <div className="dashboard">
       <button className="btn ghost back" onClick={() => go({ view: "home" })}>
         ← Retour
       </button>
-      <h1>Tableau de bord — {child.name}, {year}P</h1>
+      <h1>
+        Tableau de bord — {child.name}, {year}P
+      </h1>
       <p className="muted">
-        Progression officielle par objectif du PER. « Évalué » = contrôlé ou validé par un parent ;
-        « maîtrisé » = dernier contrôle réussi ou étape validée. L'entraînement libre de {child.name}{" "}
-        n'est pas comptabilisé ici.
+        Progression officielle sur le référentiel du PER. « Acquis » = dernier contrôle réussi ou
+        étape validée par un parent ; l'entraînement libre n'est pas comptabilisé.
       </p>
 
       {child.tests.length > 0 && (
         <div className="card">
-          <h2>📈 Historique des contrôles</h2>
+          <div className="card-head">
+            <h2>Scores aux contrôles</h2>
+            <span className="muted small">{child.tests.length} contrôle{child.tests.length > 1 ? "s" : ""}</span>
+          </div>
+          <ScoreLine
+            points={child.tests.map((t) => ({
+              label: `${t.title} (${new Date(t.at).toLocaleDateString("fr-CH")})`,
+              pct: Math.round((t.score / t.total) * 100),
+            }))}
+          />
           <table className="results-table">
             <thead>
               <tr>
@@ -60,38 +64,48 @@ export function DashboardView({ child, go }: { child: ChildProfile; go: (r: Rout
         </div>
       )}
 
-      {perObjective.map(({ o, s }) => (
-        <div className="card objective" key={o.id}>
-          <div className="objective-head">
-            <span className="per-chip big">{o.code}</span>
-            <div>
-              <h2>{o.name}</h2>
-              <p className="muted">{o.domain}</p>
+      {DOMAINS.map((d) => {
+        const ds = domainStats(child, d, year);
+        if (ds.total === 0) return null;
+        const objectives = OBJECTIVES.filter((o) => objectiveDomain(o.code) === d);
+        return (
+          <div className="card domain-section-card" key={d}>
+            <div className="domain-stats-head">
+              <Donut stats={ds} />
+              <div className="domain-stats-info">
+                <h2>
+                  <span className={`domain-dot ${d}`} /> {DOMAIN_LABEL[d]}
+                </h2>
+                <p className="muted small">
+                  {ds.total} étapes en {year}P : {ds.mastered} acquises · {ds.inProgress} en cours ·{" "}
+                  {ds.toReview} à revoir · {ds.toPosition} à positionner
+                </p>
+              </div>
             </div>
+            {objectives.map((o) => {
+              const s = objectiveBreakdown(child, o, year);
+              if (s.total === 0) return null;
+              return (
+                <div className="obj-stat-row" key={o.id}>
+                  <div className="obj-stat-head">
+                    <span className="per-chip">{o.code}</span>
+                    <span className="obj-stat-name">{o.name}</span>
+                    <span className="muted small obj-stat-counts">
+                      {s.mastered}/{s.total} acquis
+                    </span>
+                  </div>
+                  <StatusBar stats={s} height={7} />
+                </div>
+              );
+            })}
           </div>
-          <div className="bars">
-            <div className="bar-row">
-              <span className="bar-title">Vu en classe</span>
-              <Bar value={s.seen} max={s.total} color="var(--accent)" />
-            </div>
-            <div className="bar-row">
-              <span className="bar-title">Évalué</span>
-              <Bar value={s.evaluated} max={s.total} color="var(--francais)" />
-            </div>
-            <div className="bar-row">
-              <span className="bar-title">Maîtrisé</span>
-              <Bar value={s.mastered} max={s.total} color="var(--ok)" />
-            </div>
-          </div>
-          <p className="muted small">
-            {s.withQuestions} étapes sur {s.total} sont testables en quizz dans ce POC
-            {s.observe > 0 &&
-              ` · ${s.observe} étapes « à observer », dont ${s.validated} validées par un parent`}
-            .
-          </p>
-        </div>
-      ))}
+        );
+      })}
 
+      <p className="muted small legend-line">
+        <span className="seg-dot ok" /> acquis · <span className="seg-dot cur" /> en cours ·{" "}
+        <span className="seg-dot ko" /> à revoir · gris = à positionner
+      </p>
       <p className="muted small">
         Source : Plan d'études romand © CIIP, API publique per.ciip.ch — POC, ne remplace pas
         l'évaluation scolaire officielle.

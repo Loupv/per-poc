@@ -1,11 +1,14 @@
 import { useState } from "react";
 import type { Route } from "../App";
+import { StatusBar } from "../components/charts";
 import {
   buildRevision,
   buildTest,
   DOMAIN_LABEL,
   domainStats,
+  expressSelection,
   recommendations,
+  schoolYearFraction,
 } from "../lib/engine";
 import { hashPin, isValidPin, verifyPin } from "../lib/pin";
 import { entitlements, TIER_LABEL, tierFor } from "../lib/plan";
@@ -20,6 +23,7 @@ import {
   setActiveChild,
   setChildYear,
   setParentPinHash,
+  setSeen,
 } from "../store";
 import type { AppStore, ChildProfile, Domain } from "../types";
 
@@ -78,7 +82,6 @@ function DomainRow({ child, domain, go }: { child: ChildProfile; domain: Domain;
   const testPreview = buildTest(child, domain);
   const revPreview = buildRevision(child, domain);
   const date = new Date().toLocaleDateString("fr-CH");
-  const pct = (n: number) => (s.total === 0 ? 0 : (n / s.total) * 100);
 
   return (
     <div className="matiere-row">
@@ -86,15 +89,11 @@ function DomainRow({ child, domain, go }: { child: ChildProfile; domain: Domain;
         <span className={`domain-dot ${domain}`} />
         <strong className="matiere-name">{DOMAIN_LABEL[domain]}</strong>
         <span className="matiere-counts muted">
-          {s.mastered} acquis · {s.toReview} à revoir · {s.inProgress} en cours · {s.toPosition} à
+          {s.mastered} acquis · {s.inProgress} en cours · {s.toReview} à revoir · {s.toPosition} à
           positionner
         </span>
       </div>
-      <div className="stacked-bar" title={`${s.total} étapes`}>
-        <span className="seg ok" style={{ width: `${pct(s.mastered)}%` }} />
-        <span className="seg ko" style={{ width: `${pct(s.toReview)}%` }} />
-        <span className="seg cur" style={{ width: `${pct(s.inProgress)}%` }} />
-      </div>
+      <StatusBar stats={s} />
       <div className="row matiere-actions">
         {entitlements.canPlanTests && (
           <button
@@ -214,6 +213,88 @@ function PinSettings({ pinHash }: { pinHash: string | null }) {
   );
 }
 
+const fractionLabel = (f: number) => {
+  if (f <= 0.02) return "pas encore commencé";
+  if (f < 0.2) return "le tout début est vu";
+  if (f < 0.4) return "environ un quart est vu";
+  if (f < 0.6) return "environ la moitié est vue";
+  if (f < 0.85) return "environ les trois quarts sont vus";
+  if (f < 0.98) return "presque tout est vu";
+  return "tout le programme est vu";
+};
+
+/** Un curseur par matière : glisser = « où en est la classe ». */
+function ExpressSlider({ child, domain }: { child: ChildProfile; domain: Domain }) {
+  const s = domainStats(child, domain, child.year);
+  const current = s.total === 0 ? 0 : (s.total - s.toPosition) / s.total;
+  const [value, setValue] = useState<number | null>(null);
+  const shown = value ?? current;
+
+  const commit = (f: number) => {
+    const { see, unsee } = expressSelection(domain, child.year, f);
+    setSeen(child.id, unsee, false);
+    setSeen(child.id, see, true);
+    setValue(null);
+  };
+
+  return (
+    <div className="express-row" key={domain}>
+      <div className="row express-head">
+        <span className={`domain-dot ${domain}`} />
+        <span className="express-name">{DOMAIN_LABEL[domain]}</span>
+        <span className="muted small express-value">{fractionLabel(shown)}</span>
+      </div>
+      <input
+        type="range"
+        className="express-slider"
+        min={0}
+        max={100}
+        step={5}
+        value={Math.round(shown * 100)}
+        aria-label={`Avancement en ${DOMAIN_LABEL[domain]}`}
+        onChange={(e) => setValue(Number(e.target.value) / 100)}
+        onPointerUp={(e) => commit(Number((e.target as HTMLInputElement).value) / 100)}
+        onKeyUp={(e) => commit(Number((e.target as HTMLInputElement).value) / 100)}
+      />
+    </div>
+  );
+}
+
+/** Positionnement express : glisser, c'est tout. Le programme sert d'affinage. */
+function ExpressPositioning({ child }: { child: ChildProfile }) {
+  const calendarF = schoolYearFraction(new Date());
+
+  const applyAll = () => {
+    for (const d of DOMAINS) {
+      const { see, unsee } = expressSelection(d, child.year, calendarF);
+      setSeen(child.id, unsee, false);
+      setSeen(child.id, see, true);
+    }
+  };
+
+  return (
+    <div className="card">
+      <div className="card-head">
+        <h2>Où en est la classe ?</h2>
+        <button
+          className="btn ghost small-btn"
+          onClick={applyAll}
+          title="Position habituelle à cette période de l'année scolaire"
+        >
+          Régler selon la période de l'année
+        </button>
+      </div>
+      <p className="muted small">
+        Glissez le curseur pour chaque matière — c'est approximatif, et ajustable à tout moment.
+        Pour un réglage fin, étape par étape : le programme.
+      </p>
+      {DOMAINS.map((d) => (
+        <ExpressSlider key={d} child={child} domain={d} />
+      ))}
+    </div>
+  );
+}
+
 export function ParentHomeView({ store, child, go }: { store: AppStore; child: ChildProfile; go: (r: Route) => void }) {
   const reco = recommendations(child, 4);
   const noPositioning = Object.keys(child.seen).length === 0;
@@ -238,15 +319,13 @@ export function ParentHomeView({ store, child, go }: { store: AppStore; child: C
 
       {noPositioning && (
         <div className="card notice">
-          <strong>Première étape : le positionnement.</strong> Indiquez dans le programme ce que{" "}
-          {child.name} a déjà vu en classe — missions, contrôles et statistiques en dépendent.
-          <div className="row" style={{ marginTop: 8 }}>
-            <button className="btn primary small-btn" onClick={() => go({ view: "programme" })}>
-              Ouvrir le programme
-            </button>
-          </div>
+          <strong>Première étape : le positionnement.</strong> Utilisez le positionnement express
+          ci-dessous (10 secondes), puis affinez si besoin dans le programme — missions, contrôles et
+          statistiques en dépendent.
         </div>
       )}
+
+      <ExpressPositioning child={child} />
 
       <div className="card">
         <div className="card-head">

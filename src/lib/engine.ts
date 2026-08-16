@@ -313,19 +313,62 @@ export interface DomainStats {
   mastered: number; // contrôle réussi ou validation parent
 }
 
+const addToBreakdown = (s: DomainStats, child: ChildProfile, stepId: number) => {
+  s.total++;
+  const m = stepStatus(child, stepId);
+  if (m === "mastered") s.mastered++;
+  else if (m === "fragile") s.toReview++;
+  else if (child.seen[stepId]) s.inProgress++;
+  else s.toPosition++;
+};
+
 export function domainStats(child: ChildProfile, domain: Domain, year: number): DomainStats {
   const s: DomainStats = { total: 0, toPosition: 0, inProgress: 0, toReview: 0, mastered: 0 };
   for (const [stepId, info] of STEP_INDEX) {
     if (!stepInYear(info.step, year)) continue;
     if (objectiveDomain(info.objective.code) !== domain) continue;
-    s.total++;
-    const m = stepStatus(child, stepId);
-    if (m === "mastered") s.mastered++;
-    else if (m === "fragile") s.toReview++;
-    else if (child.seen[stepId]) s.inProgress++;
-    else s.toPosition++;
+    addToBreakdown(s, child, stepId);
   }
   return s;
+}
+
+export function objectiveBreakdown(child: ChildProfile, objective: PerObjective, year: number): DomainStats {
+  const s: DomainStats = { total: 0, toPosition: 0, inProgress: 0, toReview: 0, mastered: 0 };
+  for (const group of objective.groups)
+    for (const step of group.steps) {
+      if (!stepInYear(step, year)) continue;
+      addToBreakdown(s, child, step.id);
+    }
+  return s;
+}
+
+/**
+ * Positionnement express : pour chaque objectif de la matière, sélectionne la
+ * première fraction des étapes dans l'ordre du plan d'études. Approximatif par
+ * nature — le programme détaillé permet d'affiner.
+ */
+export function expressSelection(
+  domain: Domain,
+  year: number,
+  fraction: number
+): { see: number[]; unsee: number[] } {
+  const see: number[] = [];
+  const unsee: number[] = [];
+  for (const objective of OBJECTIVES) {
+    if (objectiveDomain(objective.code) !== domain) continue;
+    const steps = objective.groups.flatMap((g) => g.steps.filter((s) => stepInYear(s, year)));
+    const k = Math.round(steps.length * fraction);
+    steps.forEach((s, i) => (i < k ? see : unsee).push(s.id));
+  }
+  return { see, unsee };
+}
+
+/** Fraction de l'année scolaire écoulée (rentrée fin août → fin juin). */
+export function schoolYearFraction(now: Date): number {
+  const m = now.getMonth(); // 0 = janvier
+  const sinceSept = m >= 8 ? m - 8 : m + 4; // sept = 0 … juin = 9
+  if (m === 6 || m === 7) return m === 6 ? 1 : 0; // juillet : année finie ; août : rentrée
+  return Math.min(1, Math.max(0, (sinceSept + 0.5) / 10));
 }
 
 /**
