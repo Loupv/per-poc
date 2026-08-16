@@ -19,20 +19,57 @@ const F = ({ w = 160, h = 110, children }: { w?: number; h?: number; children: R
 
 const fill = "rgba(59, 91, 219, 0.08)";
 
+/** Marque d'angle droit, comme dans les manuels. */
+const RightAngle = ({ x, y, dx, dy }: { x: number; y: number; dx: number; dy: number }) => (
+  <path
+    d={`M${x + dx * 9} ${y} L${x + dx * 9} ${y + dy * 9} L${x} ${y + dy * 9}`}
+    strokeWidth="1.6"
+    opacity="0.75"
+  />
+);
+
+/** Petit trait de codage : marque des côtés de même longueur. */
+const Tick = ({ x, y, angle }: { x: number; y: number; angle: number }) => (
+  <path
+    d={`M${x} ${y - 4.5} L${x} ${y + 4.5}`}
+    transform={`rotate(${angle} ${x} ${y})`}
+    strokeWidth="1.8"
+  />
+);
+
 export const FIGURES: Record<string, ReactNode> = {
   carre: (
     <F>
       <rect x="55" y="30" width="50" height="50" fill={fill} />
+      {/* 4 angles droits + côtés égaux */}
+      <RightAngle x={55} y={30} dx={1} dy={1} />
+      <RightAngle x={105} y={30} dx={-1} dy={1} />
+      <RightAngle x={55} y={80} dx={1} dy={-1} />
+      <RightAngle x={105} y={80} dx={-1} dy={-1} />
+      <Tick x={80} y={30} angle={90} />
+      <Tick x={80} y={80} angle={90} />
+      <Tick x={55} y={55} angle={0} />
+      <Tick x={105} y={55} angle={0} />
     </F>
   ),
   rectangle: (
     <F>
       <rect x="40" y="35" width="80" height="42" fill={fill} />
+      <RightAngle x={40} y={35} dx={1} dy={1} />
+      <RightAngle x={120} y={35} dx={-1} dy={1} />
+      <RightAngle x={40} y={77} dx={1} dy={-1} />
+      <RightAngle x={120} y={77} dx={-1} dy={-1} />
     </F>
   ),
   losange: (
+    /* diagonales nettement différentes : aucun angle droit, impossible à confondre
+       avec un carré pivoté. Les traits marquent les 4 côtés de même longueur. */
     <F>
-      <path d="M80 18 L118 55 L80 92 L42 55 Z" fill={fill} />
+      <path d="M80 29 L124 55 L80 81 L36 55 Z" fill={fill} />
+      <Tick x={102} y={42} angle={30} />
+      <Tick x={102} y={68} angle={-30} />
+      <Tick x={58} y={68} angle={30} />
+      <Tick x={58} y={42} angle={-30} />
     </F>
   ),
   triangle: (

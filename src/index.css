@@ -260,7 +260,18 @@ input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 2px 
   background: linear-gradient(transparent, var(--bg) 35%); display: flex; justify-content: center;
   z-index: 5;
 }
-.cta-btn { width: 100%; max-width: 420px; min-height: 50px; font-size: 1rem; }
+.quiz-cta { gap: 10px; align-items: center; }
+.cta-btn {
+  width: 100%; max-width: 420px; min-height: 50px; font-size: 1rem;
+  position: relative; overflow: hidden;
+}
+/* compte à rebours qui remplit le bouton */
+.cta-countdown {
+  position: absolute; left: 0; top: 0; bottom: 0;
+  background: rgb(255 255 255 / 0.22); transition: width 0.06s linear;
+}
+.cta-label { position: relative; }
+.pause-btn { display: inline-flex; gap: 6px; align-items: center; flex: none; white-space: nowrap; }
 
 /* ── Écrans de transition ────────────── */
 .session-screen {
@@ -315,6 +326,14 @@ input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 2px 
   display: block; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.06em;
   text-transform: uppercase; color: #a8791f; margin-bottom: 3px;
 }
+
+/* figures dans les questions */
+.q-figure { display: flex; justify-content: center; margin: 14px 0 6px; }
+.q-figure .figure { width: 190px; height: auto; max-width: 100%; }
+.choice.fig .figure { width: 100px; }
+.choices.fig-grid { grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); }
+.choice.fig { display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 10px; }
+.fig-letter { font-weight: 700; color: var(--muted); font-size: 0.85rem; }
 
 /* en-tête de question avec écoute */
 .q-head { display: flex; gap: 10px; align-items: flex-start; justify-content: space-between; }

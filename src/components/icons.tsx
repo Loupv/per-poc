@@ -177,6 +177,13 @@ export const IconHeadphones = (p: IconProps) => (
   </Svg>
 );
 
+export const IconPause = (p: IconProps) => (
+  <Svg {...p}>
+    <rect x="6" y="4" width="4" height="16" rx="1" />
+    <rect x="14" y="4" width="4" height="16" rx="1" />
+  </Svg>
+);
+
 export const IconCheck = (p: IconProps) => (
   <Svg {...p}>
     <path d="M20 6 9 17l-5-5" />

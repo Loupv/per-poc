@@ -4,16 +4,16 @@
     "figure": "losange",
     "prompt": "Comment s'appelle cette figure ?",
     "choices": ["Le carré", "Le losange", "Le rectangle", "Le triangle"],
-    "answerIndex": 1,
-    "explanation": "4 côtés égaux mais pas d'angles droits : c'est un losange."
+    "explanation": "Ses 4 côtés sont égaux (les petits traits le montrent) mais ses angles ne sont pas droits : c'est un losange. Un carré, lui, aurait 4 angles droits.",
+    "answerIndex": 1
   },
   {
     "id": "f4803-2", "stepId": 4803, "status": "draft", "type": "mcq",
-    "prompt": "Quelle figure est un rectangle ?",
+    "prompt": "Quelle figure est un rectangle SANS être un carré ?",
     "choices": ["A", "B", "C", "D"],
     "choiceFigures": ["carre", "rectangle", "triangle", "cercle"],
     "answerIndex": 1,
-    "explanation": "Le rectangle a 4 angles droits et ses côtés opposés sont égaux — plus long que large, contrairement au carré."
+    "explanation": "B : 4 angles droits, et sa longueur est différente de sa largeur. Attention, le carré A est aussi un rectangle — un rectangle très particulier, dont tous les côtés sont égaux !"
   },
   {
     "id": "f4810-1", "stepId": 4810, "status": "draft", "type": "mcq",

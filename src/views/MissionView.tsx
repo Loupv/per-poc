@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import type { Route } from "../App";
 import { Figure } from "../components/figures";
 import { correctAnswerText, MatchPairs, MultiChoice, OrderList, SortBuckets } from "../components/formats";
-import { IconCheck, IconCross, IconHeadphones, IconVolume, IconVolumeOff } from "../components/icons";
+import { IconCheck, IconCross, IconHeadphones, IconPause, IconVolume, IconVolumeOff } from "../components/icons";
 import { MarmotteSays } from "../components/Marmotte";
 import { YearMap } from "../components/YearMap";
 import { stepInfo, type MissionQuestion } from "../lib/engine";
@@ -67,6 +67,8 @@ export function MissionView({
   const [shownFacts] = useState(() => new Set<string>());
   const [sound, setSound] = useState(soundEnabled());
   const [phase, setPhase] = useState<"intro" | "run" | "milestone">("intro");
+  const [autoPct, setAutoPct] = useState<number | null>(null);
+  const [autoPaused, setAutoPaused] = useState(false);
   const milestoneShown = useRef(false);
 
   const isTest = mode === "test";
@@ -93,6 +95,8 @@ export function MissionView({
     setAnswered(null);
     setInputValue("");
     setFact(null);
+    setAutoPct(null);
+    setAutoPaused(false);
   };
 
   const next = () => {
@@ -119,14 +123,28 @@ export function MissionView({
   };
   nextRef.current = next;
 
-  // Auto-avance : bonne réponse sans fait (entraînement), toute réponse (contrôle)
+  // Auto-avance : seulement quand il n'y a pas d'erreur à comprendre.
+  // Durée confortable pour lire, compte à rebours visible et interruptible.
   useEffect(() => {
-    if (!answered || finished) return;
-    const auto = isTest || (answered.correct && !fact);
-    if (!auto) return;
-    const t = setTimeout(() => nextRef.current(), isTest ? 600 : 950);
-    return () => clearTimeout(t);
-  }, [answered, fact, isTest, finished]);
+    if (!answered || finished || autoPaused) return;
+    const auto = isTest || answered.correct;
+    if (!auto) {
+      setAutoPct(null);
+      return;
+    }
+    const total = isTest ? 1000 : fact ? 5000 : 3000;
+    const start = Date.now();
+    setAutoPct(0);
+    const timer = setInterval(() => {
+      const pct = Math.min(1, (Date.now() - start) / total);
+      setAutoPct(pct);
+      if (pct >= 1) {
+        clearInterval(timer);
+        nextRef.current();
+      }
+    }, 60);
+    return () => clearInterval(timer);
+  }, [answered, fact, isTest, finished, autoPaused]);
 
   if (items.length === 0) {
     return (
@@ -444,10 +462,27 @@ export function MissionView({
         )}
       </div>
 
-      {answered && !(isTest || (answered.correct && !fact)) && (
+      {answered && (
         <div className="quiz-cta">
+          {autoPct !== null && !autoPaused && (
+            <button
+              className="btn ghost pause-btn"
+              title="Prendre le temps de lire"
+              onClick={() => {
+                setAutoPaused(true);
+                setAutoPct(null);
+              }}
+            >
+              <IconPause size={16} /> Pause
+            </button>
+          )}
           <button className="btn primary big cta-btn" onClick={next} autoFocus>
-            {index + 1 < items.length ? "Continuer" : "Voir mon score"}
+            {autoPct !== null && !autoPaused && (
+              <span className="cta-countdown" style={{ width: `${autoPct * 100}%` }} />
+            )}
+            <span className="cta-label">
+              {index + 1 < items.length ? "Continuer" : "Voir mon score"}
+            </span>
           </button>
         </div>
       )}
