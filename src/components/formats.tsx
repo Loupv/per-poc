@@ -109,7 +109,15 @@ export function OrderList({ q, disabled, onSubmit }: {
   return (
     <>
       <p className="muted small format-hint">Tape les éléments dans le bon ordre.</p>
-      <div className="order-placed">
+      <div
+        className="order-placed"
+        onDragOver={(e) => e.preventDefault()}
+        onDrop={(e) => {
+          e.preventDefault();
+          const it = e.dataTransfer.getData("text/plain");
+          if (it && !placed.includes(it) && !disabled) setPlaced((p) => [...p, it]);
+        }}
+      >
         {placed.length === 0 && <span className="muted small">— commence par le premier —</span>}
         {placed.map((it, i) => (
           <button
@@ -127,8 +135,10 @@ export function OrderList({ q, disabled, onSubmit }: {
         {remaining.map((it) => (
           <button
             key={it}
-            className="chip"
+            className="chip draggable"
             disabled={disabled}
+            draggable={!disabled}
+            onDragStart={(e) => e.dataTransfer.setData("text/plain", it)}
             onClick={() => setPlaced((p) => [...p, it])}
           >
             {it}
@@ -173,6 +183,12 @@ export function MatchPairs({ q, disabled, onSubmit }: {
               key={l}
               className={`chip ${activeLeft === l ? "active" : ""} ${links[l] ? "linked" : ""}`}
               disabled={disabled}
+              onDragOver={(e) => e.preventDefault()}
+              onDrop={(e) => {
+                e.preventDefault();
+                const r = e.dataTransfer.getData("text/plain");
+                if (r && !disabled) setLinks((prev) => ({ ...prev, [l]: r }));
+              }}
               onClick={() => {
                 if (links[l]) {
                   setLinks(({ [l]: _removed, ...rest }) => rest);
@@ -189,8 +205,10 @@ export function MatchPairs({ q, disabled, onSubmit }: {
           {rights.map((r) => (
             <button
               key={r}
-              className={`chip ${linkedRights.has(r) ? "dim" : ""}`}
-              disabled={disabled || !activeLeft || linkedRights.has(r)}
+              className={`chip draggable ${linkedRights.has(r) ? "dim" : ""}`}
+              disabled={disabled || linkedRights.has(r)}
+              draggable={!disabled && !linkedRights.has(r)}
+              onDragStart={(e) => e.dataTransfer.setData("text/plain", r)}
               onClick={() => {
                 if (!activeLeft) return;
                 setLinks((prev) => ({ ...prev, [activeLeft]: r }));
@@ -235,8 +253,10 @@ export function SortBuckets({ q, disabled, onSubmit }: {
         {unassigned.map((it) => (
           <button
             key={it}
-            className={`chip ${activeItem === it ? "active" : ""}`}
+            className={`chip draggable ${activeItem === it ? "active" : ""}`}
             disabled={disabled}
+            draggable={!disabled}
+            onDragStart={(e) => e.dataTransfer.setData("text/plain", it)}
             onClick={() => setActiveItem(it)}
           >
             {it}
@@ -251,6 +271,15 @@ export function SortBuckets({ q, disabled, onSubmit }: {
             className={`bucket ${activeItem && !disabled ? "ready" : ""}`}
             role="button"
             tabIndex={activeItem && !disabled ? 0 : -1}
+            onDragOver={(e) => e.preventDefault()}
+            onDrop={(e) => {
+              e.preventDefault();
+              const it = e.dataTransfer.getData("text/plain");
+              if (it && !disabled) {
+                setAssign((prev) => ({ ...prev, [it]: b.name }));
+                setActiveItem(null);
+              }
+            }}
             onClick={() => {
               if (!activeItem || disabled) return;
               setAssign((prev) => ({ ...prev, [activeItem]: b.name }));

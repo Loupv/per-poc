@@ -22,6 +22,10 @@ export interface Question {
   pairs?: [string, string][];
   /** sort : catégories et leurs éléments (mélangés à l'affichage). */
   buckets?: { name: string; items: string[] }[];
+  /** Figure SVG affichée avec l'énoncé (id du registre de figures). */
+  figure?: string;
+  /** mcq : figures affichées comme choix (alignées sur `choices`, qui sert de libellé A/B/C/D). */
+  choiceFigures?: string[];
 }
 
 export interface FicheSection {

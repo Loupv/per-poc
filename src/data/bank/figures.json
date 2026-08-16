@@ -1,0 +1,73 @@
+[
+  {
+    "id": "f4803-1", "stepId": 4803, "status": "draft", "type": "mcq",
+    "figure": "losange",
+    "prompt": "Comment s'appelle cette figure ?",
+    "choices": ["Le carré", "Le losange", "Le rectangle", "Le triangle"],
+    "answerIndex": 1,
+    "explanation": "4 côtés égaux mais pas d'angles droits : c'est un losange."
+  },
+  {
+    "id": "f4803-2", "stepId": 4803, "status": "draft", "type": "mcq",
+    "prompt": "Quelle figure est un rectangle ?",
+    "choices": ["A", "B", "C", "D"],
+    "choiceFigures": ["carre", "rectangle", "triangle", "cercle"],
+    "answerIndex": 1,
+    "explanation": "Le rectangle a 4 angles droits et ses côtés opposés sont égaux — plus long que large, contrairement au carré."
+  },
+  {
+    "id": "f4810-1", "stepId": 4810, "status": "draft", "type": "mcq",
+    "figure": "paralleles",
+    "prompt": "Ces deux droites sont…",
+    "choices": ["parallèles", "perpendiculaires", "sécantes", "confondues"],
+    "answerIndex": 0,
+    "explanation": "Elles gardent toujours le même écart et ne se croiseront jamais."
+  },
+  {
+    "id": "f4810-2", "stepId": 4810, "status": "draft", "type": "mcq",
+    "figure": "perpendiculaires",
+    "prompt": "Ces deux droites sont…",
+    "choices": ["parallèles", "perpendiculaires", "confondues", "courbes"],
+    "answerIndex": 1,
+    "explanation": "Elles se croisent en formant un angle droit (le petit carré le montre)."
+  },
+  {
+    "id": "f4812-1", "stepId": 4812, "status": "draft", "type": "mcq",
+    "figure": "cube",
+    "prompt": "Comment s'appelle ce solide ?",
+    "choices": ["Le cube", "La pyramide", "Le parallélépipède rectangle", "Le cylindre"],
+    "answerIndex": 0,
+    "explanation": "Toutes ses faces sont des carrés identiques : c'est un cube."
+  },
+  {
+    "id": "f4814-1", "stepId": 4814, "status": "draft", "type": "mcq",
+    "figure": "pyramide",
+    "prompt": "Comment s'appelle ce solide ?",
+    "choices": ["Le cube", "Le parallélépipède rectangle", "La pyramide", "La boule"],
+    "answerIndex": 2,
+    "explanation": "Ses faces triangulaires se rejoignent en une pointe : c'est une pyramide."
+  },
+  {
+    "id": "f4981-1", "stepId": 4981, "status": "draft", "type": "input",
+    "figure": "regle7",
+    "prompt": "Combien de centimètres mesure ce segment rouge ?",
+    "accepted": ["7", "7 cm", "7cm"],
+    "explanation": "Le segment va de la graduation 0 à la graduation 7 : il mesure 7 cm."
+  },
+  {
+    "id": "f4835-1", "stepId": 4835, "status": "draft", "type": "mcq",
+    "figure": "grille-ab",
+    "prompt": "Quel code permet d'aller du point A au point B ?",
+    "choices": ["→ → ↑", "↑ ↑ →", "→ ↑ ↑", "← ← ↓"],
+    "answerIndex": 0,
+    "explanation": "De A à B : 2 cases vers la droite, puis 1 case vers le haut."
+  },
+  {
+    "id": "f4827-1", "stepId": 4827, "status": "draft", "type": "mcq",
+    "figure": "carre",
+    "prompt": "Combien d'axes de symétrie a cette figure ?",
+    "choices": ["0", "2", "4", "Une infinité"],
+    "answerIndex": 2,
+    "explanation": "Un carré a 4 axes : deux par les milieux des côtés et les deux diagonales."
+  }
+]

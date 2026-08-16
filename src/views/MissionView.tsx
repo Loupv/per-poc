@@ -1,5 +1,6 @@
 import { useState } from "react";
 import type { Route } from "../App";
+import { Figure } from "../components/figures";
 import { correctAnswerText, MatchPairs, MultiChoice, OrderList, SortBuckets } from "../components/formats";
 import { IconCheck, IconCross } from "../components/icons";
 import { stepInfo, type MissionQuestion } from "../lib/engine";
@@ -164,11 +165,12 @@ export function MissionView({
 
       <div className="card question-card">
         <h2>{q.prompt}</h2>
+        {q.figure && <Figure id={q.figure} />}
 
         {q.type === "mcq" && (
-          <div className="choices">
+          <div className={`choices ${q.choiceFigures ? "fig-grid" : ""}`}>
             {q.choices!.map((c, i) => {
-              let cls = "choice";
+              let cls = q.choiceFigures ? "choice fig" : "choice";
               if (answered) {
                 if (isTest) cls += i === answered.picked ? " picked" : " dim";
                 else if (i === q.answerIndex) cls += " correct";
@@ -177,7 +179,14 @@ export function MissionView({
               }
               return (
                 <button key={c} className={cls} disabled={!!answered} onClick={() => submit(i === q.answerIndex, i)}>
-                  {c}
+                  {q.choiceFigures ? (
+                    <>
+                      <span className="fig-letter">{c}</span>
+                      <Figure id={q.choiceFigures[i]} />
+                    </>
+                  ) : (
+                    c
+                  )}
                 </button>
               );
             })}

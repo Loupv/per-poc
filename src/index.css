@@ -310,6 +310,19 @@ input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 2px 
 .bucket.ready { border-color: var(--accent); background: var(--accent-soft); cursor: pointer; }
 .bucket-items { display: flex; gap: 5px; flex-wrap: wrap; }
 .correct-answer { font-weight: 600; margin: 6px 0 0; }
+.chip.draggable { cursor: grab; }
+.chip.draggable:active { cursor: grabbing; }
+
+/* ── Figures ─────────────────────────── */
+.q-figure { margin: 12px 0 4px; color: var(--ink); }
+.q-figure .figure { max-width: 240px; height: auto; display: block; }
+.choices.fig-grid { grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); }
+.choice.fig {
+  display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 10px;
+}
+.choice.fig .figure { width: 100px; height: auto; }
+.choice.fig .q-figure { margin: 0; }
+.fig-letter { font-weight: 700; font-size: 0.82rem; color: var(--muted); }
 
 /* ── Fautes récentes ─────────────────── */
 .mistake-row {
