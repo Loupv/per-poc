@@ -7,11 +7,12 @@ import {
   DOMAIN_LABEL,
   domainStats,
   expressSelection,
+  globalStats,
   recommendations,
   schoolYearFraction,
 } from "../lib/engine";
 import { hashPin, isValidPin, verifyPin } from "../lib/pin";
-import { entitlements, TIER_LABEL, tierFor } from "../lib/plan";
+import { entitlements } from "../lib/plan";
 import {
   addChild,
   deletePlannedTest,
@@ -34,16 +35,11 @@ function AddChildForm({ childCount }: { childCount: number }) {
   const [open, setOpen] = useState(false);
   const [name, setName] = useState("");
   const [year, setYear] = useState(6);
-  if (childCount >= entitlements.maxChildren)
-    return (
-      <span className="tier-badge" title="Disponible avec l'abonnement Famille">
-        Multi-enfants : tier {TIER_LABEL[tierFor((e) => e.maxChildren > 1)]}
-      </span>
-    );
+  if (childCount >= entitlements.maxChildren) return null;
   if (!open)
     return (
-      <button className="btn ghost small-btn" onClick={() => setOpen(true)}>
-        + Ajouter un enfant <span className="tier-badge inline">{TIER_LABEL[tierFor((e) => e.maxChildren > 1)]}</span>
+      <button className="btn link" onClick={() => setOpen(true)}>
+        + Ajouter un enfant
       </button>
     );
   return (
@@ -76,56 +72,91 @@ function AddChildForm({ childCount }: { childCount: number }) {
   );
 }
 
-/** Ligne matière : états + actions directes. */
-function DomainRow({ child, domain, go }: { child: ChildProfile; domain: Domain; go: (r: Route) => void }) {
+const fractionLabel = (f: number) => {
+  if (f <= 0.02) return "pas encore commencé";
+  if (f < 0.2) return "le tout début est vu";
+  if (f < 0.4) return "environ un quart est vu";
+  if (f < 0.6) return "environ la moitié est vue";
+  if (f < 0.85) return "environ les trois quarts sont vus";
+  if (f < 0.98) return "presque tout est vu";
+  return "tout le programme est vu";
+};
+
+/** Une matière = un bloc : curseur de positionnement, état, actions. */
+function MatiereBlock({ child, domain, go }: { child: ChildProfile; domain: Domain; go: (r: Route) => void }) {
   const s = domainStats(child, domain, child.year);
-  const testPreview = buildTest(child, domain);
-  const revPreview = buildRevision(child, domain);
+  const current = s.total === 0 ? 0 : (s.total - s.toPosition) / s.total;
+  const [value, setValue] = useState<number | null>(null);
+  const shown = value ?? current;
   const date = new Date().toLocaleDateString("fr-CH");
 
+  const commit = (f: number) => {
+    const { see, unsee } = expressSelection(domain, child.year, f);
+    setSeen(child.id, unsee, false);
+    setSeen(child.id, see, true);
+    setValue(null);
+  };
+
+  const testPreview = buildTest(child, domain);
+  const revPreview = buildRevision(child, domain);
+
   return (
-    <div className="matiere-row">
-      <div className="matiere-head">
+    <div className="matiere-block">
+      <div className="row matiere-head">
         <span className={`domain-dot ${domain}`} />
         <strong className="matiere-name">{DOMAIN_LABEL[domain]}</strong>
-        <span className="matiere-counts muted">
-          {s.mastered} acquis · {s.inProgress} en cours · {s.toReview} à revoir · {s.toPosition} à
-          positionner
-        </span>
+        <span className="muted small express-value">{fractionLabel(shown)}</span>
       </div>
+      <input
+        type="range"
+        className="express-slider"
+        min={0}
+        max={100}
+        step={5}
+        value={Math.round(shown * 100)}
+        aria-label={`Avancement en ${DOMAIN_LABEL[domain]}`}
+        onChange={(e) => setValue(Number(e.target.value) / 100)}
+        onPointerUp={(e) => commit(Number((e.target as HTMLInputElement).value) / 100)}
+        onKeyUp={(e) => commit(Number((e.target as HTMLInputElement).value) / 100)}
+      />
       <StatusBar stats={s} />
-      <div className="row matiere-actions">
-        {entitlements.canPlanTests && (
+      <div className="row matiere-foot">
+        <span className="muted small">
+          {s.mastered} acquis · {s.inProgress} en cours · {s.toReview} à revoir
+        </span>
+        <span className="row matiere-links">
+          {entitlements.canPlanTests && (
+            <button
+              className="btn link"
+              disabled={testPreview.length === 0}
+              onClick={() =>
+                planTest(child.id, {
+                  title: `Contrôle ${DOMAIN_LABEL[domain]} — ${date}`,
+                  domain,
+                  questionIds: testPreview.map((mq) => mq.question.id),
+                })
+              }
+            >
+              Contrôle
+            </button>
+          )}
           <button
-            className="btn ghost small-btn"
-            disabled={testPreview.length === 0}
+            className="btn link"
+            disabled={revPreview.length === 0}
             onClick={() =>
-              planTest(child.id, {
-                title: `Contrôle ${DOMAIN_LABEL[domain]} — ${date}`,
+              planRevision(child.id, {
+                title: `Révision ${DOMAIN_LABEL[domain]} — ${date}`,
                 domain,
-                questionIds: testPreview.map((mq) => mq.question.id),
+                questionIds: revPreview.map((mq) => mq.question.id),
               })
             }
           >
-            Programmer un contrôle
+            Révision
           </button>
-        )}
-        <button
-          className="btn ghost small-btn"
-          disabled={revPreview.length === 0}
-          onClick={() =>
-            planRevision(child.id, {
-              title: `Révision ${DOMAIN_LABEL[domain]} — ${date}`,
-              domain,
-              questionIds: revPreview.map((mq) => mq.question.id),
-            })
-          }
-        >
-          Programme de révision
-        </button>
-        <button className="btn ghost small-btn" onClick={() => go({ view: "programme" })}>
-          Positionner
-        </button>
+          <button className="btn link" onClick={() => go({ view: "programme" })}>
+            Détail
+          </button>
+        </span>
       </div>
     </div>
   );
@@ -163,11 +194,10 @@ function PinSettings({ pinHash }: { pinHash: string | null }) {
 
   return (
     <div className="pin-settings">
-      <h3>Code PIN parent</h3>
       <p className="muted small">
         {pinHash
-          ? "Un code protège l'accès à l'espace parents sur cet appareil."
-          : "Aucun code : n'importe qui peut ouvrir l'espace parents. Définissez un code à 4 chiffres."}
+          ? "Un code PIN protège l'espace parents sur cet appareil."
+          : "Aucun code PIN : n'importe qui peut ouvrir l'espace parents."}
       </p>
       <div className="row">
         {pinHash && (
@@ -200,104 +230,26 @@ function PinSettings({ pinHash }: { pinHash: string | null }) {
           onChange={(e) => setPin2(e.target.value.replace(/\D/g, "").slice(0, 4))}
         />
         <button className="btn primary small-btn" onClick={save} disabled={pin1.length < 4}>
-          {pinHash ? "Modifier" : "Définir le code"}
+          {pinHash ? "Modifier" : "Définir"}
         </button>
         {pinHash && (
-          <button className="btn ghost small-btn" onClick={remove} disabled={current.length < 4}>
-            Supprimer le code
+          <button className="btn link" onClick={remove} disabled={current.length < 4}>
+            Supprimer
           </button>
         )}
       </div>
-      {msg && <p className={msg.includes("incorrect") || msg.includes("correspondent") || msg.includes("chiffres") ? "pin-error" : "muted small"}>{msg}</p>}
-    </div>
-  );
-}
-
-const fractionLabel = (f: number) => {
-  if (f <= 0.02) return "pas encore commencé";
-  if (f < 0.2) return "le tout début est vu";
-  if (f < 0.4) return "environ un quart est vu";
-  if (f < 0.6) return "environ la moitié est vue";
-  if (f < 0.85) return "environ les trois quarts sont vus";
-  if (f < 0.98) return "presque tout est vu";
-  return "tout le programme est vu";
-};
-
-/** Un curseur par matière : glisser = « où en est la classe ». */
-function ExpressSlider({ child, domain }: { child: ChildProfile; domain: Domain }) {
-  const s = domainStats(child, domain, child.year);
-  const current = s.total === 0 ? 0 : (s.total - s.toPosition) / s.total;
-  const [value, setValue] = useState<number | null>(null);
-  const shown = value ?? current;
-
-  const commit = (f: number) => {
-    const { see, unsee } = expressSelection(domain, child.year, f);
-    setSeen(child.id, unsee, false);
-    setSeen(child.id, see, true);
-    setValue(null);
-  };
-
-  return (
-    <div className="express-row" key={domain}>
-      <div className="row express-head">
-        <span className={`domain-dot ${domain}`} />
-        <span className="express-name">{DOMAIN_LABEL[domain]}</span>
-        <span className="muted small express-value">{fractionLabel(shown)}</span>
-      </div>
-      <input
-        type="range"
-        className="express-slider"
-        min={0}
-        max={100}
-        step={5}
-        value={Math.round(shown * 100)}
-        aria-label={`Avancement en ${DOMAIN_LABEL[domain]}`}
-        onChange={(e) => setValue(Number(e.target.value) / 100)}
-        onPointerUp={(e) => commit(Number((e.target as HTMLInputElement).value) / 100)}
-        onKeyUp={(e) => commit(Number((e.target as HTMLInputElement).value) / 100)}
-      />
-    </div>
-  );
-}
-
-/** Positionnement express : glisser, c'est tout. Le programme sert d'affinage. */
-function ExpressPositioning({ child }: { child: ChildProfile }) {
-  const calendarF = schoolYearFraction(new Date());
-
-  const applyAll = () => {
-    for (const d of DOMAINS) {
-      const { see, unsee } = expressSelection(d, child.year, calendarF);
-      setSeen(child.id, unsee, false);
-      setSeen(child.id, see, true);
-    }
-  };
-
-  return (
-    <div className="card">
-      <div className="card-head">
-        <h2>Où en est la classe ?</h2>
-        <button
-          className="btn ghost small-btn"
-          onClick={applyAll}
-          title="Position habituelle à cette période de l'année scolaire"
-        >
-          Régler selon la période de l'année
-        </button>
-      </div>
-      <p className="muted small">
-        Glissez le curseur pour chaque matière — c'est approximatif, et ajustable à tout moment.
-        Pour un réglage fin, étape par étape : le programme.
-      </p>
-      {DOMAINS.map((d) => (
-        <ExpressSlider key={d} child={child} domain={d} />
-      ))}
+      {msg && (
+        <p className={msg.includes("✓") || msg.includes("supprimé") ? "muted small" : "pin-error"}>{msg}</p>
+      )}
     </div>
   );
 }
 
 export function ParentHomeView({ store, child, go }: { store: AppStore; child: ChildProfile; go: (r: Route) => void }) {
   const reco = recommendations(child, 4);
-  const noPositioning = Object.keys(child.seen).length === 0;
+  const g = globalStats(child, child.year);
+  const calendarF = schoolYearFraction(new Date());
+  const hasReco = reco.readyToTest.length > 0 || reco.toRework.length > 0 || reco.toPractice.length > 0;
 
   return (
     <>
@@ -316,42 +268,49 @@ export function ParentHomeView({ store, child, go }: { store: AppStore; child: C
           <AddChildForm childCount={store.children.length} />
         </div>
       </div>
+      <p className="muted small">
+        {g.seen} étapes vues en classe · {g.evaluated} évaluées · {g.mastered} acquises — sur{" "}
+        {g.total} en {child.year}P.{" "}
+        <button className="btn link" onClick={() => go({ view: "dashboard" })}>
+          Tableau de bord
+        </button>
+      </p>
 
-      {noPositioning && (
-        <div className="card notice">
-          <strong>Première étape : le positionnement.</strong> Utilisez le positionnement express
-          ci-dessous (10 secondes), puis affinez si besoin dans le programme — missions, contrôles et
-          statistiques en dépendent.
-        </div>
-      )}
-
-      <ExpressPositioning child={child} />
-
-      <div className="card">
+      <section className="card">
         <div className="card-head">
-          <h2>Progression de {child.name} par matière</h2>
-          <button className="linklike" onClick={() => go({ view: "dashboard" })}>
-            détail par objectif →
+          <h2>Matières</h2>
+          <button
+            className="btn link"
+            onClick={() => {
+              for (const d of DOMAINS) {
+                const { see, unsee } = expressSelection(d, child.year, calendarF);
+                setSeen(child.id, unsee, false);
+                setSeen(child.id, see, true);
+              }
+            }}
+            title="Position habituelle à cette période de l'année scolaire"
+          >
+            Régler selon la période de l'année
           </button>
         </div>
-        {DOMAINS.map((d) => (
-          <DomainRow key={d} child={child} domain={d} go={go} />
-        ))}
-        <p className="muted small legend-line">
-          <span className="seg-dot ok" /> acquis · <span className="seg-dot ko" /> à revoir ·{" "}
-          <span className="seg-dot cur" /> en cours (vu, pas encore évalué)
+        <p className="muted small">
+          Glissez pour indiquer où en est la classe — approximatif, ajustable à tout moment.
         </p>
-      </div>
+        {DOMAINS.map((d) => (
+          <MatiereBlock key={d} child={child} domain={d} go={go} />
+        ))}
+      </section>
 
       {(child.planned.length > 0 || child.revisions.length > 0) && (
-        <div className="card">
+        <section className="card">
           <h2>À faire par {child.name}</h2>
           {child.planned.map((p) => (
             <div className="row planned-row" key={p.id}>
               <span className="planned-title">
-                📝 {p.title} <span className="muted small">· {p.questionIds.length} questions · une seule tentative</span>
+                {p.title}{" "}
+                <span className="muted small">· contrôle · {p.questionIds.length} questions</span>
               </span>
-              <button className="btn ghost small-btn" onClick={() => deletePlannedTest(child.id, p.id)}>
+              <button className="btn link" onClick={() => deletePlannedTest(child.id, p.id)}>
                 Annuler
               </button>
             </div>
@@ -359,77 +318,68 @@ export function ParentHomeView({ store, child, go }: { store: AppStore; child: C
           {child.revisions.map((p) => (
             <div className="row planned-row" key={p.id}>
               <span className="planned-title">
-                📚 {p.title} <span className="muted small">· {p.questionIds.length} questions · rejouable</span>
+                {p.title}{" "}
+                <span className="muted small">· révision · {p.questionIds.length} questions</span>
               </span>
-              <button className="btn ghost small-btn" onClick={() => deleteRevision(child.id, p.id)}>
+              <button className="btn link" onClick={() => deleteRevision(child.id, p.id)}>
                 Retirer
               </button>
             </div>
           ))}
-        </div>
+        </section>
       )}
 
-      {entitlements.canSeeRecommendations &&
-        (reco.readyToTest.length > 0 || reco.toRework.length > 0 || reco.toPractice.length > 0) && (
-          <div className="card">
-            <h2>
-              Recommandations <span className="tier-badge inline">{TIER_LABEL[tierFor((e) => e.canSeeRecommendations)]}</span>
-            </h2>
-            {reco.readyToTest.length > 0 && (
-              <div className="reco-block">
-                <h3>Prêt à être contrôlé</h3>
-                <ul>
-                  {reco.readyToTest.map((i) => (
-                    <li key={i.step.id}>
-                      {i.step.text.slice(0, 90)} <span className="per-chip">{i.objective.code}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            )}
-            {reco.toRework.length > 0 && (
-              <div className="reco-block">
-                <h3>À retravailler (raté au dernier contrôle)</h3>
-                <ul>
-                  {reco.toRework.map((i) => (
-                    <li key={i.step.id}>
-                      {i.step.text.slice(0, 90)} <span className="per-chip">{i.objective.code}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            )}
-            {reco.toPractice.length > 0 && (
-              <div className="reco-block">
-                <h3>À réviser (vu en classe, jamais entraîné)</h3>
-                <ul>
-                  {reco.toPractice.map((i) => (
-                    <li key={i.step.id}>
-                      {i.step.text.slice(0, 90)} <span className="per-chip">{i.objective.code}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            )}
-          </div>
-        )}
+      {entitlements.canSeeRecommendations && hasReco && (
+        <section className="card">
+          <h2>Recommandations</h2>
+          {reco.readyToTest.length > 0 && (
+            <div className="reco-block">
+              <h3>Prêt à être contrôlé</h3>
+              <ul>
+                {reco.readyToTest.map((i) => (
+                  <li key={i.step.id}>
+                    {i.step.text.slice(0, 90)} <span className="per-chip">{i.objective.code}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+          {reco.toRework.length > 0 && (
+            <div className="reco-block">
+              <h3>À retravailler</h3>
+              <ul>
+                {reco.toRework.map((i) => (
+                  <li key={i.step.id}>
+                    {i.step.text.slice(0, 90)} <span className="per-chip">{i.objective.code}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+          {reco.toPractice.length > 0 && (
+            <div className="reco-block">
+              <h3>À réviser</h3>
+              <ul>
+                {reco.toPractice.map((i) => (
+                  <li key={i.step.id}>
+                    {i.step.text.slice(0, 90)} <span className="per-chip">{i.objective.code}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+        </section>
+      )}
 
       {child.tests.length > 0 && (
-        <div className="card">
+        <section className="card">
           <h2>Contrôles passés</h2>
           <table className="results-table">
-            <thead>
-              <tr>
-                <th>Contrôle</th>
-                <th>Date</th>
-                <th>Score</th>
-              </tr>
-            </thead>
             <tbody>
               {[...child.tests].reverse().map((t) => (
                 <tr key={t.id}>
                   <td>{t.title}</td>
-                  <td>{new Date(t.at).toLocaleDateString("fr-CH")}</td>
+                  <td className="muted">{new Date(t.at).toLocaleDateString("fr-CH")}</td>
                   <td>
                     <strong>
                       {t.score}/{t.total}
@@ -439,16 +389,13 @@ export function ParentHomeView({ store, child, go }: { store: AppStore; child: C
               ))}
             </tbody>
           </table>
-          <p className="muted small">
-            Enregistrés en une fois, non modifiables, une seule tentative par contrôle.
-          </p>
-        </div>
+        </section>
       )}
 
-      <div className="card profile-card">
-        <h2>Profil de {child.name}</h2>
-        <div className="row">
-          <span className="muted">Niveau actuel :</span>
+      <details className="card profile-details">
+        <summary>Profil et réglages</summary>
+        <div className="row" style={{ marginTop: 10 }}>
+          <span className="muted">Niveau de {child.name} :</span>
           {YEARS.map((y) => (
             <button
               key={y}
@@ -463,7 +410,7 @@ export function ParentHomeView({ store, child, go }: { store: AppStore; child: C
         <div className="row" style={{ marginTop: 10 }}>
           {store.children.length > 1 && (
             <button
-              className="btn danger small-btn"
+              className="btn link danger-link"
               onClick={() => {
                 if (window.confirm(`Supprimer le profil de ${child.name} et toute sa progression ?`))
                   removeChild(child.id);
@@ -473,7 +420,7 @@ export function ParentHomeView({ store, child, go }: { store: AppStore; child: C
             </button>
           )}
           <button
-            className="btn danger small-btn"
+            className="btn link danger-link"
             onClick={() => {
               if (window.confirm("Effacer TOUS les profils et toute la progression sur cet appareil ?"))
                 resetAll();
@@ -482,7 +429,7 @@ export function ParentHomeView({ store, child, go }: { store: AppStore; child: C
             Réinitialiser l'appareil
           </button>
         </div>
-      </div>
+      </details>
     </>
   );
 }
