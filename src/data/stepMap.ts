@@ -67,6 +67,51 @@ export const QUESTION_STEP: Record<string, number> = {
   cj6: 4427,
   cj7: 4427,
 
+  // sc-corps (MSN 27)
+  co1: 2179, // les 5 sens et leurs organes
+  co2: 2179,
+  co3: 2180, // alimentation équilibrée
+  co4: 2182, // cheminement de l'air / respiration
+  co5: 5111, // localisation des organes
+  co6: 5109, // comportements bénéfiques / néfastes
+  co7: 5111,
+
+  // sc-vivant (MSN 28)
+  vi1: 2202, // parties des végétaux
+  vi2: 2202,
+  vi3: 2203, // morphologie et régime alimentaire
+  vi4: 2205, // cycle de vie d'un animal
+  vi5: 2209, // stratégies : hibernation, migration
+  vi6: 2209,
+  vi7: 2204, // relations entre êtres vivants
+  vi8: 5150, // biodiversité et intervention humaine
+
+  // sc-demarche (MSN 26)
+  de1: 5040, // instruments de mesure
+  de2: 5040,
+  de3: 5045, // organisation des données (tableau, diagramme)
+  de4: 5034, // formulation d'hypothèses
+  de5: 2163, // catastrophes naturelles
+
+  // shs-geo (SHS 21)
+  ge1: 5246, // besoins vitaux et secondaires
+  ge2: 3549, // lieux répondant aux besoins
+  ge3: 3558, // vocabulaire : commune, canton, région, pays
+  ge4: 3558,
+  ge5: 3571, // raisons de la localisation d'un lieu
+  ge6: 3579, // échelles (quartier, ville, canton…)
+  ge7: 3559, // repères sur un plan
+  ge8: 3576, // impacts des activités humaines
+
+  // shs-histoire (SHS 22)
+  hi1: 5253, // de la Préhistoire à la fin de l'Antiquité
+  hi2: 5259, // vocabulaire : siècle, millénaire…
+  hi3: 5259,
+  hi4: 31, // situer les événements qui ont contribué au changement
+  hi5: 3615, // fiction (mythe, légende) vs réalité
+  hi6: 39, // traces et documents du passé
+  hi7: 3616, // comparaison de sources
+
   // fr-orthographe (L1 26)
   or1: 4400, // homophones grammaticaux a/à, son/sont…
   or2: 4399, // utilisation d'homophones grammaticaux

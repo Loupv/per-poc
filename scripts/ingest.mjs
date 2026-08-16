@@ -11,7 +11,7 @@ import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const API = "https://per.ciip.ch/api";
-const CODE_PREFIXES = ["MSN 21", "MSN 22", "MSN 23", "MSN 24", "MSN 25", "L1 2"];
+const CODE_PREFIXES = ["MSN 2", "L1 2", "SHS 2"];
 
 const stripHtml = (html) =>
   (html ?? "")

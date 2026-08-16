@@ -707,4 +707,459 @@ export const THEMES: Theme[] = [
   },
 ];
 
+// ─────────────────────────── SCIENCES ───────────────────────────
+THEMES.push(
+  {
+    id: "sc-corps",
+    domain: "sciences",
+    emoji: "🫀",
+    title: "Mon corps",
+    subtitle: "Les 5 sens, la respiration, bien manger",
+    perCode: "MSN 27",
+    attentes: [
+      "Catégorise les informations captées par le corps selon les 5 sens et identifie les organes concernés",
+      "Met en évidence les principes d'une alimentation équilibrée",
+      "Localise les organes étudiés sur des représentations du corps humain",
+    ],
+    fiche: [
+      {
+        title: "Les 5 sens et leurs organes",
+        body: "La vue → les yeux. L'ouïe → les oreilles. L'odorat → le nez. Le goût → la langue. Le toucher → la peau (sur tout le corps !).",
+      },
+      {
+        title: "La respiration",
+        body: "Quand tu inspires, l'air entre par le nez ou la bouche, descend par la trachée et remplit les poumons, dans la poitrine (cage thoracique). Les poumons donnent l'oxygène au sang.",
+      },
+      {
+        title: "Bien manger, bien vivre",
+        body: "Une alimentation équilibrée, c'est manger varié : fruits et légumes, céréales, protéines, et de l'eau. Bouger tous les jours et dormir suffisamment font aussi du bien au corps.",
+        examples: ["Bénéfique : dormir 9-10h, bouger, manger des fruits", "Néfaste : trop de sucre, trop d'écrans le soir"],
+      },
+    ],
+    questions: [
+      {
+        id: "co1", type: "mcq",
+        prompt: "Quel organe est associé au sens du goût ?",
+        choices: ["L'oreille", "La langue", "Le nez", "La peau"],
+        answerIndex: 1,
+        explanation: "C'est la langue, avec ses papilles, qui capte les goûts (sucré, salé, acide, amer).",
+      },
+      {
+        id: "co2", type: "mcq",
+        prompt: "Tu sens que le sable est chaud sous tes pieds. Quel organe capte cette information ?",
+        choices: ["La peau", "Les yeux", "La langue", "Les oreilles"],
+        answerIndex: 0,
+        explanation: "Le toucher passe par la peau, qui recouvre tout le corps — même la plante des pieds !",
+      },
+      {
+        id: "co3", type: "mcq",
+        prompt: "Que veut dire « manger équilibré » ?",
+        choices: [
+          "Manger la même chose tous les jours",
+          "Ne manger que ce qu'on préfère",
+          "Manger varié : fruits, légumes, céréales, protéines…",
+          "Sauter le petit-déjeuner",
+        ],
+        answerIndex: 2,
+        explanation: "Le corps a besoin d'aliments variés pour avoir toute son énergie et bien grandir.",
+      },
+      {
+        id: "co4", type: "mcq",
+        prompt: "Quand tu inspires, où va l'air ?",
+        choices: ["Dans l'estomac", "Dans les poumons", "Dans le cœur", "Dans les muscles"],
+        answerIndex: 1,
+        explanation: "L'air descend par la trachée jusqu'aux poumons, qui donnent l'oxygène au sang.",
+      },
+      {
+        id: "co5", type: "mcq",
+        prompt: "Quel organe fait circuler le sang dans tout le corps ?",
+        choices: ["Le cerveau", "L'estomac", "Les poumons", "Le cœur"],
+        answerIndex: 3,
+        explanation: "Le cœur est une pompe : il pousse le sang dans tout le corps, jour et nuit.",
+      },
+      {
+        id: "co6", type: "mcq",
+        prompt: "Lequel de ces comportements fait du bien à ton corps ?",
+        choices: [
+          "Boire des sodas à tous les repas",
+          "Dormir suffisamment chaque nuit",
+          "Passer la soirée devant un écran",
+          "Ne jamais faire de sport",
+        ],
+        answerIndex: 1,
+        explanation: "Le sommeil aide le corps à grandir, à réparer et à mémoriser ce qu'on a appris.",
+      },
+      {
+        id: "co7", type: "mcq",
+        prompt: "Où se trouvent tes poumons ?",
+        choices: ["Dans le ventre", "Dans la poitrine", "Dans la tête", "Dans les jambes"],
+        answerIndex: 1,
+        explanation: "Les poumons sont dans la poitrine, protégés par les côtes (la cage thoracique).",
+      },
+    ],
+  },
+  {
+    id: "sc-vivant",
+    domain: "sciences",
+    emoji: "🦋",
+    title: "Le monde vivant",
+    subtitle: "Plantes, animaux et leurs milieux",
+    perCode: "MSN 28",
+    attentes: [
+      "Observe et identifie diverses parties de végétaux",
+      "Met en lien la morphologie d'espèces animales avec leur régime alimentaire",
+      "Étudie les phases du cycle de vie d'un animal et compare les stratégies des animaux (migration, hibernation…)",
+    ],
+    fiche: [
+      {
+        title: "Les parties d'une plante",
+        body: "Les racines puisent l'eau et tiennent la plante dans le sol. La tige (ou le tronc) porte la plante ; l'écorce protège le tronc. Les feuilles captent la lumière. La fleur devient un fruit, qui contient les graines.",
+      },
+      {
+        title: "Les régimes alimentaires",
+        body: "Herbivore : mange des plantes (vache). Carnivore : mange d'autres animaux (renard). Granivore : mange des graines (moineau). Omnivore : mange de tout (sanglier… et l'humain !).",
+      },
+      {
+        title: "Cycles de vie et stratégies pour l'hiver",
+        body: "Le papillon passe par 4 étapes : œuf → chenille → chrysalide → papillon. Pour survivre à l'hiver : certains animaux hibernent (la marmotte dort), d'autres migrent (les hirondelles partent au sud où elles trouvent des insectes à manger).",
+      },
+      {
+        title: "Les êtres vivants dépendent les uns des autres",
+        body: "Dans un milieu, les êtres vivants sont liés : la prédation (l'un mange l'autre), le parasitisme (l'un vit aux dépens de l'autre, comme le gui sur l'arbre), la symbiose (les deux s'entraident). Quand l'Homme détruit un milieu, la biodiversité (la variété des êtres vivants) diminue.",
+      },
+    ],
+    questions: [
+      {
+        id: "vi1", type: "mcq",
+        prompt: "Quelle partie de la plante puise l'eau dans le sol ?",
+        choices: ["Les feuilles", "La fleur", "Les racines", "Le fruit"],
+        answerIndex: 2,
+        explanation: "Les racines s'enfoncent dans le sol pour puiser l'eau et les sels minéraux.",
+      },
+      {
+        id: "vi2", type: "mcq",
+        prompt: "Comment s'appelle la « peau » qui protège le tronc d'un arbre ?",
+        choices: ["La feuille", "L'écorce", "La racine", "La sève"],
+        answerIndex: 1,
+        explanation: "L'écorce protège le tronc du froid, des chocs et des insectes.",
+      },
+      {
+        id: "vi3", type: "mcq",
+        prompt: "Un animal qui ne mange que des plantes est…",
+        choices: ["carnivore", "omnivore", "granivore", "herbivore"],
+        answerIndex: 3,
+        explanation: "Herbivore = qui mange des végétaux, comme la vache ou le lapin.",
+      },
+      {
+        id: "vi4", type: "mcq",
+        prompt: "La chenille se transforme d'abord en… puis devient papillon.",
+        choices: ["chrysalide", "œuf", "larve de mouche", "têtard"],
+        answerIndex: 0,
+        explanation: "Le cycle du papillon : œuf → chenille → chrysalide → papillon.",
+      },
+      {
+        id: "vi5", type: "mcq",
+        prompt: "Que fait la marmotte pour passer l'hiver ?",
+        choices: ["Elle migre vers le sud", "Elle hiberne", "Elle change de couleur", "Elle construit un barrage"],
+        answerIndex: 1,
+        explanation: "La marmotte hiberne : elle dort tout l'hiver dans son terrier, son corps tourne au ralenti.",
+      },
+      {
+        id: "vi6", type: "mcq",
+        prompt: "Pourquoi les hirondelles partent-elles vers le sud en automne ?",
+        choices: [
+          "Parce qu'elles n'aiment pas la neige",
+          "Pour trouver de la nourriture (les insectes disparaissent ici en hiver)",
+          "Pour faire la course",
+          "Parce que les jours sont trop longs",
+        ],
+        answerIndex: 1,
+        explanation: "C'est la migration : en hiver, il n'y a presque plus d'insectes chez nous, alors elles vont en chercher là où il fait chaud.",
+      },
+      {
+        id: "vi7", type: "mcq",
+        prompt: "Le gui pousse sur les branches d'un arbre et se nourrit à ses dépens. C'est un exemple de…",
+        choices: ["symbiose", "prédation", "parasitisme", "compétition"],
+        answerIndex: 2,
+        explanation: "Le gui est un parasite : il profite de l'arbre sans rien lui donner en retour.",
+      },
+      {
+        id: "vi8", type: "mcq",
+        prompt: "Qu'est-ce qui ferait BAISSER la biodiversité d'une prairie ?",
+        choices: [
+          "Y laisser pousser des fleurs variées",
+          "Y créer une mare",
+          "Y planter une haie",
+          "La recouvrir de béton",
+        ],
+        answerIndex: 3,
+        explanation: "Le béton détruit le milieu de vie des plantes et des petits animaux : la variété des êtres vivants diminue.",
+      },
+    ],
+  },
+  {
+    id: "sc-demarche",
+    domain: "sciences",
+    emoji: "🔬",
+    title: "La démarche scientifique",
+    subtitle: "Observer, mesurer, expliquer",
+    perCode: "MSN 26",
+    attentes: [
+      "Formule des questions et des hypothèses au sujet d'une problématique",
+      "Utilise des outils et instruments adéquats pour les observations et expériences",
+      "Organise les données à l'aide de représentations (schéma, tableau, diagramme)",
+    ],
+    fiche: [
+      {
+        title: "La démarche du scientifique",
+        body: "1. Je me pose une question. 2. Je propose une hypothèse (ce que je pense, à vérifier). 3. J'observe ou j'expérimente. 4. Je note fidèlement mes résultats. 5. Je conclus : mon hypothèse était-elle juste ?",
+        examples: ["« Je pense que la plante a besoin de lumière pour pousser » → c'est une hypothèse"],
+      },
+      {
+        title: "Les bons instruments",
+        body: "Chaque mesure a son instrument : la règle pour les longueurs, la balance pour les masses, le thermomètre pour la température, le chronomètre pour les durées.",
+      },
+      {
+        title: "Organiser ses résultats",
+        body: "Un tableau ou un diagramme en colonnes permet de comparer les résultats d'un coup d'œil — bien plus pratique qu'un long texte !",
+      },
+    ],
+    questions: [
+      {
+        id: "de1", type: "mcq",
+        prompt: "Quel instrument utilises-tu pour mesurer la température de l'eau ?",
+        choices: ["Une règle", "Un thermomètre", "Une balance", "Un chronomètre"],
+        answerIndex: 1,
+        explanation: "Le thermomètre mesure la température, en degrés (°C).",
+      },
+      {
+        id: "de2", type: "mcq",
+        prompt: "Pour mesurer le temps que met un glaçon à fondre, j'utilise…",
+        choices: ["un chronomètre", "une balance", "un thermomètre", "une loupe"],
+        answerIndex: 0,
+        explanation: "Le chronomètre mesure les durées (minutes, secondes).",
+      },
+      {
+        id: "de3", type: "mcq",
+        prompt: "Pour comparer d'un coup d'œil la taille de 5 plantes, le plus pratique est…",
+        choices: ["un long texte", "un diagramme en colonnes", "une chanson", "une devinette"],
+        answerIndex: 1,
+        explanation: "Un diagramme (ou un tableau) montre tous les résultats d'un seul coup d'œil.",
+      },
+      {
+        id: "de4", type: "mcq",
+        prompt: "« Je pense que la plante a besoin de lumière pour pousser. » Cette phrase est…",
+        choices: ["un résultat", "une mesure", "une hypothèse", "une conclusion"],
+        answerIndex: 2,
+        explanation: "Une hypothèse, c'est ce qu'on pense AVANT de vérifier par une expérience.",
+      },
+      {
+        id: "de5", type: "mcq",
+        prompt: "Laquelle de ces catastrophes naturelles est causée par un trop-plein d'eau ?",
+        choices: ["La sécheresse", "L'inondation", "Le tremblement de terre", "L'avalanche"],
+        answerIndex: 1,
+        explanation: "L'inondation arrive quand il pleut trop : les rivières débordent.",
+      },
+    ],
+  },
+
+  // ─────────────────────────── HISTOIRE-GÉO ───────────────────────────
+  {
+    id: "shs-geo",
+    domain: "shs",
+    emoji: "🗺️",
+    title: "Géographie : mon canton",
+    subtitle: "Besoins, lieux, cartes et échelles",
+    perCode: "SHS 21",
+    attentes: [
+      "Identifie et catégorise les besoins vitaux et secondaires, et les lieux qui y répondent",
+      "S'approprie le vocabulaire de la géographie : commune, canton, région, pays",
+      "Identifie des repères sur le terrain, une photographie ou un plan",
+    ],
+    fiche: [
+      {
+        title: "Besoins vitaux et besoins secondaires",
+        body: "Les besoins vitaux sont indispensables pour vivre : s'alimenter, boire, respirer, dormir, se protéger. Les besoins secondaires rendent la vie plus agréable : jouer, voyager, regarder un film. À chaque besoin correspondent des lieux : l'épicerie pour s'alimenter, l'hôpital pour se soigner, l'école pour apprendre.",
+      },
+      {
+        title: "Commune, canton, pays",
+        body: "Tu habites dans une commune (avec sa mairie, son école, ses quartiers). Les communes forment un canton (Genève, Vaud, Valais…). Les 26 cantons forment la Suisse. Du plus petit au plus grand : quartier < commune/ville < canton < pays.",
+      },
+      {
+        title: "Pourquoi les villes sont-elles là où elles sont ?",
+        body: "Beaucoup de villes se sont installées au bord de l'eau (lac, fleuve) : pour boire, pêcher, transporter des marchandises. Genève est née là où le Rhône sort du lac Léman !",
+      },
+      {
+        title: "Se repérer sur un plan",
+        body: "Pour te repérer, cherche des repères fixes qui ne bougent pas : une gare, un pont, une église, une rivière. Les activités humaines transforment aussi le territoire (routes, immeubles) — avec des impacts sur la nature.",
+      },
+    ],
+    questions: [
+      {
+        id: "ge1", type: "mcq",
+        prompt: "Lequel de ces besoins est un besoin VITAL ?",
+        choices: ["Jouer aux jeux vidéo", "S'alimenter", "Partir en vacances", "Regarder la télévision"],
+        answerIndex: 1,
+        explanation: "Sans manger, on ne peut pas vivre : c'est un besoin vital. Les autres sont des besoins secondaires.",
+      },
+      {
+        id: "ge2", type: "mcq",
+        prompt: "Quel lieu répond au besoin de se soigner ?",
+        choices: ["Le stade", "Le cinéma", "L'hôpital", "La piscine"],
+        answerIndex: 2,
+        explanation: "L'hôpital (ou le cabinet médical, la pharmacie) répond au besoin de se soigner.",
+      },
+      {
+        id: "ge3", type: "mcq",
+        prompt: "Genève, Vaud et le Valais sont des…",
+        choices: ["pays", "communes", "cantons", "continents"],
+        answerIndex: 2,
+        explanation: "Ce sont trois des 26 cantons qui forment la Suisse.",
+      },
+      {
+        id: "ge4", type: "mcq",
+        prompt: "Le territoire où se trouvent ta rue, ton école et ta mairie s'appelle…",
+        choices: ["une commune", "un pays", "un continent", "un canton"],
+        answerIndex: 0,
+        explanation: "La commune est le plus petit territoire officiel, dirigé par une mairie.",
+      },
+      {
+        id: "ge5", type: "mcq",
+        prompt: "Pourquoi beaucoup de villes se sont-elles installées au bord d'un lac ou d'un fleuve ?",
+        choices: [
+          "Pour la vue",
+          "Pour l'eau : boire, pêcher, transporter des marchandises",
+          "Parce que c'était obligatoire",
+          "Pour construire des piscines",
+        ],
+        answerIndex: 1,
+        explanation: "L'eau était essentielle : boire, arroser, pêcher et transporter par bateau. C'est pour ça que Genève est née au bord du Rhône et du Léman.",
+      },
+      {
+        id: "ge6", type: "mcq",
+        prompt: "Classe du plus petit au plus grand :",
+        choices: [
+          "canton < quartier < pays < ville",
+          "quartier < ville < canton < pays",
+          "pays < canton < ville < quartier",
+          "ville < quartier < pays < canton",
+        ],
+        answerIndex: 1,
+        explanation: "Le quartier est dans la ville, la ville dans le canton, le canton dans le pays.",
+      },
+      {
+        id: "ge7", type: "mcq",
+        prompt: "Sur un plan de ville, quel est le meilleur repère pour t'orienter ?",
+        choices: ["Les nuages", "Les voitures garées", "Une gare ou un pont", "Les passants"],
+        answerIndex: 2,
+        explanation: "Un bon repère ne bouge pas : une gare, un pont, une église, une rivière.",
+      },
+      {
+        id: "ge8", type: "mcq",
+        prompt: "Une nouvelle route traverse une forêt. Quel impact sur l'environnement ?",
+        choices: [
+          "Aucun impact",
+          "Les habitats des animaux sont détruits ou coupés en deux",
+          "Les arbres poussent plus vite",
+          "Il y a plus de champignons",
+        ],
+        answerIndex: 1,
+        explanation: "Les activités humaines transforment le territoire : la route détruit et sépare les milieux où vivent les animaux.",
+      },
+    ],
+  },
+  {
+    id: "shs-histoire",
+    domain: "shs",
+    emoji: "🏺",
+    title: "Histoire : se repérer dans le temps",
+    subtitle: "Périodes, traces du passé, vrai ou légende",
+    perCode: "SHS 22",
+    attentes: [
+      "Situe dans le temps des événements et les organise selon la chronologie (de la Préhistoire à la fin de l'Antiquité)",
+      "S'approprie le vocabulaire du temps : date, période, siècle, millénaire",
+      "Distingue fiction (mythe, légende) et réalité, et questionne les traces du passé",
+    ],
+    fiche: [
+      {
+        title: "Les grandes périodes",
+        body: "L'histoire se découpe en grandes périodes : la Préhistoire (la plus ancienne), puis l'Antiquité, le Moyen Âge, l'époque moderne et l'époque contemporaine. C'est l'invention de l'écriture qui marque la fin de la Préhistoire et le début de l'Antiquité.",
+      },
+      {
+        title: "Compter le temps",
+        body: "Une année = 365 jours. Un siècle = 100 ans. Un millénaire = 1000 ans. Sur la ligne du temps, on range les événements du plus ancien (à gauche) au plus récent (à droite).",
+      },
+      {
+        title: "Comment connaît-on le passé ?",
+        body: "Grâce aux traces : ruines, objets, pièces de monnaie, textes anciens, peintures. Les historiens comparent plusieurs sources pour vérifier — car deux documents peuvent raconter le même événement différemment !",
+      },
+      {
+        title: "Vrai ou légende ?",
+        body: "Une légende est un récit transmis depuis longtemps mais sans preuve (comme Guillaume Tell). La réalité historique, elle, s'appuie sur des traces et des documents vérifiables.",
+      },
+    ],
+    questions: [
+      {
+        id: "hi1", type: "mcq",
+        prompt: "Quelle est la période la plus ANCIENNE ?",
+        choices: ["Le Moyen Âge", "L'Antiquité", "La Préhistoire", "L'époque moderne"],
+        answerIndex: 2,
+        explanation: "La Préhistoire vient en premier, avant l'Antiquité puis le Moyen Âge.",
+      },
+      {
+        id: "hi2", type: "mcq",
+        prompt: "Un siècle, c'est…",
+        choices: ["10 ans", "100 ans", "1000 ans", "50 ans"],
+        answerIndex: 1,
+        explanation: "Un siècle = 100 ans. Nous vivons au 21e siècle.",
+      },
+      {
+        id: "hi3", type: "mcq",
+        prompt: "Un millénaire, c'est…",
+        choices: ["100 ans", "10 000 ans", "500 ans", "1000 ans"],
+        answerIndex: 3,
+        explanation: "Un millénaire = 1000 ans, soit 10 siècles.",
+      },
+      {
+        id: "hi4", type: "mcq",
+        prompt: "Quelle invention marque la fin de la Préhistoire ?",
+        choices: ["La roue", "L'écriture", "Le feu", "L'électricité"],
+        answerIndex: 1,
+        explanation: "Avec l'écriture, les humains laissent des textes : l'histoire « écrite » commence, c'est l'Antiquité.",
+      },
+      {
+        id: "hi5", type: "mcq",
+        prompt: "Guillaume Tell, dont personne n'a prouvé l'existence, est plutôt…",
+        choices: ["un personnage réel", "une légende", "un roi de Suisse", "un historien"],
+        answerIndex: 1,
+        explanation: "C'est une légende : un récit célèbre transmis depuis longtemps, mais sans preuve historique.",
+      },
+      {
+        id: "hi6", type: "mcq",
+        prompt: "Qu'est-ce qui aide les historiens à connaître la vie des Romains ?",
+        choices: [
+          "Les traces : ruines, objets, textes anciens",
+          "Les films au cinéma",
+          "Leur imagination",
+          "Les jeux vidéo",
+        ],
+        answerIndex: 0,
+        explanation: "Les traces du passé (ruines, monnaies, textes) sont les preuves sur lesquelles travaillent les historiens.",
+      },
+      {
+        id: "hi7", type: "mcq",
+        prompt: "Deux documents anciens racontent le même événement de façon différente. Que fait l'historien ?",
+        choices: [
+          "Il jette les deux documents",
+          "Il choisit le plus joli",
+          "Il les compare et cherche d'autres sources pour vérifier",
+          "Il invente une troisième version",
+        ],
+        answerIndex: 2,
+        explanation: "Comparer plusieurs sources permet de repérer les ressemblances, les différences et les idées reçues.",
+      },
+    ],
+  }
+);
+
 export const themeById = (id: string) => THEMES.find((t) => t.id === id);

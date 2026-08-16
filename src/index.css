@@ -14,6 +14,10 @@
   --maths-bg: #fdecec;
   --francais: #d99a00;
   --francais-bg: #fdf4dc;
+  --sciences: #0e9594;
+  --sciences-bg: #e3f5f5;
+  --shs: #2f9e44;
+  --shs-bg: #e9f7ec;
   --radius: 16px;
   font-family: "Avenir Next", "Segoe UI", system-ui, -apple-system, sans-serif;
   color: var(--ink);
@@ -94,6 +98,8 @@ input:focus { outline: 2px solid var(--accent); border-color: var(--accent); }
 .theme-card { display: flex; flex-direction: column; gap: 12px; border-top: 5px solid var(--line); }
 .theme-card.maths { border-top-color: var(--maths); }
 .theme-card.francais { border-top-color: var(--francais); }
+.theme-card.sciences { border-top-color: var(--sciences); }
+.theme-card.shs { border-top-color: var(--shs); }
 .theme-head { display: flex; gap: 12px; align-items: center; }
 .theme-emoji { font-size: 1.8rem; }
 .theme-emoji.big { font-size: 2.6rem; }
@@ -119,6 +125,8 @@ input:focus { outline: 2px solid var(--accent); border-color: var(--accent); }
 .fiche-section h2 { color: var(--accent); }
 .fiche.maths .fiche-section h2 { color: var(--maths); }
 .fiche.francais .fiche-section h2 { color: var(--francais); }
+.fiche.sciences .fiche-section h2 { color: var(--sciences); }
+.fiche.shs .fiche-section h2 { color: var(--shs); }
 .examples { background: #f6f7fb; border-radius: 12px; padding: 12px 12px 12px 32px; margin: 10px 0 0; }
 .examples li { margin: 4px 0; }
 .fiche-cta { margin-top: 24px; text-align: center; }
@@ -135,6 +143,8 @@ input:focus { outline: 2px solid var(--accent); border-color: var(--accent); }
 .quiz-progress-bar { height: 100%; background: var(--accent); border-radius: 999px; transition: width 0.3s; }
 .quiz.maths .quiz-progress-bar { background: var(--maths); }
 .quiz.francais .quiz-progress-bar { background: var(--francais); }
+.quiz.sciences .quiz-progress-bar { background: var(--sciences); }
+.quiz.shs .quiz-progress-bar { background: var(--shs); }
 .quiz-counter { margin: 8px 0 14px; }
 
 .question-card h2 { font-size: 1.25rem; line-height: 1.4; }

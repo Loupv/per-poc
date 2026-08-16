@@ -1,4 +1,4 @@
-export type Domain = "maths" | "francais";
+export type Domain = "maths" | "francais" | "sciences" | "shs";
 
 export interface Question {
   id: string;

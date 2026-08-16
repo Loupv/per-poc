@@ -1,7 +1,7 @@
 {
  "source": "https://per.ciip.ch (API publique)",
  "copyright": "© CIIP — Plan d'études romand. POC interne, usage commercial à clarifier.",
- "fetchedAt": "2026-08-16T11:44:20.436Z",
+ "fetchedAt": "2026-08-16T12:30:51.636Z",
  "cycle": 2,
  "years": [
   5,
@@ -9175,6 +9175,2995 @@
        "years": [
         5,
         6,
+        7,
+        8
+       ]
+      }
+     ],
+     "attentes": []
+    }
+   ]
+  },
+  {
+   "id": 68,
+   "code": "MSN 26",
+   "name": "Explorer des phénomènes naturels et des technologies à l'aide de démarches caractéristiques des sciences expérimentales",
+   "domain": "Mathématiques et Sciences de la nature",
+   "groups": [
+    {
+     "id": 2484,
+     "path": [
+      "Développement de la démarche scientifique"
+     ],
+     "steps": [
+      {
+       "id": 5033,
+       "text": "Formulation de questions, d' hypothèses",
+       "years": [
+        5,
+        6,
+        7,
+        8
+       ]
+      }
+     ],
+     "attentes": []
+    },
+    {
+     "id": 2485,
+     "path": [
+      "Développement de la démarche scientifique"
+     ],
+     "steps": [
+      {
+       "id": 5034,
+       "text": "Formulation de quelques questions et hypothèses au sujet d'une problématique (oralement ou par écrit – dessin ou schéma intuitif, légende,…)",
+       "years": [
+        5,
+        6
+       ]
+      },
+      {
+       "id": 5035,
+       "text": "Formulation de quelques questions et hypothèses au sujet d'une problématique Évaluation de leur pertinence (prennent-elles en compte les éléments de la situation problématique ?)",
+       "years": [
+        7,
+        8
+       ]
+      }
+     ],
+     "attentes": [
+      {
+       "id": 2828,
+       "text": "formule au moins une question et/ou une hypothèse qui utilise(nt) les éléments de la situation au sujet d'une problématique choisit une piste de recherche, un dispositif d'exploration qui permet de répondre à une question de recherche (dans une liste de propositions) met en évidence quelques facteurs (des variables et des constantes) intervenant dans l'explication d'une problématique"
+      }
+     ]
+    },
+    {
+     "id": 2486,
+     "path": [
+      "Développement de la démarche scientifique"
+     ],
+     "steps": [
+      {
+       "id": 5036,
+       "text": "Développement de stratégies d'exploration et/ou d'expérimentation, par : l'imagination d'une piste de recherche, d'un dispositif d'exploration, qui permet de répondre à une problématique, à une question de recherche l'anticipation des résultats la mise en évidence de quelques facteurs (variables) qui peuvent intervenir dans l'explication d'un phénomène observé ou expérimenté la détermination des facteurs à observer, impliquant de déterminer des invariants la mise en œuvre d'un dispositif expérimental ou d'exploration (démontage d'un objet technique) qui a été imaginé ou proposé",
+       "years": [
+        5,
+        6,
+        7,
+        8
+       ]
+      }
+     ],
+     "attentes": [
+      {
+       "id": 2829,
+       "text": "formule au moins une question et/ou une hypothèse qui utilise(nt) les éléments de la situation au sujet d'une problématique choisit une piste de recherche, un dispositif d'exploration qui permet de répondre à une question de recherche (dans une liste de propositions) met en évidence quelques facteurs (des variables et des constantes) intervenant dans l'explication d'une problématique"
+      }
+     ]
+    },
+    {
+     "id": 2487,
+     "path": [
+      "Développement de la démarche scientifique"
+     ],
+     "steps": [
+      {
+       "id": 5037,
+       "text": "Récolte et mise en forme des données",
+       "years": [
+        5,
+        6,
+        7,
+        8
+       ]
+      }
+     ],
+     "attentes": []
+    },
+    {
+     "id": 2489,
+     "path": [
+      "Développement de la démarche scientifique"
+     ],
+     "steps": [
+      {
+       "id": 5039,
+       "text": "Relevé fidèle des résultats, des observations et/ou des mesures effectuées (dessin d'observation, photo, texte, nombre, schéma,…) ; tenue d'un journal d'observations",
+       "years": [
+        5,
+        6,
+        7,
+        8
+       ]
+      }
+     ],
+     "attentes": [
+      {
+       "id": 2830,
+       "text": "récolte des résultats ou des observations pertinents en regard de la problématique étudiée choisit un ou plusieurs instruments de mesure adéquats dans une problématique donnée utilise correctement des instruments de mesure (longueur, capacité, masse, durée, température) organise des données à l'aide de différents outils de représentation"
+      }
+     ]
+    },
+    {
+     "id": 2490,
+     "path": [
+      "Développement de la démarche scientifique"
+     ],
+     "steps": [
+      {
+       "id": 5040,
+       "text": "Utilisation d'outils ou d'instruments adéquats pour les différentes observations ou expériences (règle, chronomètre, thermomètre,…)",
+       "years": [
+        5,
+        6
+       ]
+      },
+      {
+       "id": 5041,
+       "text": "Choix d'outils ou d'instruments adéquats pour une situation problématique donnée; utilisation correcte de ces outils en prenant conscience des marges d'erreurs ou d'interprétation",
+       "years": [
+        7,
+        8
+       ]
+      }
+     ],
+     "attentes": [
+      {
+       "id": 2831,
+       "text": "récolte des résultats ou des observations pertinents en regard de la problématique étudiée choisit un ou plusieurs instruments de mesure adéquats dans une problématique donnée utilise correctement des instruments de mesure (longueur, capacité, masse, durée, température) organise des données à l'aide de différents outils de représentation"
+      }
+     ]
+    },
+    {
+     "id": 2491,
+     "path": [
+      "Développement de la démarche scientifique"
+     ],
+     "steps": [
+      {
+       "id": 5042,
+       "text": "Prises de mesures de : longueur, capacité, masse, durée, température,… à l'aide d' unités non standardisées (gobelets, nombre de tours,…) en les comparant aux unités conventionnelles",
+       "years": [
+        5,
+        6
+       ]
+      },
+      {
+       "id": 5043,
+       "text": "Prises de mesures de : longueur, capacité, masse, durée, température,… à l'aide des unités conventionnelles",
+       "years": [
+        7,
+        8
+       ]
+      }
+     ],
+     "attentes": [
+      {
+       "id": 2832,
+       "text": "récolte des résultats ou des observations pertinents en regard de la problématique étudiée choisit un ou plusieurs instruments de mesure adéquats dans une problématique donnée utilise correctement des instruments de mesure (longueur, capacité, masse, durée, température) organise des données à l'aide de différents outils de représentation"
+      }
+     ]
+    },
+    {
+     "id": 2492,
+     "path": [
+      "Développement de la démarche scientifique"
+     ],
+     "steps": [
+      {
+       "id": 5044,
+       "text": "Récolte de données complémentaires (photos, données numériques,…) dans différents médias (autres élèves, Internet,…)",
+       "years": [
+        5,
+        6,
+        7,
+        8
+       ]
+      }
+     ],
+     "attentes": [
+      {
+       "id": 2833,
+       "text": "récolte des résultats ou des observations pertinents en regard de la problématique étudiée choisit un ou plusieurs instruments de mesure adéquats dans une problématique donnée utilise correctement des instruments de mesure (longueur, capacité, masse, durée, température) organise des données à l'aide de différents outils de représentation"
+      }
+     ]
+    },
+    {
+     "id": 2493,
+     "path": [
+      "Développement de la démarche scientifique"
+     ],
+     "steps": [
+      {
+       "id": 5045,
+       "text": "Organisation des données à l'aide de diverses représentations (schéma, tableau, arbre de classement, diagramme, graphique, carte,…) à construire, à utiliser, à modifier et à enrichir",
+       "years": [
+        5,
+        6,
+        7,
+        8
+       ]
+      }
+     ],
+     "attentes": [
+      {
+       "id": 2834,
+       "text": "récolte des résultats ou des observations pertinents en regard de la problématique étudiée choisit un ou plusieurs instruments de mesure adéquats dans une problématique donnée utilise correctement des instruments de mesure (longueur, capacité, masse, durée, température) organise des données à l'aide de différents outils de représentation"
+      }
+     ]
+    },
+    {
+     "id": 2494,
+     "path": [
+      "Développement de la démarche scientifique"
+     ],
+     "steps": [
+      {
+       "id": 5046,
+       "text": "Analyse de données et élaboration d'un modèle explicatif",
+       "years": [
+        5,
+        6,
+        7,
+        8
+       ]
+      }
+     ],
+     "attentes": []
+    },
+    {
+     "id": 2496,
+     "path": [
+      "Développement de la démarche scientifique"
+     ],
+     "steps": [
+      {
+       "id": 5048,
+       "text": "Confrontation des données à d'autres situations (à d'autres relevés, à des situations vécues,…) Interprétation des données en les confrontant à d'autres sources (ses pairs, divers médias,…) ou à d'autres situations (au vécu, à l'expérimentation,…) Distinction entre ce qui relève des résultats, des constats, de ce qui relève de l'interprétation qu'on en fait et qui peut être remise en question Proposition d'une explication; élaboration d'une règle, d'une loi, d'un principe, d'un modèle,… Validation des propositions par un débat scientifique , fondant l'argumentation sur la mise en regard des interprétations et des données prises en compte avec les modèles",
+       "years": [
+        5,
+        6,
+        7,
+        8
+       ]
+      }
+     ],
+     "attentes": [
+      {
+       "id": 2835,
+       "text": "confronte ses résultats d'observation, d'expérimentation pour infirmer ou corroborer des hypothèses"
+      }
+     ]
+    },
+    {
+     "id": 2497,
+     "path": [
+      "Développement de la démarche scientifique"
+     ],
+     "steps": [
+      {
+       "id": 5049,
+       "text": "Communication",
+       "years": [
+        5,
+        6,
+        7,
+        8
+       ]
+      }
+     ],
+     "attentes": []
+    },
+    {
+     "id": 2499,
+     "path": [
+      "Développement de la démarche scientifique"
+     ],
+     "steps": [
+      {
+       "id": 5051,
+       "text": "Présentation orale ou écrite de certaines phases d'une recherche (question de recherche, hypothèse, expérimentation, observations, résultats, interprétation,…) à l'aide de différents supports (image, dessin, texte, tableau, graphique,…)",
+       "years": [
+        5,
+        6,
+        7,
+        8
+       ]
+      }
+     ],
+     "attentes": [
+      {
+       "id": 2836,
+       "text": "reconnaît certaines phases d'une recherche communique certaines phases d'une recherche"
+      }
+     ]
+    },
+    {
+     "id": 2500,
+     "path": [
+      "Matières (Propriétés générales - Eau - Air...)"
+     ],
+     "steps": [
+      {
+       "id": 5052,
+       "text": "Expérimentation et mise en évidence de quelques propriétés de la matière dans ses états solide et liquide (dureté, compressibilité, conservation de la masse lors d'un changement de forme, différence entre solide et liquide ?…) Expérimentation et mise en évidence de quelques propriétés du changement d'état de la matière dans sa transformation solide - liquide (conservation de la masse lors d'un changement par le passage de liquide à solide ? est-ce réversible ? à quelles températures ?…) Observation des différentes formes de l'eau dans l'environnement (pluie, brouillard, neige, givre,…) et compréhension du cycle naturel de l'eau",
+       "years": [
+        5,
+        6
+       ]
+      },
+      {
+       "id": 5053,
+       "text": "Étude de l'eau comme élément essentiel à la vie (imaginer la vie sans eau pour les êtres vivants,…) Expérimentation et mise en évidence de quelques propriétés du changement d'état de la matière dans sa transformation solide – liquide (notion de réversibilité, températures associées,…)",
+       "years": [
+        7,
+        8
+       ]
+      }
+     ],
+     "attentes": [
+      {
+       "id": 2837,
+       "text": "identifie les changements d'état de l'eau et certaines de ses caractéristiques concernant son aspect, son volume, sa température décrit le cycle naturel de l'eau sait que l'air est une matière cf. Attentes liées au Développement de la démarche scientifique"
+      }
+     ]
+    },
+    {
+     "id": 2501,
+     "path": [
+      "Matières (Propriétés générales - Eau - Air...)"
+     ],
+     "steps": [
+      {
+       "id": 5054,
+       "text": "Utilisation de différents produits (eau, sel, sable, huile,…) pour créer des mélanges (hétérogènes ou homogènes) et expérimentation de divers dispositifs pour les séparer (filtration, décantation, évaporation,…)",
+       "years": [
+        5,
+        6,
+        7,
+        8
+       ]
+      }
+     ],
+     "attentes": [
+      {
+       "id": 2838,
+       "text": "identifie les changements d'état de l'eau et certaines de ses caractéristiques concernant son aspect, son volume, sa température décrit le cycle naturel de l'eau sait que l'air est une matière cf. Attentes liées au Développement de la démarche scientifique"
+      }
+     ]
+    },
+    {
+     "id": 2502,
+     "path": [
+      "Matières (Propriétés générales - Eau - Air...)"
+     ],
+     "steps": [
+      {
+       "id": 5055,
+       "text": "Identification de différents types de pollutions (caractéristiques, conséquences,…) Catégorisation et comparaison des ressources naturelles (proportion d'air respirable, lieux de stockage de l'eau douce sur Terre, part de l'eau douce utilisable par rapport à l'eau salée,…)",
+       "years": [
+        7,
+        8
+       ]
+      }
+     ],
+     "attentes": [
+      {
+       "id": 2839,
+       "text": "identifie les changements d'état de l'eau et certaines de ses caractéristiques concernant son aspect, son volume, sa température décrit le cycle naturel de l'eau sait que l'air est une matière cf. Attentes liées au Développement de la démarche scientifique"
+      }
+     ]
+    },
+    {
+     "id": 2503,
+     "path": [
+      "Matières (Propriétés générales - Eau - Air...)"
+     ],
+     "steps": [
+      {
+       "id": 5056,
+       "text": "Expérimentation et représentation de quelques propriétés de l'air (force et pression, omniprésence,…) Identification de l'air comme étant une matière gazeuse, dans notre environnement",
+       "years": [
+        5,
+        6
+       ]
+      },
+      {
+       "id": 5057,
+       "text": "Expérimentation et représentation de quelques propriétés de l'air (air froid/air chaud, taux d'humidité) Mise en lien des propriétés étudiées avec les phénomènes météorologiques : vents, précipitations,…",
+       "years": [
+        7,
+        8
+       ]
+      }
+     ],
+     "attentes": [
+      {
+       "id": 2840,
+       "text": "identifie les changements d'état de l'eau et certaines de ses caractéristiques concernant son aspect, son volume, sa température décrit le cycle naturel de l'eau sait que l'air est une matière cf. Attentes liées au Développement de la démarche scientifique"
+      }
+     ]
+    },
+    {
+     "id": 834,
+     "path": [
+      "Forces et énergies (Mécanique)"
+     ],
+     "steps": [
+      {
+       "id": 2156,
+       "text": "Équilibre et leviers Expérimentation de la notion d'équilibre au moyen de diverses balances et objets de masses différentes Compréhension du fonctionnement des outils de mesure et des unités conventionnelles associées Expérimentation et schématisation des propriétés des leviers : axe de rotation et point d'application de la force ; lien avec quelques outils (où tenir les ciseaux pour couper du carton ? et la tenaille, et le casse-noix ? comment porter un sac ? soulever des charges à l'aide de leviers,…)",
+       "years": [
+        5,
+        6
+       ]
+      },
+      {
+       "id": 2157,
+       "text": "Transmission de mouvements Observation et représentation des transmissions du mouvement (mouvements de rotation ou de translation) dans des modèles expérimentaux et dans des objets technologiques (fouet mécanique, sonnette, voiture à ressort, pendule, montre, système d'entraînement d'un vélo, moulin,…)",
+       "years": [
+        7,
+        8
+       ]
+      }
+     ],
+     "attentes": [
+      {
+       "id": 914,
+       "text": "équilibre des charges de masses différentes sur des systèmes de levier cf. Attentes liées au Développement de la démarche scientifique"
+      }
+     ]
+    },
+    {
+     "id": 2504,
+     "path": [
+      "Forces et énergie (électricité - formes d'énergie)"
+     ],
+     "steps": [
+      {
+       "id": 5058,
+       "text": "Expérimentation de circuits simples (ampoule, piles de différentes formes, fils conducteurs,…) et du principe du court-circuit Observation du fonctionnement d'objets technologiques impliquant des circuits électriques à courant faible (lampe de poche, jeu,…) Expérimentation de la conductivité électrique (matériaux isolants ou conducteurs) dans une perspective de prévention",
+       "years": [
+        5,
+        6
+       ]
+      },
+      {
+       "id": 5059,
+       "text": "Recherche des fonctions de l'énergie pour l'être humain (pour son corps, chauffer, éclairer, mettre en mouvement,…) Identification et comparaison des sources d'énergie (renouvelables/non renouvelables) et évaluation des avantages et inconvénients Observation et expérimentation de diverses transformations d'énergie (chauffe-eau, radiateur électrique,…)",
+       "years": [
+        7,
+        8
+       ]
+      }
+     ],
+     "attentes": [
+      {
+       "id": 2841,
+       "text": "reconnaît certains comportements ou gestes dangereux pour le corps humain dans la manipulation de l'électricité reconnaît différentes sources d'énergie courantes et leurs utilisations cf. Attentes liées au Développement de la démarche scientifique"
+      }
+     ]
+    },
+    {
+     "id": 2505,
+     "path": [
+      "Forces et énergie (électricité - formes d'énergie)"
+     ],
+     "steps": [
+      {
+       "id": 5060,
+       "text": "Expérimentation de circuits simples (ampoule, piles de différentes formes, fils conducteurs,…) et du principe du court-circuit Observation du fonctionnement d'objets technologiques impliquant des circuits électriques à courant faible (lampe de poche, jeu,…) Expérimentation de la conductivité électrique (matériaux isolants ou conducteurs) dans une perspective de prévention",
+       "years": [
+        5,
+        6
+       ]
+      },
+      {
+       "id": 5061,
+       "text": "Expérimentation de la conductivité thermique (échange de chaleur entre différentes matières, matériaux isolants ou conducteurs)",
+       "years": [
+        7,
+        8
+       ]
+      }
+     ],
+     "attentes": [
+      {
+       "id": 2842,
+       "text": "reconnaît certains comportements ou gestes dangereux pour le corps humain dans la manipulation de l'électricité reconnaît différentes sources d'énergie courantes et leurs utilisations cf. Attentes liées au Développement de la démarche scientifique"
+      }
+     ]
+    },
+    {
+     "id": 836,
+     "path": [
+      "Planète terre (Ombre et lumière - Système solaire)"
+     ],
+     "steps": [
+      {
+       "id": 2161,
+       "text": "Expérimentation et représentation de quelques propriétés de la lumière (trajet en ligne droite, source de lumière naturelle ou artificielle,…) Expérimentation, représentation et modélisation de quelques phénomènes d'ombres liés aux objets : mise en évidence des facteurs en jeu (position de la source de lumière, forme de l'objet, orientation de la surface où l'ombre est projetée,…) et des conséquences (ombre propre et ombre-s portée-s) Observation de la course apparente du Soleil et mise en relation avec l'alternance jour/nuit et les points cardinaux",
+       "years": [
+        5,
+        6
+       ]
+      },
+      {
+       "id": 2162,
+       "text": "Observation de la course apparente du Soleil (en précisant notamment l'heure et la position du Soleil au lever, au point culminant et au coucher) et mise en relation avec l'alternance jour/nuit, les points cardinaux, les saisons,… Représentation et modélisation en 2 et 3 dimensions des deux mouvements simultanés de la Terre (rotation autour de son axe et révolution autour du Soleil) pour appréhender les notions d'alternance jour/nuit, d'année, de durée du jour et de la nuit, de cycle des saisons,… Observation de modèles en 2 et 3 dimensions de quelques corps principaux de notre système solaire en distinguant les éléments étoile – planète – satellite (Soleil, Terre, Lune, autres planètes du système), en appréhendant les notions de tailles et de distances",
+       "years": [
+        7,
+        8
+       ]
+      }
+     ],
+     "attentes": [
+      {
+       "id": 919,
+       "text": "distingue ombre propre et ombre portée d'un objet éclairé schématise les deux mouvements simultanés de la Terre (rotation autour de son axe et révolution autour du Soleil) et les utilise pour définir la notion de jour et d'année cf. Attentes liées au Développement de la démarche scientifique"
+      }
+     ]
+    },
+    {
+     "id": 837,
+     "path": [
+      "Planète terre (Ombre et lumière - Système solaire)"
+     ],
+     "steps": [
+      {
+       "id": 2163,
+       "text": "Étude et analyse des mécanismes en jeu dans une catastrophe naturelle affectant la planète Terre (inondation, sécheresse, tempête,…)",
+       "years": [
+        5,
+        6,
+        7,
+        8
+       ]
+      }
+     ],
+     "attentes": [
+      {
+       "id": 924,
+       "text": "distingue ombre propre et ombre portée d'un objet éclairé schématise les deux mouvements simultanés de la Terre (rotation autour de son axe et révolution autour du Soleil) et les utilise pour définir la notion de jour et d'année cf. Attentes liées au Développement de la démarche scientifique"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": 69,
+   "code": "MSN 27",
+   "name": "Identifier les différentes parties de son corps, en décrire le fonctionnement et en tirer des conséquences pour sa santé",
+   "domain": "Mathématiques et Sciences de la nature",
+   "groups": [
+    {
+     "id": 2526,
+     "path": [
+      "Développement de la démarche scientifique"
+     ],
+     "steps": [
+      {
+       "id": 5090,
+       "text": "Formulation de questions, d'hypothèses",
+       "years": [
+        5,
+        6,
+        7,
+        8
+       ]
+      }
+     ],
+     "attentes": []
+    },
+    {
+     "id": 2527,
+     "path": [
+      "Développement de la démarche scientifique"
+     ],
+     "steps": [
+      {
+       "id": 5091,
+       "text": "Formulation de quelques questions et hypothèses au sujet d'une problématique (oralement ou par écrit - dessin ou schéma intuitif, légende,…)",
+       "years": [
+        5,
+        6
+       ]
+      },
+      {
+       "id": 5092,
+       "text": "Formulation de quelques questions et hypothèses au sujet d'une problématique Évaluation de leur pertinence (prennent-elles en compte les éléments de la situation problématique ?)",
+       "years": [
+        7,
+        8
+       ]
+      }
+     ],
+     "attentes": [
+      {
+       "id": 2865,
+       "text": "formule au moins une question et/ou une hypothèse qui utilise(nt) les éléments de la situation au sujet d'une problématique choisit une piste de recherche, un dispositif d'exploration qui permet de répondre à une question de recherche (dans une liste de propositions) met en évidence quelques facteurs (des variables et des constantes) intervenant dans l'explication d'une problématique"
+      }
+     ]
+    },
+    {
+     "id": 2528,
+     "path": [
+      "Développement de la démarche scientifique"
+     ],
+     "steps": [
+      {
+       "id": 5093,
+       "text": "Développement de stratégies d'exploration et/ou d'expérimentation, par : l'imagination d'une piste de recherche, d'un dispositif d'exploration, qui permet de répondre à une problématique, à une question de recherche l'anticipation des résultats la mise en évidence de quelques facteurs (variables) qui peuvent intervenir dans l'explication d'un phénomène observé ou expérimenté la détermination des facteurs à observer, impliquant de déterminer des invariants la mise en œuvre d'un dispositif expérimental ou d'exploration (démontage d'un objet technique) qui a été imaginé ou proposé",
+       "years": [
+        5,
+        6,
+        7,
+        8
+       ]
+      }
+     ],
+     "attentes": [
+      {
+       "id": 2866,
+       "text": "formule au moins une question et/ou une hypothèse qui utilise(nt) les éléments de la situation au sujet d'une problématique choisit une piste de recherche, un dispositif d'exploration qui permet de répondre à une question de recherche (dans une liste de propositions) met en évidence quelques facteurs (des variables et des constantes) intervenant dans l'explication d'une problématique"
+      }
+     ]
+    },
+    {
+     "id": 2529,
+     "path": [
+      "Développement de la démarche scientifique"
+     ],
+     "steps": [
+      {
+       "id": 5094,
+       "text": "Récolte et mise en forme des données",
+       "years": [
+        5,
+        6,
+        7,
+        8
+       ]
+      }
+     ],
+     "attentes": []
+    },
+    {
+     "id": 2531,
+     "path": [
+      "Développement de la démarche scientifique"
+     ],
+     "steps": [
+      {
+       "id": 5096,
+       "text": "Relevé fidèle des résultats, des observations et/ou des mesures effectuées (dessin d'observation, photo, texte, nombre, schéma,…) ; tenue d'un journal d'observations",
+       "years": [
+        5,
+        6,
+        7,
+        8
+       ]
+      }
+     ],
+     "attentes": [
+      {
+       "id": 2867,
+       "text": "récolte des résultats ou des observations pertinents en regard de la problématique étudiée choisit un ou plusieurs instruments de mesure adéquats dans une problématique donnée utilise correctement des instruments de mesure (longueur, capacité, masse, durée, température) organise des données à l'aide de différents outils de représentation"
+      }
+     ]
+    },
+    {
+     "id": 2532,
+     "path": [
+      "Développement de la démarche scientifique"
+     ],
+     "steps": [
+      {
+       "id": 5097,
+       "text": "Utilisation d'outils ou d'instruments adéquats pour les différentes observations ou expériences (règle, chronomètre, thermomètre,…)",
+       "years": [
+        5,
+        6
+       ]
+      },
+      {
+       "id": 5098,
+       "text": "Choix d'outils ou d'instruments adéquats pour une situation problématique donnée ; utilisation correcte de ces outils en prenant conscience des marges d'erreurs ou d'interprétation",
+       "years": [
+        7,
+        8
+       ]
+      }
+     ],
+     "attentes": [
+      {
+       "id": 2868,
+       "text": "récolte des résultats ou des observations pertinents en regard de la problématique étudiée choisit un ou plusieurs instruments de mesure adéquats dans une problématique donnée utilise correctement des instruments de mesure (longueur, capacité, masse, durée, température) organise des données à l'aide de différents outils de représentation"
+      }
+     ]
+    },
+    {
+     "id": 2533,
+     "path": [
+      "Développement de la démarche scientifique"
+     ],
+     "steps": [
+      {
+       "id": 5099,
+       "text": "Prise de mesures de : longueur, capacité, masse, durée, température,… à l'aide d' unités non standardisées (gobelets, nombre de tours,…) en les comparant aux unités conventionnelles",
+       "years": [
+        5,
+        6
+       ]
+      },
+      {
+       "id": 5100,
+       "text": "Prises de mesures de : longueur, capacité, masse, durée, température,… à l'aide des unités conventionnelles",
+       "years": [
+        7,
+        8
+       ]
+      }
+     ],
+     "attentes": [
+      {
+       "id": 2869,
+       "text": "récolte des résultats ou des observations pertinents en regard de la problématique étudiée choisit un ou plusieurs instruments de mesure adéquats dans une problématique donnée utilise correctement des instruments de mesure (longueur, capacité, masse, durée, température) organise des données à l'aide de différents outils de représentation"
+      }
+     ]
+    },
+    {
+     "id": 2534,
+     "path": [
+      "Développement de la démarche scientifique"
+     ],
+     "steps": [
+      {
+       "id": 5101,
+       "text": "Récolte de données complémentaires (photos, données numériques,…) dans différents médias (autres élèves, Internet,…)",
+       "years": [
+        5,
+        6,
+        7,
+        8
+       ]
+      }
+     ],
+     "attentes": [
+      {
+       "id": 2870,
+       "text": "récolte des résultats ou des observations pertinents en regard de la problématique étudiée choisit un ou plusieurs instruments de mesure adéquats dans une problématique donnée utilise correctement des instruments de mesure (longueur, capacité, masse, durée, température) organise des données à l'aide de différents outils de représentation"
+      }
+     ]
+    },
+    {
+     "id": 2535,
+     "path": [
+      "Développement de la démarche scientifique"
+     ],
+     "steps": [
+      {
+       "id": 5102,
+       "text": "Organisation des données à l'aide de diverses représentations (schéma, tableau, arbre de classement, diagramme, graphique, carte,…) à construire, à utiliser, à modifier et à enrichir",
+       "years": [
+        5,
+        6,
+        7,
+        8
+       ]
+      }
+     ],
+     "attentes": [
+      {
+       "id": 2871,
+       "text": "récolte des résultats ou des observations pertinents en regard de la problématique étudiée choisit un ou plusieurs instruments de mesure adéquats dans une problématique donnée utilise correctement des instruments de mesure (longueur, capacité, masse, durée, température) organise des données à l'aide de différents outils de représentation"
+      }
+     ]
+    },
+    {
+     "id": 2536,
+     "path": [
+      "Développement de la démarche scientifique"
+     ],
+     "steps": [
+      {
+       "id": 5103,
+       "text": "Analyse des données et élaboration d'un modèle explicatif",
+       "years": [
+        5,
+        6,
+        7,
+        8
+       ]
+      }
+     ],
+     "attentes": []
+    },
+    {
+     "id": 2538,
+     "path": [
+      "Développement de la démarche scientifique"
+     ],
+     "steps": [
+      {
+       "id": 5105,
+       "text": "Confrontation des données à d'autres situations (à d'autres relevés, à des situations vécues,…) Interprétation des données en les confrontant à d'autres sources (ses pairs, divers médias,…) ou à d'autres situations (au vécu, à l'expérimentation,…) Distinction entre ce qui relève des résultats, des constats, de ce qui relève de l'interprétation qu'on en fait et qui peut être remise en question Proposition d'une explication; élaboration d'une règle, d'une loi, d'un principe, d'un modèle,… Validation des propositions par un débat scientifique , fondant l'argumentation sur la mise en regard des interprétations et des données prises en compte avec les modèles",
+       "years": [
+        5,
+        6,
+        7,
+        8
+       ]
+      }
+     ],
+     "attentes": [
+      {
+       "id": 2872,
+       "text": "confronte ses résultats d'observation, d'expérimentation pour infirmer ou corroborer des hypothèses"
+      }
+     ]
+    },
+    {
+     "id": 2539,
+     "path": [
+      "Développement de la démarche scientifique"
+     ],
+     "steps": [
+      {
+       "id": 5106,
+       "text": "Communication",
+       "years": [
+        5,
+        6,
+        7,
+        8
+       ]
+      }
+     ],
+     "attentes": []
+    },
+    {
+     "id": 2541,
+     "path": [
+      "Développement de la démarche scientifique"
+     ],
+     "steps": [
+      {
+       "id": 5108,
+       "text": "Présentation orale ou écrite de certaines phases d'une recherche (question de recherche, hypothèse, expérimentation, observations, résultats, interprétation,…) à l'aide de différents supports (image, dessin, texte, tableau, graphique,…)",
+       "years": [
+        5,
+        6,
+        7,
+        8
+       ]
+      }
+     ],
+     "attentes": [
+      {
+       "id": 2873,
+       "text": "reconnaît certaines phases d'une recherche communique certaines phases d'une recherche"
+      }
+     ]
+    },
+    {
+     "id": 2542,
+     "path": [
+      "Le corps humain dans sa globalité (1, 8, 9)"
+     ],
+     "steps": [
+      {
+       "id": 5109,
+       "text": "Mise en évidence des organes et fonctions du corps touchés par certains comportements, néfastes ou bénéfiques (concernant l'alimentation, le sommeil, l'activité physique,…) dans une perspective de prévention",
+       "years": [
+        5,
+        6
+       ]
+      },
+      {
+       "id": 5110,
+       "text": "Mise en évidence des organes et fonctions du corps touchés par certains comportements, néfastes ou bénéfiques concernant l'alimentation, le sommeil, l'activité physique, l'audition,… (tabagisme, alcoolisme, dopage,…) dans une perspective de prévention",
+       "years": [
+        7,
+        8
+       ]
+      }
+     ],
+     "attentes": [
+      {
+       "id": 2874,
+       "text": "énumère quelques besoins fondamentaux au bon fonctionnement du corps repère quelques comportements à risques et les explicite cf. Attentes liées au Développement de la démarche scientifique"
+      }
+     ]
+    },
+    {
+     "id": 2543,
+     "path": [
+      "Le corps humain dans sa globalité (1, 8, 9)"
+     ],
+     "steps": [
+      {
+       "id": 5111,
+       "text": "Comparaison de diverses représentations ou modélisations du corps humain pour y localiser les organes étudiés",
+       "years": [
+        5,
+        6,
+        7,
+        8
+       ]
+      }
+     ],
+     "attentes": []
+    },
+    {
+     "id": 844,
+     "path": [
+      "Organe des sens (2, 7)"
+     ],
+     "steps": [
+      {
+       "id": 2179,
+       "text": "Catégorisation des informations captées par le corps selon les 5 sens et identification des organes concernés Analyse des conséquences de l'absence d'un sens (jouer à l'aveugle, au sourd, mettre des gants,…)",
+       "years": [
+        5,
+        6,
+        7,
+        8
+       ]
+      }
+     ],
+     "attentes": [
+      {
+       "id": 938,
+       "text": "associe une information captée par le corps à un organe sensoriel cf. Attentes liées au Développement de la démarche scientifique"
+      }
+     ]
+    },
+    {
+     "id": 845,
+     "path": [
+      "Sources d'énergie et transformation"
+     ],
+     "steps": [
+      {
+       "id": 2180,
+       "text": "Mise en évidence des principes d'une alimentation équilibrée",
+       "years": [
+        5,
+        6
+       ]
+      },
+      {
+       "id": 2181,
+       "text": "Représentation spontanée du cheminement des aliments dans le corps et confrontation avec des schémas anatomiques Mise en évidence des différents organes de l'appareil digestif : processus mécanique et chimique de transformation des aliments en nutriments, de leur assimilation et de leur élimination Schématisation des relations entre l'appareil digestif et l'appareil circulatoire",
+       "years": [
+        7,
+        8
+       ]
+      }
+     ],
+     "attentes": [
+      {
+       "id": 940,
+       "text": "situe et ordonne les principaux organes de l'appareil digestif (bouche, dents, œsophage, estomac, intestins, anus) décrit sommairement le fonctionnement et le rôle de ces principaux organes dans le processus de digestion en lien avec l'appareil circulatoire cf. Attentes liées au Développement de la démarche scientifique"
+      }
+     ]
+    },
+    {
+     "id": 846,
+     "path": [
+      "Respiration externe (4, 7, 9)"
+     ],
+     "steps": [
+      {
+       "id": 2182,
+       "text": "Représentation spontanée du cheminement de l'air dans le corps et confrontation avec des schémas anatomiques Mise en évidence des relations entre l'appareil respiratoire et l'appareil circulatoire (dénombrement des respirations et pulsations cardiaques selon l'activité du corps) Mesure du volume d'air éjecté par respiration normale ou forcée",
+       "years": [
+        5,
+        6
+       ]
+      }
+     ],
+     "attentes": [
+      {
+       "id": 943,
+       "text": "situe, ordonne et décrit sommairement le fonctionnement des principaux organes de l'appareil respiratoire (bouche, nez, trachée, poumons) établit une relation entre l'intensité de l'activité physique et les appareils circulatoire et respiratoire cf. Attentes liées au Développement de la démarche scientifique"
+      }
+     ]
+    },
+    {
+     "id": 2544,
+     "path": [
+      "Locomotion et mouvement (5, 7, 9"
+     ],
+     "steps": [
+      {
+       "id": 5112,
+       "text": "Construction de sa représentation du squelette par : la schématisation de l'intérieur du corps humain (squelette) l'amélioration par palpation de son propre corps la vérification à l'aide de différents médias (schémas, photos, modèles en 3 dimensions,…)",
+       "years": [
+        5,
+        6
+       ]
+      },
+      {
+       "id": 5113,
+       "text": "Comparaison du squelette d'un Homme et de celui d'autres vertébrés en repérant les os principaux pour comprendre le fonctionnement du système locomoteur et son lien avec le mode de vie",
+       "years": [
+        7,
+        8
+       ]
+      }
+     ],
+     "attentes": [
+      {
+       "id": 2875,
+       "text": "complète un schéma du squelette à l'aide de divers documents ; situe les os principaux distingue divers types d'articulations et les situe dans le corps humain cf. Attentes liées au Développement de la démarche scientifique"
+      }
+     ]
+    },
+    {
+     "id": 2545,
+     "path": [
+      "Locomotion et mouvement (5, 7, 9"
+     ],
+     "steps": [
+      {
+       "id": 5114,
+       "text": "Mise en évidence des différents mouvements du corps par : l'émission d' hypothèses sur les mouvements possibles et impossibles la catégorisation des mouvements (flexion, extension) et de différentes articulations (dans un axe, dans plusieurs directions) par expérimentation sur son corps la vérification à l'aide de différents médias (schémas, photos, modèles en 3 dimensions, animations,…)",
+       "years": [
+        5,
+        6
+       ]
+      },
+      {
+       "id": 5115,
+       "text": "Mise en évidence du fonctionnement des principaux muscles du bras (lieu d'attache, direction du mouvement), par la construction de modèles en 3D permettant de reproduire les mouvements et/ou par la consultation de différents médias",
+       "years": [
+        7,
+        8
+       ]
+      }
+     ],
+     "attentes": [
+      {
+       "id": 2876,
+       "text": "complète un schéma du squelette à l'aide de divers documents ; situe les os principaux distingue divers types d'articulations et les situe dans le corps humain cf. Attentes liées au Développement de la démarche scientifique"
+      }
+     ]
+    },
+    {
+     "id": 848,
+     "path": [
+      "Transformation du corps (6, 7, 9)"
+     ],
+     "steps": [
+      {
+       "id": 2187,
+       "text": "Observation de l'évolution du corps en procédant à des mesures régulières consignées dans un carnet personnel (taille, poids, pointure, dentition, cheveux,…)",
+       "years": [
+        5,
+        6
+       ]
+      },
+      {
+       "id": 2188,
+       "text": "Mise en évidence de l'évolution du corps humain tout au long de la vie ; description des caractéristiques de chaque étape (enfance, adolescence, adulte,…) et représentation à l'aide d'une frise temporelle",
+       "years": [
+        7,
+        8
+       ]
+      }
+     ],
+     "attentes": [
+      {
+       "id": 949,
+       "text": "cf. Attentes liées au Développement de la démarche scientifique"
+      }
+     ]
+    },
+    {
+     "id": 2546,
+     "path": [
+      "Transformation du corps (6, 7, 9)"
+     ],
+     "steps": [
+      {
+       "id": 5116,
+       "text": "Observation d'une faculté du corps à se régénérer (repousse des cheveux, des ongles et selon les opportunités: cicatrisation, hématome, recalcification d'un os cassé,…)",
+       "years": [
+        5,
+        6,
+        7,
+        8
+       ]
+      }
+     ],
+     "attentes": [
+      {
+       "id": 2877,
+       "text": "cf. Attentes liées au Développement de la démarche scientifique"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": 75,
+   "code": "MSN 28",
+   "name": "Déterminer des caractéristiques du monde vivant et de divers milieux et en tirer des conséquences pour la pérennité de la vie",
+   "domain": "Mathématiques et Sciences de la nature",
+   "groups": [
+    {
+     "id": 2557,
+     "path": [
+      "Développement de la démarche scientifique"
+     ],
+     "steps": [
+      {
+       "id": 5131,
+       "text": "Formulation de questions, d'hypothèses",
+       "years": [
+        5,
+        6,
+        7,
+        8
+       ]
+      }
+     ],
+     "attentes": []
+    },
+    {
+     "id": 2558,
+     "path": [
+      "Développement de la démarche scientifique"
+     ],
+     "steps": [
+      {
+       "id": 5132,
+       "text": "Formulation de quelques questions et hypothèses au sujet d'une problématique (oralement ou par écrit - dessin ou schéma intuitif, légende,…)",
+       "years": [
+        5,
+        6
+       ]
+      },
+      {
+       "id": 5133,
+       "text": "Formulation de quelques questions et hypothèses au sujet d'une problématique (oralement ou par écrit - dessin ou schéma intuitif, légende,…)",
+       "years": [
+        7,
+        8
+       ]
+      }
+     ],
+     "attentes": [
+      {
+       "id": 2889,
+       "text": "formule au moins une question et/ou une hypothèse qui utilise(nt) les éléments de la situation au sujet d'une problématique choisit une piste de recherche, un dispositif d'exploration qui permet de répondre à une question de recherche (dans une liste de propositions) met en évidence quelques facteurs (des variables et des constantes) intervenant dans l'explication d'une problématique"
+      }
+     ]
+    },
+    {
+     "id": 2559,
+     "path": [
+      "Développement de la démarche scientifique"
+     ],
+     "steps": [
+      {
+       "id": 5134,
+       "text": "Développement de stratégies d'exploration et/ou d'expérimentation, par : l'imagination d'une piste de recherche, d'un dispositif d'exploration, qui permet de répondre à une problématique, à une question de recherche l'anticipation des résultats, la mise en évidence de quelques facteurs (variables) qui peuvent intervenir dans l'explication d'un phénomène observé ou expérimenté la détermination des facteurs à observer, impliquant de déterminer des invariants la mise en œuvre d'un dispositif expérimental ou d'exploration (démontage d'un objet technique) qui a été imaginé ou proposé",
+       "years": [
+        5,
+        6,
+        7,
+        8
+       ]
+      }
+     ],
+     "attentes": [
+      {
+       "id": 2890,
+       "text": "formule au moins une question et/ou une hypothèse qui utilise(nt) les éléments de la situation au sujet d'une problématique choisit une piste de recherche, un dispositif d'exploration qui permet de répondre à une question de recherche (dans une liste de propositions) met en évidence quelques facteurs (des variables et des constantes) intervenant dans l'explication d'une problématique"
+      }
+     ]
+    },
+    {
+     "id": 2560,
+     "path": [
+      "Développement de la démarche scientifique"
+     ],
+     "steps": [
+      {
+       "id": 5135,
+       "text": "Récolte et mise en forme des données",
+       "years": [
+        5,
+        6,
+        7,
+        8
+       ]
+      }
+     ],
+     "attentes": []
+    },
+    {
+     "id": 2562,
+     "path": [
+      "Développement de la démarche scientifique"
+     ],
+     "steps": [
+      {
+       "id": 5137,
+       "text": "Relevé fidèle des résultats, des observations et/ou des mesures effectuées (dessin d'observation, photo, texte, nombre, schéma,…) ; tenue d'un journal d'observations",
+       "years": [
+        5,
+        6,
+        7,
+        8
+       ]
+      }
+     ],
+     "attentes": [
+      {
+       "id": 2891,
+       "text": "récolte des résultats ou des observations pertinents en regard de la problématique étudiée choisit un ou plusieurs instruments de mesure adéquats dans une problématique donnée utilise correctement des instruments de mesure (longueur, capacité, masse, durée, température) organise des données à l'aide de différents outils de représentation"
+      }
+     ]
+    },
+    {
+     "id": 2563,
+     "path": [
+      "Développement de la démarche scientifique"
+     ],
+     "steps": [
+      {
+       "id": 5138,
+       "text": "Utilisation d'outils ou d'instruments adéquats pour les différentes observations ou expériences (règle, chronomètre, thermomètre,…)",
+       "years": [
+        5,
+        6
+       ]
+      },
+      {
+       "id": 5139,
+       "text": "Choix d'outils ou d'instruments adéquats pour une situation problématique donnée ; utilisation correcte de ces outils en prenant conscience des marges d'erreurs ou d'interprétation",
+       "years": [
+        7,
+        8
+       ]
+      }
+     ],
+     "attentes": [
+      {
+       "id": 2892,
+       "text": "récolte des résultats ou des observations pertinents en regard de la problématique étudiée choisit un ou plusieurs instruments de mesure adéquats dans une problématique donnée utilise correctement des instruments de mesure (longueur, capacité, masse, durée, température) organise des données à l'aide de différents outils de représentation"
+      }
+     ]
+    },
+    {
+     "id": 2564,
+     "path": [
+      "Développement de la démarche scientifique"
+     ],
+     "steps": [
+      {
+       "id": 5140,
+       "text": "Prise de mesures de : longueur, capacité, masse, durée, température,… à l'aide d' unités non standardisées (gobelets, nombre de tours,…) en les comparant aux unités conventionnelles",
+       "years": [
+        5,
+        6
+       ]
+      },
+      {
+       "id": 5141,
+       "text": "Prises de mesures de : longueur, capacité, masse, durée, température,… à l'aide des unités conventionnelles",
+       "years": [
+        7,
+        8
+       ]
+      }
+     ],
+     "attentes": [
+      {
+       "id": 2893,
+       "text": "récolte des résultats ou des observations pertinents en regard de la problématique étudiée choisit un ou plusieurs instruments de mesure adéquats dans une problématique donnée utilise correctement des instruments de mesure (longueur, capacité, masse, durée, température) organise des données à l'aide de différents outils de représentation"
+      }
+     ]
+    },
+    {
+     "id": 2565,
+     "path": [
+      "Développement de la démarche scientifique"
+     ],
+     "steps": [
+      {
+       "id": 5142,
+       "text": "Récolte de données complémentaires (photos, données numériques,…) dans différents médias (autres élèves, Internet,…)",
+       "years": [
+        5,
+        6,
+        7,
+        8
+       ]
+      }
+     ],
+     "attentes": [
+      {
+       "id": 2894,
+       "text": "récolte des résultats ou des observations pertinents en regard de la problématique étudiée choisit un ou plusieurs instruments de mesure adéquats dans une problématique donnée utilise correctement des instruments de mesure (longueur, capacité, masse, durée, température) organise des données à l'aide de différents outils de représentation"
+      }
+     ]
+    },
+    {
+     "id": 2566,
+     "path": [
+      "Développement de la démarche scientifique"
+     ],
+     "steps": [
+      {
+       "id": 5143,
+       "text": "Organisation des données à l'aide de diverses représentations (schéma, tableau, arbre de classement, diagramme, graphique, carte,…) à construire, à utiliser, à modifier et à enrichir",
+       "years": [
+        5,
+        6,
+        7,
+        8
+       ]
+      }
+     ],
+     "attentes": [
+      {
+       "id": 2895,
+       "text": "récolte des résultats ou des observations pertinents en regard de la problématique étudiée choisit un ou plusieurs instruments de mesure adéquats dans une problématique donnée utilise correctement des instruments de mesure (longueur, capacité, masse, durée, température) organise des données à l'aide de différents outils de représentation"
+      }
+     ]
+    },
+    {
+     "id": 2567,
+     "path": [
+      "Développement de la démarche scientifique"
+     ],
+     "steps": [
+      {
+       "id": 5144,
+       "text": "Analyse des données et élaboration d'un modèle explicatif",
+       "years": [
+        5,
+        6,
+        7,
+        8
+       ]
+      }
+     ],
+     "attentes": []
+    },
+    {
+     "id": 2569,
+     "path": [
+      "Développement de la démarche scientifique"
+     ],
+     "steps": [
+      {
+       "id": 5146,
+       "text": "Confrontation des données à d'autres situations (à d'autres relevés, à des situations vécues,…) Interprétation des données en les confrontant à d'autres sources (ses pairs, divers médias,…) ou à d'autres situations (au vécu, à l'expérimentation,…) Distinction entre ce qui relève des résultats, des constats, de ce qui relève de l'interprétation qu'on en fait et qui peut être remise en question Proposition d'une explication ; élaboration d'une règle, d'une loi, d'un principe, d'un modèle,… Validation des propositions par un débat scientifique, fondant l'argumentation sur la mise en regard des interprétations et des données prises en compte avec les modèles",
+       "years": [
+        5,
+        6,
+        7,
+        8
+       ]
+      }
+     ],
+     "attentes": [
+      {
+       "id": 2896,
+       "text": "confronte ses résultats d'observation, d'expérimentation pour infirmer ou corroborer des hypothèses"
+      }
+     ]
+    },
+    {
+     "id": 2570,
+     "path": [
+      "Développement de la démarche scientifique"
+     ],
+     "steps": [
+      {
+       "id": 5147,
+       "text": "Communication",
+       "years": [
+        5,
+        6,
+        7,
+        8
+       ]
+      }
+     ],
+     "attentes": []
+    },
+    {
+     "id": 2572,
+     "path": [
+      "Développement de la démarche scientifique"
+     ],
+     "steps": [
+      {
+       "id": 5149,
+       "text": "Présentation orale ou écrite de certaines phases d'une recherche (question de recherche, hypothèse, expérimentation, observations, résultats, interprétation,…) à l'aide de différents supports (image, dessin, texte, tableau, graphique,…)",
+       "years": [
+        5,
+        6,
+        7,
+        8
+       ]
+      }
+     ],
+     "attentes": [
+      {
+       "id": 2897,
+       "text": "reconnaît certaines phases d'une recherche communique certaines phases d'une recherche"
+      }
+     ]
+    },
+    {
+     "id": 853,
+     "path": [
+      "Le vivant : Unité et diversité (2, 3)"
+     ],
+     "steps": [
+      {
+       "id": 2202,
+       "text": "Observation et identification de diverses parties de végétaux (racine, écorce, tige, feuilles, fruits, fleurs, rameaux,…) , d'animaux (pattes, bec,…) et de champignons afin de comparer leur morphologie Recherche de critères définissant la notion de vivant en restant à l'échelle de l'organisme visible à l'œil nu (naître, se développer en interaction avec le milieu, se reproduire, mourir) Recherche de critères pour trier, classer ou ranger les êtres vivants Présentation des classements à l'aide de divers outils (tableaux, schémas, arbres de classement,…) Comparaison avec des critères et classements utilisés par les scientifiques Identification d'un être vivant à l'aide d'une clé de détermination simple Mise en évidence de la biodiversité en répertoriant quelques êtres vivants d'un milieu étudié",
+       "years": [
+        5,
+        6,
+        7,
+        8
+       ]
+      }
+     ],
+     "attentes": [
+      {
+       "id": 960,
+       "text": "différencie vivant/non vivant par des critères à l'échelle de l'organisme (naître, croître, se reproduire, mourir) propose un critère de classement et l'utilise identifie et classe quelques êtres vivants à l'aide de documents de référence"
+      }
+     ]
+    },
+    {
+     "id": 854,
+     "path": [
+      "Le vivant : Unité et diversité (2, 3)"
+     ],
+     "steps": [
+      {
+       "id": 2203,
+       "text": "Mise en lien de la morphologie de diverses espèces animales avec : leur régime alimentaire (carnivore, granivore, herbivore,…) leur mode de locomotion (marche, course, vol, nage,…) leurs stratégies de protection ou d'attaques (camouflage, venin,… - affût, poursuite, piège,…) Étude des relations alimentaires entre les êtres vivants (chaîne alimentaire, pyramide alimentaire,…) et identification des producteurs (végétaux), des consommateurs 1 (herbivores), des consommateurs 2 (carnivores ou prédateurs) et des décomposeurs sur un schéma montrant les relations alimentaires dans un milieu naturel",
+       "years": [
+        5,
+        6,
+        7,
+        8
+       ]
+      }
+     ],
+     "attentes": [
+      {
+       "id": 963,
+       "text": "établit un lien entre une particularité morphologique d'un animal et son mode de vie"
+      }
+     ]
+    },
+    {
+     "id": 855,
+     "path": [
+      "Interdépendance (Les êtres vivants entre eux et avec leur milieu) (3)"
+     ],
+     "steps": [
+      {
+       "id": 2204,
+       "text": "Pour un milieu étudié : comparaison et analyse des relations (symbiose, prédation, parasitisme, compétition,…) entre êtres vivants analyse des liens entre animaux, plantes,… et le milieu afin de montrer les interdépendances (disponibilité en nourriture, possibilité de protection, de croissance, conditions favorables pour la reproduction,…) et leur implication pour la biodiversité analyse de différents documents (schémas, textes, films,…) présentant ces relations",
+       "years": [
+        5,
+        6,
+        7,
+        8
+       ]
+      }
+     ],
+     "attentes": [
+      {
+       "id": 964,
+       "text": "caractérise une relation entre êtres vivants caractérise une relation entre un être vivant et son milieu cf. Attentes liées au Développement de la démarche scientifique"
+      }
+     ]
+    },
+    {
+     "id": 856,
+     "path": [
+      "Cycles de vie des animaux, des végétaux, et leur comparaison (4)"
+     ],
+     "steps": [
+      {
+       "id": 2205,
+       "text": "Étude de différentes phases du cycle de vie d'un animal par l'organisation d'un élevage (asticot-mouche; chenille-papillon; fourmis, poussins ; souris ;…)",
+       "years": [
+        5,
+        6
+       ]
+      },
+      {
+       "id": 2206,
+       "text": "Comparer différentes phases du cycle de vie de plusieurs animaux pour mettre en évidence l'unité et la diversité des étapes de la reproduction (fécondation, œuf, éclosion, développement jusqu'à l'âge adulte,…) Comparaison des stratégies de reproduction de différentes classes d'animaux pour assurer la perpétuation de l'espèce (peu ou beaucoup d'œufs, développement à l'intérieur ou à l'extérieur du corps,…)",
+       "years": [
+        7,
+        8
+       ]
+      }
+     ],
+     "attentes": [
+      {
+       "id": 967,
+       "text": "ordonne différentes phases de développement d'un animal cf. Attentes liées au Développement de la démarche scientifique"
+      }
+     ]
+    },
+    {
+     "id": 857,
+     "path": [
+      "Cycles de vie des animaux, des végétaux, et leur comparaison (4)"
+     ],
+     "steps": [
+      {
+       "id": 2207,
+       "text": "Récolte de différentes graines (gland, marron, pépin de pomme, lentille, haricot, pois, fève,…) pour définir leur fonction (unité) et constater leurs différences (diversité de formes, de couleurs,…) Expérimentation des conditions de germination Étude des différentes phases du cycle de vie d'une plante par l'organisation d'une plantation, observations dans le milieu, confrontation à des documents,… Étude de la croissance des plantes par l'observation et la prise de note des marques de l'évolution saisonnière sur quelques arbres ou arbustes témoins proches de l'école (rougissement des feuilles, perte des feuilles, rameau avec bourgeons, éclosion de la première feuille, croissance des rameaux,…)",
+       "years": [
+        5,
+        6
+       ]
+      },
+      {
+       "id": 2208,
+       "text": "Mise en évidence de l'unité du cycle de vie de toute plante (fécondation, développement, mort,…) Étude du cycle de vie des plantes à fleur, avec un accent sur leur reproduction : pollinisation, développement de la fleur et évolution en fruit, notamment par l'observation de plantes diversifiées dans leur milieu et/ou par leur culture (plants de tomates, de petit pois, de haricots, cerisier, pommier, érable, chêne,…) Comparaison des stratégies adoptées par les plantes pour assurer la perpétuation de l'espèce (repartir des racines, faire des fleurs et des graines,… ; les disséminer par le vent, par les animaux,…)",
+       "years": [
+        7,
+        8
+       ]
+      }
+     ],
+     "attentes": [
+      {
+       "id": 969,
+       "text": "ordonne différentes phases de développement d'un végétal (germination, croissance, floraison, pollinisation, fécondation, maturation du fruit et développement des graines, dissémination des graines) cf. Attentes liées au Développement de la démarche scientifique"
+      }
+     ]
+    },
+    {
+     "id": 858,
+     "path": [
+      "Cycles de vie des animaux, des végétaux, et leur comparaison (4)"
+     ],
+     "steps": [
+      {
+       "id": 2209,
+       "text": "Comparaison des stratégies de divers animaux (migration, hibernation, survie à un certain stade de développement,…) et de diverses plantes (en graine chez les annuelles ; par conservation d'une partie de la plante chez les vivaces, y c. les arbres,…) pour survivre à l'hiver",
+       "years": [
+        5,
+        6
+       ]
+      },
+      {
+       "id": 2210,
+       "text": "Comparaison entre la graine (végétal) et l'œuf (animal) et mise en évidence du rôle identique joué dans le cycle de vie (détenir l'information pour développer un individu)",
+       "years": [
+        7,
+        8
+       ]
+      }
+     ],
+     "attentes": [
+      {
+       "id": 971,
+       "text": "repère une similitude entre l'œuf et la graine cite une adaptation développée par les animaux et par les végétaux pour survivre à l'hiver"
+      }
+     ]
+    },
+    {
+     "id": 859,
+     "path": [
+      "Écosystèmes (équilibre et fragilité) (5, 6)"
+     ],
+     "steps": [
+      {
+       "id": 2211,
+       "text": "Utilisation des informations obtenues lors de l'étude d'un milieu pour émettre des hypothèses sur ce qui changerait si l'on modifiait ce milieu (élimination de certaines espèces, assèchement, enlèvement de terre, coupe fréquente de l'herbe,…) et pour en analyser leur pertinence",
+       "years": [
+        5,
+        6,
+        7,
+        8
+       ]
+      }
+     ],
+     "attentes": [
+      {
+       "id": 973,
+       "text": "décrit les conséquences (positives ou négatives) d'une intervention humaine sur un milieu naturel compare un milieu diversifié et un milieu peu diversifié en se basant sur leur description cf. Attentes liées au Développement de la démarche scientifique"
+      }
+     ]
+    },
+    {
+     "id": 2573,
+     "path": [
+      "Écosystèmes (équilibre et fragilité) (5, 6)"
+     ],
+     "steps": [
+      {
+       "id": 5150,
+       "text": "Mise en évidence de la variation de biodiversité en comparant un milieu avant et après l'intervention de l'Homme (néfaste ou bénéfique) Exploitation d'un fait d'actualité pour montrer la fragilité des milieux naturels (incendie, marée noire, pollutions diverses, disparition d'espèces, déforestation,…)",
+       "years": [
+        5,
+        6,
+        7,
+        8
+       ]
+      }
+     ],
+     "attentes": [
+      {
+       "id": 2898,
+       "text": "décrit les conséquences (positives ou négatives) d'une intervention humaine sur un milieu naturel compare un milieu diversifié et un milieu peu diversifié en se basant sur leur description cf. Attentes liées au Développement de la démarche scientifique"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": 74,
+   "code": "SHS 21",
+   "name": "Identifier les relations existant entre les activités humaines et l'organisation de l'espace",
+   "domain": "Sciences humaines et sociales",
+   "groups": [
+    {
+     "id": 2579,
+     "path": [],
+     "steps": [
+      {
+       "id": 5158,
+       "text": "Mon canton, un espace (6e) Mon canton, un espace (6e)",
+       "years": [
+        5,
+        6
+       ]
+      },
+      {
+       "id": 5159,
+       "text": "Géographie 7-8",
+       "years": [
+        7,
+        8
+       ]
+      }
+     ],
+     "attentes": []
+    },
+    {
+     "id": 1373,
+     "path": [
+      "Espaces concernés"
+     ],
+     "steps": [
+      {
+       "id": 3566,
+       "text": "Espace vécu, fréquenté (observation indirecte, région proche) avec mise en évidence des liens avec des espaces plus lointains",
+       "years": [
+        5,
+        6
+       ]
+      },
+      {
+       "id": 3567,
+       "text": "Espace vécu, fréquenté (observation directe) ou documenté (observation indirecte, régions suisses ou voisines) en insistant sur les relations entre l'échelon régional et l'échelon national",
+       "years": [
+        7,
+        8
+       ]
+      }
+     ],
+     "attentes": []
+    },
+    {
+     "id": 1364,
+     "path": [
+      "(SE) QUESTIONNER ET ANALYSER"
+     ],
+     "steps": [
+      {
+       "id": 3547,
+       "text": "Observation, questionnement et hypothèses concernant l'organisation et l'aménagement de l'espace par l'homme pour répondre aux besoins fondamentaux.",
+       "years": [
+        5,
+        6,
+        7,
+        8
+       ]
+      }
+     ],
+     "attentes": []
+    },
+    {
+     "id": 2608,
+     "path": [
+      "(SE) QUESTIONNER ET ANALYSER"
+     ],
+     "steps": [
+      {
+       "id": 5246,
+       "text": "Identification et catégorisation des besoins vitaux et secondaires (se protéger, s'alimenter, respirer / communiquer, vivre en communauté, se déplacer, apprendre,…)",
+       "years": [
+        5,
+        6,
+        7,
+        8
+       ]
+      }
+     ],
+     "attentes": []
+    },
+    {
+     "id": 1365,
+     "path": [
+      "(SE) QUESTIONNER ET ANALYSER"
+     ],
+     "steps": [
+      {
+       "id": 3549,
+       "text": "Identification, dans l'espace étudié, de lieux répondant plus spécifiquement à l'un ou l'autre de ces besoins (habitation/zones de population, commerce/filière de production, centre sportif/région touristique, aéroport/nœud autoroutier,…)",
+       "years": [
+        5,
+        6,
+        7,
+        8
+       ]
+      }
+     ],
+     "attentes": [
+      {
+       "id": 1927,
+       "text": "identifie à quel type de besoin un lieu peut répondre"
+      }
+     ]
+    },
+    {
+     "id": 1374,
+     "path": [
+      "(SE) QUESTIONNER ET ANALYSER",
+      "Acteur-s / qui ? pour faire quoi ?"
+     ],
+     "steps": [
+      {
+       "id": 3568,
+       "text": "Identification et caractérisation de différents groupes de personnes concernées (habitants, utilisateurs, employés, producteurs,…) et de son propre positionnement parmi les acteurs Classement des personnes en catégories d' acteurs (individuels ou collectifs) : appartenant au domaine public ou privé économiques, sociaux ou politiques",
+       "years": [
+        5,
+        6,
+        7,
+        8
+       ]
+      }
+     ],
+     "attentes": [
+      {
+       "id": 1935,
+       "text": "selon la situation, identifie, catégorise et décrit le rôle des acteurs concernés"
+      }
+     ]
+    },
+    {
+     "id": 1375,
+     "path": [
+      "(SE) QUESTIONNER ET ANALYSER",
+      "Acteur-s / qui ? pour faire quoi ?"
+     ],
+     "steps": [
+      {
+       "id": 3569,
+       "text": "différenciation entre un producteur, un distributeur et un consommateur en se basant sur une filière de production",
+       "years": [
+        7,
+        8
+       ]
+      }
+     ],
+     "attentes": []
+    },
+    {
+     "id": 1376,
+     "path": [
+      "(SE) QUESTIONNER ET ANALYSER",
+      "Acteur-s / qui ? pour faire quoi ?"
+     ],
+     "steps": [
+      {
+       "id": 3570,
+       "text": "Identification de ses propres représentations d'un espace et des représentations différentes que peuvent en avoir les acteurs selon le groupe auquel ils appartiennent",
+       "years": [
+        5,
+        6,
+        7,
+        8
+       ]
+      }
+     ],
+     "attentes": []
+    },
+    {
+     "id": 1377,
+     "path": [
+      "(SE) QUESTIONNER ET ANALYSER",
+      "Localisation / où ? pourquoi là ?"
+     ],
+     "steps": [
+      {
+       "id": 3571,
+       "text": "Description du lieu et mise en évidence de raisons pouvant expliquer sa localisation : raisons naturelles : identification de quelques caractéristiques du site (hydrographie, relief, paysage, ensoleillement) raisons sociales ou économiques : approche de la notion de proximité (de la famille, des commerces,…) et de prix raisons culturelles (histoire, habitudes familiales, langue, savoir-faire) Identification des relations du lieu avec l'extérieur (limites et accès)",
+       "years": [
+        5,
+        6,
+        7,
+        8
+       ]
+      }
+     ],
+     "attentes": [
+      {
+       "id": 1936,
+       "text": "décrit un lieu : en nommant quelques caractéristiques de son site et de sa situation en identifiant ses limites et des possibilités d'accès en citant au moins deux raisons pouvant expliquer sa localisation"
+      }
+     ]
+    },
+    {
+     "id": 1378,
+     "path": [
+      "(SE) QUESTIONNER ET ANALYSER",
+      "Organisation de l'espace / comment les sociétés organisent-elles l'espace en fonction des buts recherchés ?"
+     ],
+     "steps": [
+      {
+       "id": 3572,
+       "text": "Identification des différentes parties d'un lieu et des relations entre elles, de leurs fonctions et utilisations (habitat, loisirs, approvisionnement, échanges, accueil, passage, activité, transformation,…)",
+       "years": [
+        5,
+        6,
+        7,
+        8
+       ]
+      }
+     ],
+     "attentes": [
+      {
+       "id": 1937,
+       "text": "identifie et classe des lieux (ou des parties de lieux) selon leur-s fonction-s"
+      }
+     ]
+    },
+    {
+     "id": 1379,
+     "path": [
+      "(SE) QUESTIONNER ET ANALYSER",
+      "Organisation de l'espace / comment les sociétés organisent-elles l'espace en fonction des buts recherchés ?"
+     ],
+     "steps": [
+      {
+       "id": 3573,
+       "text": "Localisation et identification des moyens utilisés (aménagements liés aux activités humaines) :",
+       "years": [
+        5,
+        6,
+        7,
+        8
+       ]
+      }
+     ],
+     "attentes": []
+    },
+    {
+     "id": 1380,
+     "path": [
+      "(SE) QUESTIONNER ET ANALYSER",
+      "Organisation de l'espace / comment les sociétés organisent-elles l'espace en fonction des buts recherchés ?"
+     ],
+     "steps": [
+      {
+       "id": 3574,
+       "text": "pour distinguer les zones et marquer leurs limites pour relier les lieux, les zones, les territoires différents (accès) pour approvisionner (eau, énergies,…) et évacuer (eaux usées, déchets,…) pour embellir, sécuriser, attirer,… pour éviter / réduire les nuisances envers les personnes et l'environnement",
+       "years": [
+        5,
+        6,
+        7,
+        8
+       ]
+      }
+     ],
+     "attentes": [
+      {
+       "id": 1938,
+       "text": "délimite des zones géographiques (habitations, activités, voies et nœuds de communication,…) identifie les différents types de découpage de l'espace (politique, économique, linguistique, naturel) en Suisse et en zone frontalière repère des éléments de l'espace liés aux aménagements et les met en relation avec les buts recherchés"
+      }
+     ]
+    },
+    {
+     "id": 1381,
+     "path": [
+      "(SE) QUESTIONNER ET ANALYSER",
+      "Organisation de l'espace / comment les sociétés organisent-elles l'espace en fonction des buts recherchés ?"
+     ],
+     "steps": [
+      {
+       "id": 3575,
+       "text": "Comparaison de l'organisation de différents lieux ayant les mêmes fonctions (étendue, limites, aménagements: bâtiments, voies de communication,…)",
+       "years": [
+        7,
+        8
+       ]
+      }
+     ],
+     "attentes": [
+      {
+       "id": 1939,
+       "text": "compare l'organisation de deux lieux selon au moins 3 critères géographiques pertinents"
+      }
+     ]
+    },
+    {
+     "id": 1382,
+     "path": [
+      "(SE) QUESTIONNER ET ANALYSER",
+      "Organisation de l'espace / comment les sociétés organisent-elles l'espace en fonction des buts recherchés ?"
+     ],
+     "steps": [
+      {
+       "id": 3576,
+       "text": "Identification de quelques impacts environnementaux, sociaux et économiques liés aux activités humaines et à l'aménagement de l'espace",
+       "years": [
+        5,
+        6,
+        7,
+        8
+       ]
+      }
+     ],
+     "attentes": [
+      {
+       "id": 1940,
+       "text": "dans une situation donnée, met en relation des aménagements liés aux activités humaines et leur impact sur la qualité de vie des personnes ou sur l'environnement"
+      }
+     ]
+    },
+    {
+     "id": 1385,
+     "path": [
+      "(SE) QUESTIONNER ET ANALYSER",
+      "Échelle / quels espaces, quels acteurs sont-ils concernés ?"
+     ],
+     "steps": [
+      {
+       "id": 3579,
+       "text": "Identification de deux échelles différentes au niveau local (appartement/quartier, quartier/ville, local /régional,…)",
+       "years": [
+        5,
+        6
+       ]
+      },
+      {
+       "id": 3580,
+       "text": "Identification des échelles concernées ou à prendre en compte selon la problématique (locale, régionale, nationale, continentale et mondiale)",
+       "years": [
+        7,
+        8
+       ]
+      }
+     ],
+     "attentes": [
+      {
+       "id": 1943,
+       "text": "identifie l' échelle des documents proposés : étendue spatiale et type d'informations"
+      }
+     ]
+    },
+    {
+     "id": 2609,
+     "path": [
+      "(S') INFORMER"
+     ],
+     "steps": [
+      {
+       "id": 5247,
+       "text": "Utilisation de divers médias :",
+       "years": [
+        5,
+        6,
+        7,
+        8
+       ]
+      }
+     ],
+     "attentes": []
+    },
+    {
+     "id": 1366,
+     "path": [
+      "(S') INFORMER"
+     ],
+     "steps": [
+      {
+       "id": 3551,
+       "text": "lecture d'images fixes et mobiles, extraction des informations pertinentes et mise en relation avec d'autres sources",
+       "years": [
+        5,
+        6
+       ]
+      },
+      {
+       "id": 3552,
+       "text": "lecture de tableaux, de graphiques, d'images fixes et mobiles, extraction des informations pertinentes et mise en relation avec d'autres sources",
+       "years": [
+        7,
+        8
+       ]
+      }
+     ],
+     "attentes": [
+      {
+       "id": 1928,
+       "text": "Identifie dans les documents à disposition, les informations pertinentes et utiles pour répondre à un questionnement géographique"
+      }
+     ]
+    },
+    {
+     "id": 1367,
+     "path": [
+      "(S') INFORMER"
+     ],
+     "steps": [
+      {
+       "id": 3553,
+       "text": "Sélection d'informations, comparaisons et mise en relation de sources diverses afin de répondre à une question donnée, de vérifier une hypothèse :",
+       "years": [
+        5,
+        6,
+        7,
+        8
+       ]
+      },
+      {
+       "id": 3554,
+       "text": "observation du terrain, documents photographiques, plans ou cartes simplifiés",
+       "years": [
+        5,
+        6
+       ]
+      },
+      {
+       "id": 3555,
+       "text": "outils géographiques diversifiés et complexifiés, provenant de médias variés",
+       "years": [
+        7,
+        8
+       ]
+      }
+     ],
+     "attentes": [
+      {
+       "id": 1929,
+       "text": "présente, oralement ou par écrit, le résultat d'une recherche en mettant en relation au moins 3 éléments différents parmi les suivants : schéma personnel, graphique, croquis, photographie, carte, texte"
+      }
+     ]
+    },
+    {
+     "id": 2610,
+     "path": [
+      "(S') INFORMER"
+     ],
+     "steps": [
+      {
+       "id": 5248,
+       "text": "Schématisation de l'espace en vue d'une présentation de lieux étudiés ou de déplacements, élaboration d'une représentation personnelle (schéma, plan, maquette,…): choix ou élaboration d'une légende pertinente vérification de la lisibilité de la représentation auprès des pairs et par comparaison avec des représentations diverses",
+       "years": [
+        5,
+        6,
+        7,
+        8
+       ]
+      }
+     ],
+     "attentes": [
+      {
+       "id": 2930,
+       "text": "présente, oralement ou par écrit, le résultat d'une recherche en mettant en relation au moins 3 éléments différents parmi les suivants : schéma personnel, graphique, croquis, photographie, carte, texte"
+      }
+     ]
+    },
+    {
+     "id": 1368,
+     "path": [
+      "(S') INFORMER"
+     ],
+     "steps": [
+      {
+       "id": 3557,
+       "text": "Appropriation puis utilisation d'un vocabulaire et de notions spécifiques en lien avec l'espace et la géographie",
+       "years": [
+        5,
+        6,
+        7,
+        8
+       ]
+      },
+      {
+       "id": 3558,
+       "text": "Zone, réseau, limites, frontières,… Relief, hydrographie, végétation, construction, aménagement,… Commune, canton, région, pays Échelle",
+       "years": [
+        5,
+        6,
+        7,
+        8
+       ]
+      }
+     ],
+     "attentes": [
+      {
+       "id": 1930,
+       "text": "connaît et utilise à bon escient la nomenclature et le vocabulaire liés aux situations travaillées"
+      }
+     ]
+    },
+    {
+     "id": 1369,
+     "path": [
+      "(SE) REPÉRER"
+     ],
+     "steps": [
+      {
+       "id": 3559,
+       "text": "Identification de repères (éléments significatifs permanents) sur le terrain, sur une photographie, un dessin, un plan simple, une carte Mise en relation entre la réalité et ces différents types de documents Appropriation des principales conventions de représentation de l'espace Identification et choix de points de repère communs et pertinents (formes, volumes,…) sur des cartes d' échelles différentes Dénomination des points de repère significatifs de l'espace étudié (nomenclature)",
+       "years": [
+        5,
+        6,
+        7,
+        8
+       ]
+      }
+     ],
+     "attentes": [
+      {
+       "id": 1931,
+       "text": "choisit et utilise les points de repère pertinents, les signes et symboles, permettant la représentation de l'espace"
+      }
+     ]
+    },
+    {
+     "id": 1370,
+     "path": [
+      "(SE) REPÉRER"
+     ],
+     "steps": [
+      {
+       "id": 3560,
+       "text": "Choix des outils géographiques les plus pertinents (selon le contexte, l' échelle ,…) et orientation de ces documents pour se situer dans l'espace Localisation de lieux étudiés sur des schémas, des plans et des cartes d'échelles différentes",
+       "years": [
+        5,
+        6,
+        7,
+        8
+       ]
+      }
+     ],
+     "attentes": [
+      {
+       "id": 1932,
+       "text": "choisit et utilise, parmi les outils à disposition, ceux permettant le repérage, la localisation et l'orientation de quelques éléments étudiés"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": 83,
+   "code": "SHS 22",
+   "name": "Identifier la manière dont les Hommes ont organisé leur vie collective à travers le temps, ici et ailleurs",
+   "domain": "Sciences humaines et sociales",
+   "groups": [
+    {
+     "id": 2614,
+     "path": [],
+     "steps": [
+      {
+       "id": 5255,
+       "text": "L'atelier de l'histoire",
+       "years": [
+        5,
+        6
+       ]
+      },
+      {
+       "id": 5256,
+       "text": "Histoire 7-8",
+       "years": [
+        7,
+        8
+       ]
+      }
+     ],
+     "attentes": []
+    },
+    {
+     "id": 2613,
+     "path": [
+      "Répartition des périodes étudiées"
+     ],
+     "steps": [
+      {
+       "id": 5253,
+       "text": "De la préhistoire à la fin de l'Antiquité",
+       "years": [
+        5,
+        6
+       ]
+      },
+      {
+       "id": 5254,
+       "text": "Du moyen Âge à l'Époque Contemporaine",
+       "years": [
+        7,
+        8
+       ]
+      }
+     ],
+     "attentes": []
+    },
+    {
+     "id": 15,
+     "path": [
+      "(SE) QUESTIONNER ET ANALYSER",
+      "Changements et permanence"
+     ],
+     "steps": [
+      {
+       "id": 30,
+       "text": "Observation et mise en relation de documents iconographiques et de textes décrivant le mode de vie et l'organisation sociale à certaines périodes, ainsi que le territoire concerné Identification des changements intervenus, de la permanence de certains éléments Questionnement et formulation d'hypothèses concernant l'évolution des modes de vie (les situations de la vie actuelle auxquelles cela correspond, ce qui a changé, ce qui est resté et pourquoi) Création et utilisation expérimentale de divers objets ou techniques (poterie, peinture, armes, outils, cuisine, jeux)",
+       "years": [
+        5,
+        6,
+        7,
+        8
+       ]
+      }
+     ],
+     "attentes": [
+      {
+       "id": 13,
+       "text": "caractérise selon 2 ou 3 critères le mode de vie à certaines périodes de l'histoire, dans certaines régions distingue, entre l'objet d'étude et la période actuelle ou d'autres périodes du passé, des éléments qui ont changé ou qui sont restés"
+      }
+     ]
+    },
+    {
+     "id": 16,
+     "path": [
+      "(SE) QUESTIONNER ET ANALYSER",
+      "Changements et permanence"
+     ],
+     "steps": [
+      {
+       "id": 31,
+       "text": "Identification et situation dans le temps d'événements qui ont contribué au changement Organisation de ces événements selon l'ordre chronologique (succession et simultanéité)",
+       "years": [
+        5,
+        6
+       ]
+      },
+      {
+       "id": 32,
+       "text": "Situation dans le temps et mise en relation d'événements constituant des moments de rupture (inventions, révolutions, réformes, découvertes,..)",
+       "years": [
+        7,
+        8
+       ]
+      }
+     ],
+     "attentes": [
+      {
+       "id": 14,
+       "text": "cite et commente des événements qui induisent un changement met en relation des personnages, des lieux et des événements repères"
+      }
+     ]
+    },
+    {
+     "id": 2615,
+     "path": [
+      "(SE) QUESTIONNER ET ANALYSER",
+      "Changements et permanence"
+     ],
+     "steps": [
+      {
+       "id": 5257,
+       "text": "Identification et description du rôle de personnages ou de groupes (acteurs individuels et collectifs) impliqués dans une relation sociale ou par un événement",
+       "years": [
+        5,
+        6,
+        7,
+        8
+       ]
+      }
+     ],
+     "attentes": [
+      {
+       "id": 2931,
+       "text": "identifie, catégorise et décrit le rôle des acteurs concernés par un événement"
+      }
+     ]
+    },
+    {
+     "id": 17,
+     "path": [
+      "(SE) QUESTIONNER ET ANALYSER",
+      "Mythes et réalité"
+     ],
+     "steps": [
+      {
+       "id": 3615,
+       "text": "Distinction entre fiction (récit, mythe , légende,…) et réalité",
+       "years": [
+        5,
+        6,
+        7,
+        8
+       ]
+      }
+     ],
+     "attentes": [
+      {
+       "id": 16,
+       "text": "distingue les personnages historiques des héros de fiction"
+      }
+     ]
+    },
+    {
+     "id": 1409,
+     "path": [
+      "(SE) QUESTIONNER ET ANALYSER",
+      "Mythes et réalité"
+     ],
+     "steps": [
+      {
+       "id": 3616,
+       "text": "Comparaison de diverses sources concernant un événement ou une période, mise en évidence de ressemblances et de différences dans leur représentation",
+       "years": [
+        5,
+        6
+       ]
+      },
+      {
+       "id": 3617,
+       "text": "Comparaison de diverses sources concernant un événement ou une période et mise en évidence de l'évolution des représentations",
+       "years": [
+        7,
+        8
+       ]
+      }
+     ],
+     "attentes": [
+      {
+       "id": 1959,
+       "text": "identifie des différences de représentation à propos d'un événement, d'une période"
+      }
+     ]
+    },
+    {
+     "id": 1410,
+     "path": [
+      "(SE) QUESTIONNER ET ANALYSER",
+      "Mythes et réalité"
+     ],
+     "steps": [
+      {
+       "id": 3618,
+       "text": "Questionnement sur l'authenticité des événements et des personnages, la véracité des reconstitutions",
+       "years": [
+        5,
+        6,
+        7,
+        8
+       ]
+      }
+     ],
+     "attentes": [
+      {
+       "id": 1960,
+       "text": "identifie des différences de représentation à propos d'un événement, d'une période"
+      }
+     ]
+    },
+    {
+     "id": 1411,
+     "path": [
+      "(SE) QUESTIONNER ET ANALYSER",
+      "Mythes et réalité"
+     ],
+     "steps": [
+      {
+       "id": 3619,
+       "text": "Mise en évidence de représentations erronées et « idées reçues » concernant les périodes historiques",
+       "years": [
+        5,
+        6,
+        7,
+        8
+       ]
+      }
+     ],
+     "attentes": []
+    },
+    {
+     "id": 18,
+     "path": [
+      "(SE) QUESTIONNER ET ANALYSER",
+      "Traces et mémoire"
+     ],
+     "steps": [
+      {
+       "id": 39,
+       "text": "Questionnement sur ce qui reste d'une période, d'un événement, sur les éléments (traces ou documents) qui permettent de les comprendre, sur ce qui a été conservé et pourquoi (esthétique, mémoire, valeur réelle ou sentimentale,…) Observation de traces du passé (objets, monuments, aménagement de l'espace,…) : matière, provenance, situation, condition, lieu et raison de leur conservation. Identification des renseignements qu'elles donnent Identification des héritages du passé, des conséquences sur la vie actuelle (répartition linguistique, religieuse, organisation sociale, politique, manifestation culturelle,…) , et des commémorations",
+       "years": [
+        5,
+        6,
+        7,
+        8
+       ]
+      }
+     ],
+     "attentes": [
+      {
+       "id": 18,
+       "text": "met en relation des objets avec la période où ils ont été produits, identifie le lieu et la raison de leur conservation identifie et situe dans le temps quelques événements de l'histoire locale ou nationale ayant laissé des traces dans la vie actuelle met en relation des éléments historiques et leur commémoration"
+      }
+     ]
+    },
+    {
+     "id": 1412,
+     "path": [
+      "(S') INFORMER"
+     ],
+     "steps": [
+      {
+       "id": 3620,
+       "text": "Exploitation et analyse des sources (gravures, photos, films, textes originaux, témoignages, articles,…) traitant d'un même sujet ou d'une même période, selon leur pertinence, leur authenticité",
+       "years": [
+        5,
+        6,
+        7,
+        8
+       ]
+      },
+      {
+       "id": 3621,
+       "text": "Exploration et identification de l'apport de diverses sources",
+       "years": [
+        5,
+        6
+       ]
+      },
+      {
+       "id": 3622,
+       "text": "Distinction entre sources historiques et reconstitutions",
+       "years": [
+        7,
+        8
+       ]
+      }
+     ],
+     "attentes": [
+      {
+       "id": 1961,
+       "text": "choisit dans les documents à disposition, les informations pertinentes et utiles pour la compréhension d'un événement"
+      }
+     ]
+    },
+    {
+     "id": 1413,
+     "path": [
+      "(S') INFORMER"
+     ],
+     "steps": [
+      {
+       "id": 3623,
+       "text": "Sélection d'informations, comparaison et mise en relation de sources diverses afin de :",
+       "years": [
+        5,
+        6,
+        7,
+        8
+       ]
+      },
+      {
+       "id": 3624,
+       "text": "répondre à une question donnée ou vérifier une hypothèse",
+       "years": [
+        5,
+        6
+       ]
+      },
+      {
+       "id": 3625,
+       "text": "décrire un changement, une évolution concernant un aspect de la vie quotidienne",
+       "years": [
+        5,
+        6
+       ]
+      },
+      {
+       "id": 3626,
+       "text": "répondre à une question donnée et vérifier une hypothèse présenter quelques caractéristiques d'une période, d'un événement, d'un personnage",
+       "years": [
+        7,
+        8
+       ]
+      },
+      {
+       "id": 3628,
+       "text": "décrire un changement, une évolution dans la vie quotidienne, la vie sociale",
+       "years": [
+        7,
+        8
+       ]
+      }
+     ],
+     "attentes": [
+      {
+       "id": 1962,
+       "text": "présente, oralement ou par écrit, le résultat d'une recherche en associant plusieurs éléments (textes, images, lignes du temps , carte,…)"
+      }
+     ]
+    },
+    {
+     "id": 20,
+     "path": [
+      "(S') INFORMER"
+     ],
+     "steps": [
+      {
+       "id": 47,
+       "text": "Appropriation d'un vocabulaire et de notions spécifiques au temps et à l'histoire",
+       "years": [
+        5,
+        6,
+        7,
+        8
+       ]
+      },
+      {
+       "id": 5259,
+       "text": "Date, période, durée, chronologie, déroulement Année, siècle, millénaire Événement, changement, évolution Société, religion, pouvoir,… Trace, source historique, reconstitution Préhistoire, Antiquité, Moyen Âge, Temps modernes, Époque contemporaine",
+       "years": [
+        5,
+        6,
+        7,
+        8
+       ]
+      }
+     ],
+     "attentes": [
+      {
+       "id": 22,
+       "text": "connaît et utilise en situation un vocabulaire adéquat pour décrire des éléments et les situer dans le temps"
+      }
+     ]
+    },
+    {
+     "id": 21,
+     "path": [
+      "SE REPÉRER"
+     ],
+     "steps": [
+      {
+       "id": 48,
+       "text": "Mise en évidence de la durée des périodes, de la chronologie (succession et simultanéité) des événements concernant l'histoire des Hommes ici et ailleurs, par l'utilisation et la construction de frises chronologiques Mise en relation avec des repères temporels liés à l'histoire familiale Attribution progressive d'éléments liés à chaque période ou événement (images, photos, mots-clés,…) permettant d'en identifier les caractéristiques Enrichissement de la frise historique par des éléments en lien avec l'actualité, ou évoqués dans d'autres domaines (arts, sciences, littérature,…)",
+       "years": [
+        5,
+        6,
+        7,
+        8
+       ]
+      }
+     ],
+     "attentes": [
+      {
+       "id": 23,
+       "text": "choisit la plus pertinente des représentations graphiques de l'écoulement du temps et l'utilise pour situer des périodes, des événements, des personnages caractérise, ordonne et situe dans le temps les grandes périodes de l'histoire"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": 80,
+   "code": "SHS 23",
+   "name": "S'approprier, en situation, des outils pertinents pour traiter des problématiques de sciences humaines et sociales",
+   "domain": "Sciences humaines et sociales",
+   "groups": [
+    {
+     "id": 1522,
+     "path": [],
+     "steps": [
+      {
+       "id": 3772,
+       "text": "Cet objectif n'est pas travaillé pour lui-même. Il s'active dans les autres axes seulement.",
+       "years": [
+        5,
+        6,
+        7,
+        8
+       ]
+      }
+     ],
+     "attentes": []
+    }
+   ]
+  },
+  {
+   "id": 85,
+   "code": "SHS 24",
+   "name": "Identifier les formes locales d’organisation politique et sociale",
+   "domain": "Sciences humaines et sociales",
+   "groups": [
+    {
+     "id": 2616,
+     "path": [
+      "Droits et devoirs de l'enfant"
+     ],
+     "steps": [
+      {
+       "id": 5260,
+       "text": "Initiation aux droits, devoirs et responsabilités de l'enfant (Convention relative aux droits de l'enfant)",
+       "years": [
+        5,
+        6
+       ]
+      },
+      {
+       "id": 5261,
+       "text": "Comparaison entre les droits et devoirs d'un enfant en Suisse et d'un enfant dans un autre pays",
+       "years": [
+        7,
+        8
+       ]
+      }
+     ],
+     "attentes": [
+      {
+       "id": 2932,
+       "text": "explicite quelques droits et devoirs de l'enfant"
+      }
+     ]
+    },
+    {
+     "id": 1383,
+     "path": [
+      "DÉCOUVRIR UNE SOCIÉTÉ LOCALE, HABITER UNE COMMUNE"
+     ],
+     "steps": [
+      {
+       "id": 3578,
+       "text": "Découverte du rôle et du fonctionnement de sociétés locales (culturelles, sportives, caritatives,…) Initiation au débat sur quelques choix de sociétés locales et simulation de votation",
+       "years": [
+        5,
+        6
+       ]
+      },
+      {
+       "id": 3629,
+       "text": "Initiation à l'organisation politique communale en fonction d'événements, si possible en lien avec l'actualité (élections, votations,…) Illustration des principales différences entre votations et élections communales et débat sur leurs enjeux Description de différents rôles des élus communaux (selon les spécificités de chaque canton) Identification du processus de prise de décision au niveau communal (distinction exécutif/législatif)",
+       "years": [
+        7,
+        8
+       ]
+      }
+     ],
+     "attentes": [
+      {
+       "id": 1941,
+       "text": "décrit quelques éléments du processus de décision communal à partir d'un cas concret identifie quelques éléments fondamentaux qui permettent de distinguer le pouvoir exécutif communal (maire/syndic, conseil communal/municipal) du pouvoir législatif communal (assemblée, conseil général, conseil de ville)"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": 88,
+   "code": "SHS 25",
+   "name": "Éveiller aux sens des valeurs humanistes et religieuses et identifier le fait religieux",
+   "domain": "Sciences humaines et sociales",
+   "groups": [
+    {
+     "id": 2624,
+     "path": [],
+     "steps": [
+      {
+       "id": 5273,
+       "text": "Approche des événements existentiels fondamentaux tels que naissance, mariage, mort… à travers les traditions et les pratiques religieuses (prières, rites de passage,…)",
+       "years": [
+        7,
+        8
+       ]
+      }
+     ],
+     "attentes": []
+    },
+    {
+     "id": 2625,
+     "path": [],
+     "steps": [
+      {
+       "id": 5274,
+       "text": "Découverte des différents types de croyances (un dieu, des dieux, des déesses: monothéisme, polythéisme, athéisme, agnosticisme)",
+       "years": [
+        7,
+        8
+       ]
+      }
+     ],
+     "attentes": []
+    },
+    {
+     "id": 2626,
+     "path": [],
+     "steps": [
+      {
+       "id": 5275,
+       "text": "Observation de la nécessité de règles, de valeurs et de lois au travers du décalogue et de personnages religieux tels que Abraham, Moïse, David, Salomon, Marie, Jésus, Mohamed, Siddharta Sensibilisation aux valeurs de justice, partage, liberté, dignité et paix en exploitant des situations vécues",
+       "years": [
+        5,
+        6
+       ]
+      },
+      {
+       "id": 5276,
+       "text": "Approche des valeurs (partage, liberté, dignité, solidarité, respect, responsabilité,…) à partir des témoins profanes et religieux d'hier et aujourd'hui",
+       "years": [
+        7,
+        8
+       ]
+      }
+     ],
+     "attentes": [
+      {
+       "id": 2938,
+       "text": "identifie les 10 commandements du décalogue explicite le bien-fondé de quelques règles de la vie de la classe (respect, justice,…) et de la société (partage, solidarité,…) reconnaît comme valeurs la justice, le partage, la liberté, la dignité…"
+      }
+     ]
+    },
+    {
+     "id": 2627,
+     "path": [],
+     "steps": [
+      {
+       "id": 5277,
+       "text": "Reconnaissance d'Abraham comme figure commune aux trois religions monothéistes à travers les textes respectifs",
+       "years": [
+        7,
+        8
+       ]
+      }
+     ],
+     "attentes": [
+      {
+       "id": 2939,
+       "text": "identifie Abraham comme personnage commun aux trois religions monothéistes"
+      }
+     ]
+    },
+    {
+     "id": 2628,
+     "path": [],
+     "steps": [
+      {
+       "id": 5278,
+       "text": "Approche de grandes figures bibliques telles que Moïse, David, Salomon,… Découverte du mode de vie en Palestine au temps de Jésus-Christ",
+       "years": [
+        5,
+        6
+       ]
+      },
+      {
+       "id": 5279,
+       "text": "Identification et signification de quelques aspects du judaïsme (monothéisme, décalogue,…)",
+       "years": [
+        7,
+        8
+       ]
+      }
+     ],
+     "attentes": [
+      {
+       "id": 2940,
+       "text": "retrace des épisodes de la vie de quelques personnages bibliques"
+      }
+     ]
+    },
+    {
+     "id": 2629,
+     "path": [],
+     "steps": [
+      {
+       "id": 5280,
+       "text": "Identification et signification des grandes étapes de la vie de Jésus-Christ",
+       "years": [
+        5,
+        6
+       ]
+      },
+      {
+       "id": 5281,
+       "text": "Découverte du message de Jésus-Christ (amour, pardon, prédilection pour les petits et les pauvres,…)",
+       "years": [
+        7,
+        8
+       ]
+      }
+     ],
+     "attentes": [
+      {
+       "id": 2941,
+       "text": "retrace les grandes étapes de la vie de Jésus-Christ (annonciation, nativité, baptême, passion…) et les reconnaît dans des œuvres d'art"
+      }
+     ]
+    },
+    {
+     "id": 2630,
+     "path": [],
+     "steps": [
+      {
+       "id": 5282,
+       "text": "Découverte et identification des étapes de la vie de Mohamed Découverte et identification des étapes de la vie de Siddharta",
+       "years": [
+        5,
+        6
+       ]
+      },
+      {
+       "id": 5283,
+       "text": "Identification et signification de quelques aspects de l'islam (5 piliers,…) Identification et signification de quelques aspects du bouddhisme (libération de la souffrance, réincarnation,…)",
+       "years": [
+        7,
+        8
+       ]
+      }
+     ],
+     "attentes": [
+      {
+       "id": 2942,
+       "text": "retrace les grandes étapes de la vie de Moïse, de Mohamed, de Siddharta"
+      }
+     ]
+    },
+    {
+     "id": 2631,
+     "path": [],
+     "steps": [
+      {
+       "id": 5284,
+       "text": "Découverte des trois principales confessions chrétiennes (catholique, orthodoxe, réformée) , leurs rites, leurs ministres, leurs lieux de culte, leurs symboles, leurs différences et leur rapprochement œcuménique",
+       "years": [
+        5,
+        6
+       ]
+      },
+      {
+       "id": 5285,
+       "text": "Approfondissement des principales fêtes chrétiennes et de leur signification (Noël, Pâques, Ascension, Pentecôte) Identification des principales fêtes juives et musulmanes",
+       "years": [
+        7,
+        8
+       ]
+      }
+     ],
+     "attentes": [
+      {
+       "id": 2943,
+       "text": "cite les trois grandes confessions chrétiennes et quelques rites importants explique la signification des principales fêtes religieuses cite quelques fêtes juives et musulmanes désigne des lieux de culte chrétien et quelques symboles liturgiques (croix, poisson, pain, vin)"
+      }
+     ]
+    },
+    {
+     "id": 2632,
+     "path": [],
+     "steps": [
+      {
+       "id": 5286,
+       "text": "Observation d'œuvres d'art sacré en lien avec les thèmes étudiés",
+       "years": [
+        5,
+        6
+       ]
+      },
+      {
+       "id": 5287,
+       "text": "Observation et interprétation de l'art religieux (architecture, musique, peinture…) en lien avec les thèmes étudiés",
+       "years": [
+        7,
+        8
+       ]
+      }
+     ],
+     "attentes": []
+    },
+    {
+     "id": 2633,
+     "path": [],
+     "steps": [
+      {
+       "id": 5288,
+       "text": "Identification et distinction des lieux de culte (cathédrale, temples, église, synagogue, mosquée,…)",
+       "years": [
+        7,
+        8
+       ]
+      }
+     ],
+     "attentes": [
+      {
+       "id": 2944,
+       "text": "identifie les lieux de culte des grandes religions (synagogue, temples, église, mosquée…) reconnaît des lieux de cultes importants du paysage suisse (cathédrale de Lausanne, de Genève, abbaye d'Einsiedeln, de St-Gall…)"
+      }
+     ]
+    },
+    {
+     "id": 2634,
+     "path": [],
+     "steps": [
+      {
+       "id": 5289,
+       "text": "Observation et analyse historique et sociologique du paysage religieux en Suisse",
+       "years": [
+        7,
+        8
+       ]
+      }
+     ],
+     "attentes": [
+      {
+       "id": 2945,
+       "text": "extrait des informations de textes, de graphiques, de cartes et d'images permettant de documenter une question sur le paysage religieux suisse"
+      }
+     ]
+    },
+    {
+     "id": 2635,
+     "path": [],
+     "steps": [
+      {
+       "id": 5290,
+       "text": "Découverte de récits cosmogoniques (Genèse, Mésopotamie, Grèce, Chine…) Distinction entre les approches scientifiques et religieuses sur les origines du monde",
+       "years": [
         7,
         8
        ]
