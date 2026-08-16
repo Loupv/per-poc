@@ -1,0 +1,107 @@
+[
+  {
+    "id": "x4945-1", "stepId": 4945, "status": "draft", "type": "multi",
+    "prompt": "Coche tous les nombres pairs (divisibles par 2).",
+    "choices": ["34", "57", "120", "81", "66"],
+    "correctIndices": [0, 2, 4],
+    "explanation": "Un nombre pair se termine par 0, 2, 4, 6 ou 8 : 34, 120 et 66."
+  },
+  {
+    "id": "x4898-1", "stepId": 4898, "status": "draft", "type": "order",
+    "prompt": "Range ces nombres du plus petit au plus grand.",
+    "items": ["999", "1'009", "1'090", "1'900"],
+    "explanation": "999 a trois chiffres, puis on compare les autres : 1'009 < 1'090 < 1'900."
+  },
+  {
+    "id": "x4943-1", "stepId": 4943, "status": "draft", "type": "multi",
+    "prompt": "Coche tous les multiples de 5.",
+    "choices": ["35", "52", "40", "54", "75"],
+    "correctIndices": [0, 2, 4],
+    "explanation": "Les multiples de 5 se terminent par 0 ou 5 : 35, 40 et 75."
+  },
+  {
+    "id": "x4975-1", "stepId": 4975, "status": "draft", "type": "match",
+    "prompt": "Associe chaque grandeur à son instrument de mesure.",
+    "pairs": [
+      ["une longueur", "la règle"],
+      ["une masse", "la balance"],
+      ["une durée", "le chronomètre"],
+      ["une température", "le thermomètre"]
+    ],
+    "explanation": "Chaque grandeur a son instrument : règle, balance, chronomètre, thermomètre."
+  },
+  {
+    "id": "x2179-1", "stepId": 2179, "status": "draft", "type": "match",
+    "prompt": "Associe chaque organe au sens qu'il permet.",
+    "pairs": [
+      ["l'œil", "la vue"],
+      ["l'oreille", "l'ouïe"],
+      ["le nez", "l'odorat"],
+      ["la langue", "le goût"]
+    ],
+    "explanation": "Et le cinquième sens, le toucher, passe par la peau !"
+  },
+  {
+    "id": "x2179-2", "stepId": 2179, "status": "draft", "type": "multi",
+    "prompt": "Coche les organes des sens.",
+    "choices": ["l'œil", "le foie", "l'oreille", "l'estomac", "la peau"],
+    "correctIndices": [0, 2, 4],
+    "explanation": "L'œil (vue), l'oreille (ouïe) et la peau (toucher). Le foie et l'estomac servent à la digestion."
+  },
+  {
+    "id": "x2203-1", "stepId": 2203, "status": "draft", "type": "sort",
+    "prompt": "Range chaque animal selon son régime alimentaire.",
+    "buckets": [
+      { "name": "Herbivore", "items": ["la vache", "le lapin"] },
+      { "name": "Carnivore", "items": ["le renard", "l'aigle"] }
+    ],
+    "explanation": "La vache et le lapin mangent des plantes ; le renard et l'aigle chassent d'autres animaux."
+  },
+  {
+    "id": "x2205-1", "stepId": 2205, "status": "draft", "type": "order",
+    "prompt": "Remets le cycle de vie du papillon dans l'ordre.",
+    "items": ["l'œuf", "la chenille", "la chrysalide", "le papillon"],
+    "explanation": "Œuf → chenille → chrysalide → papillon : c'est la métamorphose."
+  },
+  {
+    "id": "x5253-1", "stepId": 5253, "status": "draft", "type": "order",
+    "prompt": "Remets les grandes périodes de l'histoire dans l'ordre, de la plus ancienne à la plus récente.",
+    "items": ["la Préhistoire", "l'Antiquité", "le Moyen Âge", "l'époque moderne"],
+    "explanation": "La Préhistoire d'abord, puis l'Antiquité (avec l'écriture), le Moyen Âge et l'époque moderne."
+  },
+  {
+    "id": "x5246-1", "stepId": 5246, "status": "draft", "type": "sort",
+    "prompt": "Range chaque besoin dans la bonne catégorie.",
+    "buckets": [
+      { "name": "Besoin vital", "items": ["boire", "respirer", "dormir"] },
+      { "name": "Besoin secondaire", "items": ["jouer aux cartes", "aller au cinéma"] }
+    ],
+    "explanation": "Sans boire, respirer ou dormir, on ne peut pas vivre. Les loisirs sont des besoins secondaires."
+  },
+  {
+    "id": "x4367-1", "stepId": 4367, "status": "draft", "type": "match",
+    "prompt": "Associe chaque mot à sa classe grammaticale.",
+    "pairs": [
+      ["chien", "nom commun"],
+      ["grand", "adjectif"],
+      ["chante", "verbe"],
+      ["le", "déterminant"]
+    ],
+    "explanation": "« Chien » désigne un animal (nom), « grand » décrit (adjectif), « chante » est une action (verbe), « le » accompagne le nom (déterminant)."
+  },
+  {
+    "id": "x4400-1", "stepId": 4400, "status": "draft", "type": "sort",
+    "prompt": "Range chaque phrase selon le mot qui manque : « son » ou « sont ».",
+    "buckets": [
+      { "name": "son", "items": ["Il a perdu ___ cahier.", "Elle prête ___ vélo."] },
+      { "name": "sont", "items": ["Ils ___ en retard.", "Les chats ___ noirs."] }
+    ],
+    "explanation": "« Sont » = verbe être (on peut dire « étaient ») ; « son » = à lui, à elle."
+  },
+  {
+    "id": "x4890-1", "stepId": 4890, "status": "draft", "type": "order",
+    "prompt": "Range ces nombres du plus petit au plus grand.",
+    "items": ["89", "890", "908", "8'009"],
+    "explanation": "Plus un nombre a de chiffres, plus il est grand ; à nombre de chiffres égal, on compare de gauche à droite."
+  }
+]

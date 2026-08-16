@@ -1,14 +1,27 @@
 export type Domain = "maths" | "francais" | "sciences" | "shs";
 export type Role = "child" | "parent";
 
+export type QuestionType = "mcq" | "input" | "multi" | "order" | "match" | "sort";
+
 export interface Question {
   id: string;
-  type: "mcq" | "input";
+  type: QuestionType;
   prompt: string;
-  choices?: string[];
-  answerIndex?: number;
-  accepted?: string[];
   explanation: string;
+  /** mcq et multi : les propositions. */
+  choices?: string[];
+  /** mcq : index de la bonne réponse. */
+  answerIndex?: number;
+  /** input : réponses acceptées. */
+  accepted?: string[];
+  /** multi : indices de TOUTES les bonnes réponses. */
+  correctIndices?: number[];
+  /** order : les éléments dans le bon ordre (mélangés à l'affichage). */
+  items?: string[];
+  /** match : paires correctes [gauche, droite]. */
+  pairs?: [string, string][];
+  /** sort : catégories et leurs éléments (mélangés à l'affichage). */
+  buckets?: { name: string; items: string[] }[];
 }
 
 export interface FicheSection {
@@ -78,6 +91,26 @@ export interface ChildProfile {
   planned: PlannedTest[];
   /** Programmes de révision préparés par un parent (rejouables, mode entraînement). */
   revisions: PlannedTest[];
+  /** Journal des fautes (entraînement et contrôles), plus récentes en dernier. */
+  mistakes: Mistake[];
+  /** Séances d'entraînement terminées. */
+  sessions: PracticeSession[];
+}
+
+/** Une faute : question ratée, avec son contexte. */
+export interface Mistake {
+  q: string;
+  s: number;
+  at: string;
+  mode: "practice" | "test";
+}
+
+/** Une séance d'entraînement terminée. */
+export interface PracticeSession {
+  at: string;
+  title: string;
+  score: number;
+  total: number;
 }
 
 export interface AppStore {

@@ -391,7 +391,7 @@ export const THEMES: Theme[] = [
       {
         id: "c3", type: "mcq",
         prompt: "Où se passe le tournoi ?",
-        choices: ["Dans la cour de l'école", "Au bord du lac", "Dans une salle de gym", "Chez Diego"],
+        choices: ["Dans la cour de l'école", "Au bord du lac, près du port", "Dans la salle de gym du village", "Dans le jardin de chez Diego"],
         answerIndex: 0,
         explanation: "« Dans la cour, son ami Diego l'attend près des tables de ping-pong. »",
       },
@@ -410,12 +410,7 @@ export const THEMES: Theme[] = [
       {
         id: "c5", type: "mcq",
         prompt: "Que fait Nora après avoir perdu la première partie ?",
-        choices: [
-          "Elle abandonne le tournoi",
-          "Elle change de raquette",
-          "Elle respire un grand coup et observe mieux la balle",
-          "Elle demande de l'aide à la maîtresse",
-        ],
+        choices: ["Elle abandonne le tournoi et rentre chez elle", "Elle change de raquette avec Diego", "Elle respire un grand coup et observe mieux la balle", "Elle demande à la maîtresse d'arrêter la partie"],
         answerIndex: 2,
         explanation: "« Elle respire un grand coup, observe mieux la balle… et gagne les deux parties suivantes ! »",
       },
@@ -434,12 +429,7 @@ export const THEMES: Theme[] = [
       {
         id: "c7", type: "mcq",
         prompt: "« Tu seras imbattable » veut dire…",
-        choices: [
-          "que personne ne pourra te battre",
-          "que tu perdras toujours",
-          "que tu seras fatiguée",
-          "que tu ne joueras plus",
-        ],
+        choices: ["que personne ne pourra te battre", "que tu perdras toutes tes parties", "que tu seras trop fatiguée pour jouer", "que tu ne joueras plus jamais au ping-pong"],
         answerIndex: 0,
         explanation: "Le préfixe « im- » veut dire « ne pas » : im-battable = qu'on ne peut pas battre.",
       },
@@ -520,12 +510,7 @@ export const THEMES: Theme[] = [
       {
         id: "gr7", type: "mcq",
         prompt: "Quel est le sujet dans « Les élèves de la classe préparent un spectacle » ?",
-        choices: [
-          "un spectacle",
-          "Les élèves de la classe",
-          "préparent",
-          "la classe",
-        ],
+        choices: ["un spectacle de fin d'année", "Les élèves de la classe", "préparent un spectacle", "la classe tout entière"],
         answerIndex: 1,
         explanation: "Qui est-ce qui prépare un spectacle ? « Les élèves de la classe » : c'est le groupe sujet en entier.",
       },
@@ -754,12 +739,7 @@ THEMES.push(
       {
         id: "co3", type: "mcq",
         prompt: "Que veut dire « manger équilibré » ?",
-        choices: [
-          "Manger la même chose tous les jours",
-          "Ne manger que ce qu'on préfère",
-          "Manger varié : fruits, légumes, céréales, protéines…",
-          "Sauter le petit-déjeuner",
-        ],
+        choices: ["Manger la même chose à tous les repas", "Ne manger que ses plats préférés", "Manger varié : fruits, légumes, céréales, protéines…", "Sauter le petit-déjeuner pour manger plus à midi"],
         answerIndex: 2,
         explanation: "Le corps a besoin d'aliments variés pour avoir toute son énergie et bien grandir.",
       },
@@ -867,12 +847,7 @@ THEMES.push(
       {
         id: "vi6", type: "mcq",
         prompt: "Pourquoi les hirondelles partent-elles vers le sud en automne ?",
-        choices: [
-          "Parce qu'elles n'aiment pas la neige",
-          "Pour trouver de la nourriture (les insectes disparaissent ici en hiver)",
-          "Pour faire la course",
-          "Parce que les jours sont trop longs",
-        ],
+        choices: ["Parce qu'elles n'aiment pas du tout la neige", "Pour trouver de la nourriture (les insectes disparaissent ici en hiver)", "Pour faire la course avec les autres oiseaux", "Parce que les jours d'hiver sont beaucoup trop longs"],
         answerIndex: 1,
         explanation: "C'est la migration : en hiver, il n'y a presque plus d'insectes chez nous, alors elles vont en chercher là où il fait chaud.",
       },
@@ -942,7 +917,7 @@ THEMES.push(
       {
         id: "de3", type: "mcq",
         prompt: "Pour comparer d'un coup d'œil la taille de 5 plantes, le plus pratique est…",
-        choices: ["un long texte", "un diagramme en colonnes", "une chanson", "une devinette"],
+        choices: ["un long texte qui décrit chaque plante", "un diagramme en colonnes", "une belle photo de la plus grande", "une chanson qui donne les tailles"],
         answerIndex: 1,
         explanation: "Un diagramme (ou un tableau) montre tous les résultats d'un seul coup d'œil.",
       },
@@ -1026,12 +1001,7 @@ THEMES.push(
       {
         id: "ge5", type: "mcq",
         prompt: "Pourquoi beaucoup de villes se sont-elles installées au bord d'un lac ou d'un fleuve ?",
-        choices: [
-          "Pour la vue",
-          "Pour l'eau : boire, pêcher, transporter des marchandises",
-          "Parce que c'était obligatoire",
-          "Pour construire des piscines",
-        ],
+        choices: ["Pour la belle vue sur les montagnes", "Pour l'eau : boire, pêcher, transporter des marchandises", "Parce que c'était obligatoire autrefois", "Pour construire des piscines au bord de l'eau"],
         answerIndex: 1,
         explanation: "L'eau était essentielle : boire, arroser, pêcher et transporter par bateau. C'est pour ça que Genève est née au bord du Rhône et du Léman.",
       },
@@ -1057,12 +1027,7 @@ THEMES.push(
       {
         id: "ge8", type: "mcq",
         prompt: "Une nouvelle route traverse une forêt. Quel impact sur l'environnement ?",
-        choices: [
-          "Aucun impact",
-          "Les habitats des animaux sont détruits ou coupés en deux",
-          "Les arbres poussent plus vite",
-          "Il y a plus de champignons",
-        ],
+        choices: ["Aucun impact, la forêt continue comme avant", "Les habitats des animaux sont détruits ou coupés en deux", "Les arbres se mettent à pousser plus vite", "Il y a beaucoup plus de champignons qu'avant"],
         answerIndex: 1,
         explanation: "Les activités humaines transforment le territoire : la route détruit et sépare les milieux où vivent les animaux.",
       },
@@ -1137,24 +1102,14 @@ THEMES.push(
       {
         id: "hi6", type: "mcq",
         prompt: "Qu'est-ce qui aide les historiens à connaître la vie des Romains ?",
-        choices: [
-          "Les traces : ruines, objets, textes anciens",
-          "Les films au cinéma",
-          "Leur imagination",
-          "Les jeux vidéo",
-        ],
+        choices: ["Les traces : ruines, objets, textes anciens", "Les films qui passent au cinéma", "Leur imagination et leurs rêves", "Les jeux vidéo qui parlent des Romains"],
         answerIndex: 0,
         explanation: "Les traces du passé (ruines, monnaies, textes) sont les preuves sur lesquelles travaillent les historiens.",
       },
       {
         id: "hi7", type: "mcq",
         prompt: "Deux documents anciens racontent le même événement de façon différente. Que fait l'historien ?",
-        choices: [
-          "Il jette les deux documents",
-          "Il choisit le plus joli",
-          "Il les compare et cherche d'autres sources pour vérifier",
-          "Il invente une troisième version",
-        ],
+        choices: ["Il jette les deux documents à la poubelle", "Il choisit le document le plus joli des deux", "Il les compare et cherche d'autres sources pour vérifier", "Il invente une troisième version qui l'arrange"],
         answerIndex: 2,
         explanation: "Comparer plusieurs sources permet de repérer les ressemblances, les différences et les idées reçues.",
       },

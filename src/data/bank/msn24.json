@@ -1,93 +1,178 @@
 [
   {
-    "id": "k4975-1", "stepId": 4975, "status": "draft", "type": "mcq",
+    "id": "k4975-1",
+    "stepId": 4975,
+    "status": "draft",
+    "type": "mcq",
     "prompt": "Pour mesurer la durée d'une course, j'utilise…",
-    "choices": ["une règle", "un chronomètre", "une balance", "un litre"],
+    "choices": [
+      "une règle",
+      "un chronomètre",
+      "une balance",
+      "un litre"
+    ],
     "answerIndex": 1,
     "explanation": "Une durée se mesure avec un chronomètre (ou une montre)."
   },
   {
-    "id": "k4975-2", "stepId": 4975, "status": "draft", "type": "mcq",
+    "id": "k4975-2",
+    "stepId": 4975,
+    "status": "draft",
+    "type": "mcq",
     "prompt": "Pour peser un chien, quelle unité convient le mieux ?",
-    "choices": ["Le gramme", "Le kilogramme", "Le mètre", "La minute"],
+    "choices": [
+      "Le gramme",
+      "Le kilogramme",
+      "Le mètre",
+      "La minute"
+    ],
     "answerIndex": 1,
     "explanation": "Un chien pèse plusieurs kilogrammes — le gramme serait bien trop petit."
   },
   {
-    "id": "k4976-1", "stepId": 4976, "status": "draft", "type": "mcq",
+    "id": "k4976-1",
+    "stepId": 4976,
+    "status": "draft",
+    "type": "mcq",
     "prompt": "La hauteur d'une porte est d'environ…",
-    "choices": ["20 cm", "2 m", "20 m", "2 km"],
+    "choices": [
+      "20 cm",
+      "2 m",
+      "20 m",
+      "2 km"
+    ],
     "answerIndex": 1,
     "explanation": "Une porte mesure à peu près 2 mètres — un adulte passe juste dessous."
   },
   {
-    "id": "k4976-2", "stepId": 4976, "status": "draft", "type": "mcq",
+    "id": "k4976-2",
+    "stepId": 4976,
+    "status": "draft",
+    "type": "mcq",
     "prompt": "Une grande bouteille d'eau contient environ…",
-    "choices": ["1 cuillère", "1 litre", "100 litres", "1'000 litres"],
+    "choices": [
+      "1 cuillère",
+      "1 litre",
+      "100 litres",
+      "1'000 litres"
+    ],
     "answerIndex": 1,
     "explanation": "Les bouteilles d'eau courantes contiennent 1 à 1,5 litre."
   },
   {
-    "id": "k4976-3", "stepId": 4976, "status": "draft", "type": "mcq",
+    "id": "k4976-3",
+    "stepId": 4976,
+    "status": "draft",
+    "type": "mcq",
     "prompt": "Une récréation dure environ…",
-    "choices": ["15 secondes", "15 minutes", "15 heures", "15 jours"],
+    "choices": [
+      "15 secondes",
+      "15 minutes",
+      "15 heures",
+      "15 jours"
+    ],
     "answerIndex": 1,
     "explanation": "Un quart d'heure : 15 minutes."
   },
   {
-    "id": "k4981-1", "stepId": 4981, "status": "draft", "type": "mcq",
+    "id": "k4981-1",
+    "stepId": 4981,
+    "status": "draft",
+    "type": "mcq",
     "prompt": "Pour mesurer un segment, je place … de la règle au début du trait.",
-    "choices": ["le zéro", "le 1", "le bout en plastique", "le milieu"],
+    "choices": [
+      "le zéro",
+      "le 1",
+      "le bout en plastique",
+      "le milieu"
+    ],
     "answerIndex": 0,
     "explanation": "La mesure commence au 0 de la règle, pas au bord de la règle !"
   },
   {
-    "id": "k4981-2", "stepId": 4981, "status": "draft", "type": "mcq",
+    "id": "k4981-2",
+    "stepId": 4981,
+    "status": "draft",
+    "type": "mcq",
     "prompt": "Un segment mesure entre 7 et 8 cm, plutôt proche de 8. Que peut-on dire ?",
-    "choices": ["Il mesure exactement 7 cm", "Il mesure environ 8 cm", "Il mesure 78 cm", "On ne peut rien dire"],
+    "choices": [
+      "Il mesure exactement 7 cm",
+      "Il mesure environ 8 cm",
+      "Il mesure 78 cm",
+      "On ne peut rien dire"
+    ],
     "answerIndex": 1,
     "explanation": "Quand la mesure tombe entre deux graduations, on donne un encadrement ou la valeur la plus proche : environ 8 cm."
   },
   {
-    "id": "k4981-3", "stepId": 4981, "status": "draft", "type": "mcq",
+    "id": "k4981-3",
+    "stepId": 4981,
+    "status": "draft",
+    "type": "mcq",
     "prompt": "Quel outil utilises-tu pour tracer un segment de 12 cm ?",
-    "choices": ["Une règle graduée", "Un compas seul", "Une gomme", "Un chronomètre"],
+    "choices": [
+      "Une règle graduée",
+      "Un compas seul",
+      "Une gomme",
+      "Un chronomètre"
+    ],
     "answerIndex": 0,
     "explanation": "La règle graduée permet de tracer droit ET de mesurer la longueur."
   },
   {
-    "id": "k4986-1", "stepId": 4986, "status": "draft", "type": "input",
+    "id": "k4986-1",
+    "stepId": 4986,
+    "status": "draft",
+    "type": "input",
     "prompt": "4 m = ? cm",
-    "accepted": ["400", "400 cm", "400cm"],
+    "accepted": [
+      "400",
+      "400 cm",
+      "400cm"
+    ],
     "explanation": "1 m = 100 cm, donc 4 m = 400 cm."
   },
   {
-    "id": "k4988-1", "stepId": 4988, "status": "draft", "type": "mcq",
+    "id": "k4988-1",
+    "stepId": 4988,
+    "status": "draft",
+    "type": "mcq",
     "prompt": "Autrefois, on mesurait avec des parties du corps. Laquelle servait d'unité ?",
-    "choices": ["Le pied", "L'oreille", "Le sourcil", "La dent"],
+    "choices": [
+      "Le pied",
+      "L'oreille",
+      "Le sourcil",
+      "La dent"
+    ],
     "answerIndex": 0,
     "explanation": "Le pied, la coudée, le pouce ou l'empan étaient des unités de mesure courantes."
   },
   {
-    "id": "k4988-2", "stepId": 4988, "status": "draft", "type": "mcq",
+    "id": "k4988-2",
+    "stepId": 4988,
+    "status": "draft",
+    "type": "mcq",
     "prompt": "Pourquoi mesurer avec les pieds posait-il problème ?",
     "choices": [
       "Tout le monde n'a pas des pieds de la même longueur",
-      "Les pieds sont trop précis",
-      "On ne pouvait mesurer que la nuit",
-      "C'était interdit"
+      "Les pieds mesuraient trop précisément les objets",
+      "On ne pouvait mesurer que pendant la journée",
+      "C'était interdit par les rois de l'époque"
     ],
     "answerIndex": 0,
     "explanation": "La mesure changeait selon la personne ! C'est pour ça qu'on a inventé des unités identiques pour tous."
   },
   {
-    "id": "k4988-3", "stepId": 4988, "status": "draft", "type": "mcq",
+    "id": "k4988-3",
+    "stepId": 4988,
+    "status": "draft",
+    "type": "mcq",
     "prompt": "Pourquoi les unités comme le mètre ont-elles été inventées ?",
     "choices": [
       "Pour que tout le monde mesure exactement pareil",
-      "Pour rendre les calculs plus difficiles",
-      "Pour décorer les règles",
-      "Parce que les pieds ont disparu"
+      "Pour rendre les calculs des élèves plus difficiles",
+      "Pour décorer joliment les règles de l'école",
+      "Parce que les gens ne voulaient plus utiliser leurs pieds"
     ],
     "answerIndex": 0,
     "explanation": "Une unité conventionnelle est la même pour tous, partout : on peut comparer et échanger des mesures."

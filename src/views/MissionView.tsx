@@ -1,8 +1,9 @@
 import { useState } from "react";
 import type { Route } from "../App";
+import { correctAnswerText, MatchPairs, MultiChoice, OrderList, SortBuckets } from "../components/formats";
 import { IconCheck, IconCross } from "../components/icons";
 import { stepInfo, type MissionQuestion } from "../lib/engine";
-import { recordPractice, recordTest } from "../store";
+import { recordPractice, recordSession, recordTest } from "../store";
 import type { Question, TestAnswer } from "../types";
 
 const normalize = (s: string) =>
@@ -64,7 +65,7 @@ export function MissionView({
     if (answered) return;
     setAnswered({ correct, picked });
     setOutcomes((o) => [...o, { mq, correct }]);
-    if (!isTest) recordPractice(childId, mq.stepId, correct);
+    if (!isTest) recordPractice(childId, mq.stepId, correct, mq.question.id);
   };
 
   const next = (allOutcomes: Outcome[]) => {
@@ -73,6 +74,7 @@ export function MissionView({
       setAnswered(null);
       setInputValue("");
     } else {
+      const score = allOutcomes.filter((o) => o.correct).length;
       if (isTest) {
         const answers: TestAnswer[] = allOutcomes.map((o) => ({
           questionId: o.mq.question.id,
@@ -80,6 +82,8 @@ export function MissionView({
           correct: o.correct,
         }));
         recordTest(childId, planId, title, answers);
+      } else {
+        recordSession(childId, title, score, allOutcomes.length);
       }
       setFinished(true);
     }
@@ -180,6 +184,19 @@ export function MissionView({
           </div>
         )}
 
+        {q.type === "multi" && (
+          <MultiChoice key={q.id} q={q} disabled={!!answered} onSubmit={(c) => submit(c)} />
+        )}
+        {q.type === "order" && (
+          <OrderList key={q.id} q={q} disabled={!!answered} onSubmit={(c) => submit(c)} />
+        )}
+        {q.type === "match" && (
+          <MatchPairs key={q.id} q={q} disabled={!!answered} onSubmit={(c) => submit(c)} />
+        )}
+        {q.type === "sort" && (
+          <SortBuckets key={q.id} q={q} disabled={!!answered} onSubmit={(c) => submit(c)} />
+        )}
+
         {q.type === "input" && (
           <form
             className="row"
@@ -214,6 +231,11 @@ export function MissionView({
                   {answered.correct ? <IconCheck size={15} /> : <IconCross size={15} />}
                   {answered.correct ? "Juste !" : "Pas tout à fait…"}
                 </strong>
+                {!answered.correct && correctAnswerText(q) && (
+                  <p className="correct-answer">
+                    Bonne réponse : {correctAnswerText(q)}
+                  </p>
+                )}
                 <p>{q.explanation}</p>
                 <p className="muted small">
                   Étape du PER : {stepInfo(mq.stepId)?.step.text.slice(0, 110)}…{" "}

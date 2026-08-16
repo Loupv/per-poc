@@ -6,6 +6,7 @@
 // Pour valider/écarter une question, éditer son champ "status" dans le JSON.
 
 import type { Question } from "../../types";
+import mixte from "./mixte.json";
 import msn21 from "./msn21.json";
 import msn22 from "./msn22.json";
 import msn23 from "./msn23.json";
@@ -16,6 +17,6 @@ export interface BankQuestion extends Question {
   status: "draft" | "approved" | "rejected";
 }
 
-const RAW = [...msn21, ...msn22, ...msn23, ...msn24] as BankQuestion[];
+const RAW = [...msn21, ...msn22, ...msn23, ...msn24, ...mixte] as BankQuestion[];
 
 export const BANK: BankQuestion[] = RAW.filter((q) => q.status !== "rejected");

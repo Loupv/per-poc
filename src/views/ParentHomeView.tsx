@@ -8,8 +8,10 @@ import {
   domainStats,
   expressSelection,
   globalStats,
+  questionById,
   recommendations,
   schoolYearFraction,
+  stepInfo,
 } from "../lib/engine";
 import { hashPin, isValidPin, verifyPin } from "../lib/pin";
 import { entitlements } from "../lib/plan";
@@ -245,11 +247,74 @@ function PinSettings({ pinHash }: { pinHash: string | null }) {
   );
 }
 
+/** Fautes agrégées par question : récurrence + dernière occurrence. */
+function aggregateMistakes(child: ChildProfile) {
+  const byQ = new Map<string, { count: number; lastAt: string; modes: Set<string>; stepId: number }>();
+  for (const m of child.mistakes) {
+    const cur = byQ.get(m.q) ?? { count: 0, lastAt: "", modes: new Set<string>(), stepId: m.s };
+    cur.count++;
+    if (m.at > cur.lastAt) cur.lastAt = m.at;
+    cur.modes.add(m.mode);
+    byQ.set(m.q, cur);
+  }
+  return [...byQ.entries()]
+    .sort((a, b) => b[1].count - a[1].count || b[1].lastAt.localeCompare(a[1].lastAt))
+    .slice(0, 8);
+}
+
+function MistakesSection({ child }: { child: ChildProfile }) {
+  const agg = aggregateMistakes(child);
+  if (agg.length === 0) return null;
+  const date = new Date().toLocaleDateString("fr-CH");
+  const reviewIds = agg.map(([q]) => q).filter((q) => questionById(q));
+
+  return (
+    <section className="card">
+      <div className="card-head">
+        <h2>Fautes récentes</h2>
+        {reviewIds.length > 0 && (
+          <button
+            className="btn link"
+            onClick={() =>
+              planRevision(child.id, {
+                title: `Révision des fautes — ${date}`,
+                domain: "toutes",
+                questionIds: reviewIds,
+              })
+            }
+          >
+            En faire une révision
+          </button>
+        )}
+      </div>
+      {agg.map(([qId, info]) => {
+        const mq = questionById(qId);
+        const step = stepInfo(info.stepId);
+        return (
+          <div className="mistake-row" key={qId}>
+            <span className="mistake-text">
+              {mq ? mq.question.prompt : qId}
+              <span className="per-chip">{step?.objective.code}</span>
+            </span>
+            <span className="muted small mistake-meta">
+              {info.count > 1 ? `ratée ${info.count}×` : "ratée 1×"} ·{" "}
+              {info.modes.has("test") ? "en contrôle" : "à l'entraînement"} ·{" "}
+              {new Date(info.lastAt).toLocaleDateString("fr-CH")}
+            </span>
+          </div>
+        );
+      })}
+    </section>
+  );
+}
+
 export function ParentHomeView({ store, child, go }: { store: AppStore; child: ChildProfile; go: (r: Route) => void }) {
   const reco = recommendations(child, 4);
   const g = globalStats(child, child.year);
   const calendarF = schoolYearFraction(new Date());
   const hasReco = reco.readyToTest.length > 0 || reco.toRework.length > 0 || reco.toPractice.length > 0;
+  const weekAgo = new Date(Date.now() - 7 * 24 * 3600 * 1000).toISOString();
+  const sessionsWeek = child.sessions.filter((s) => s.at >= weekAgo).length;
 
   return (
     <>
@@ -270,7 +335,9 @@ export function ParentHomeView({ store, child, go }: { store: AppStore; child: C
       </div>
       <p className="muted small">
         {g.seen} étapes vues en classe · {g.evaluated} évaluées · {g.mastered} acquises — sur{" "}
-        {g.total} en {child.year}P.{" "}
+        {g.total} en {child.year}P. {child.sessions.length} entraînement
+        {child.sessions.length > 1 ? "s" : ""} effectué{child.sessions.length > 1 ? "s" : ""}
+        {sessionsWeek > 0 && ` (${sessionsWeek} ces 7 derniers jours)`}.{" "}
         <button className="btn link" onClick={() => go({ view: "dashboard" })}>
           Tableau de bord
         </button>
@@ -328,6 +395,8 @@ export function ParentHomeView({ store, child, go }: { store: AppStore; child: C
           ))}
         </section>
       )}
+
+      <MistakesSection child={child} />
 
       {entitlements.canSeeRecommendations && hasReco && (
         <section className="card">

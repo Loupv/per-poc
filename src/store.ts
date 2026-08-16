@@ -17,7 +17,12 @@ const emptyChild = (name: string, year: number): ChildProfile => ({
   tests: [],
   planned: [],
   revisions: [],
+  mistakes: [],
+  sessions: [],
 });
+
+const MISTAKES_MAX = 200;
+const SESSIONS_MAX = 100;
 
 interface V2Store {
   role?: Role | null;
@@ -35,7 +40,12 @@ const load = (): AppStore => {
       return {
         ...parsed,
         parentPinHash: parsed.parentPinHash ?? null,
-        children: parsed.children.map((c) => ({ ...c, revisions: c.revisions ?? [] })),
+        children: parsed.children.map((c) => ({
+          ...c,
+          revisions: c.revisions ?? [],
+          mistakes: c.mistakes ?? [],
+          sessions: c.sessions ?? [],
+        })),
       };
     }
     // Migration depuis la v2 (un seul enfant, entraînement = ancien historique)
@@ -121,12 +131,29 @@ export const setSeen = (childId: string, stepIds: number[], seen: boolean) => {
 };
 
 /** Entraînement : enregistre une réponse (n'affecte pas les contrôles). */
-export const recordPractice = (childId: string, stepId: number, correct: boolean) => {
+export const recordPractice = (childId: string, stepId: number, correct: boolean, questionId: string) => {
   mutateChild(childId, (c) => {
     const prev = c.practice[stepId];
     const r = [...(prev?.r ?? []), correct ? 1 : 0].slice(-HIST_MAX);
-    return { ...c, practice: { ...c.practice, [stepId]: { r, lastAt: new Date().toISOString() } } };
+    const mistakes = correct
+      ? c.mistakes
+      : [...c.mistakes, { q: questionId, s: stepId, at: new Date().toISOString(), mode: "practice" as const }].slice(
+          -MISTAKES_MAX
+        );
+    return {
+      ...c,
+      practice: { ...c.practice, [stepId]: { r, lastAt: new Date().toISOString() } },
+      mistakes,
+    };
   });
+};
+
+/** Fin d'une séance d'entraînement complète. */
+export const recordSession = (childId: string, title: string, score: number, total: number) => {
+  mutateChild(childId, (c) => ({
+    ...c,
+    sessions: [...c.sessions, { at: new Date().toISOString(), title, score, total }].slice(-SESSIONS_MAX),
+  }));
 };
 
 /** Validation parent d'une étape « à observer ». */
@@ -168,6 +195,7 @@ export const deleteRevision = (childId: string, planId: string) => {
  * Le contrôle planifié correspondant est consommé — pas de seconde tentative.
  */
 export const recordTest = (childId: string, planId: string | null, title: string, answers: TestAnswer[]) => {
+  const at = new Date().toISOString();
   mutateChild(childId, (c) => ({
     ...c,
     planned: planId ? c.planned.filter((p) => p.id !== planId) : c.planned,
@@ -177,12 +205,18 @@ export const recordTest = (childId: string, planId: string | null, title: string
         id: newId(),
         planId,
         title,
-        at: new Date().toISOString(),
+        at,
         answers,
         score: answers.filter((a) => a.correct).length,
         total: answers.length,
       },
     ],
+    mistakes: [
+      ...c.mistakes,
+      ...answers
+        .filter((a) => !a.correct)
+        .map((a) => ({ q: a.questionId, s: a.stepId, at, mode: "test" as const })),
+    ].slice(-MISTAKES_MAX),
   }));
 };
 
