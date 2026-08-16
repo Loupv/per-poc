@@ -21,7 +21,6 @@ export type Route =
       planId?: string;
       title: string;
       questions: MissionQuestion[];
-      emoji: string;
     }
   | { view: "programme"; year?: number }
   | { view: "dashboard" };
@@ -61,10 +60,10 @@ export default function App() {
               className={`nav-parent ${route.view === "programme" ? "active" : ""}`}
               onClick={() => go({ view: "programme" })}
             >
-              🗺️ Programme
+              Programme
             </button>
             <button className="nav-parent role-switch" onClick={switchRole}>
-              {isParent ? "🧒 Mode enfant" : "👪 Espace parents"}
+              {isParent ? "Mode enfant" : "Espace parents"}
             </button>
           </nav>
         )}
@@ -100,7 +99,6 @@ export default function App() {
                 mode={route.mode}
                 planId={route.planId ?? null}
                 title={route.title}
-                emoji={route.emoji}
                 questions={route.questions}
                 go={go}
               />

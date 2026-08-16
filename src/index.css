@@ -117,7 +117,8 @@ input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 2px 
   align-items: flex-start; text-align: left;
 }
 .role-card:hover { border-color: var(--accent); }
-.role-emoji { font-size: 1.5rem; }
+.role-icon { color: var(--accent); }
+.pin-title { display: flex; gap: 8px; align-items: center; justify-content: center; }
 
 .hello { margin-top: 4px; }
 .hello-row { justify-content: space-between; align-items: baseline; }
@@ -136,7 +137,14 @@ input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 2px 
 .tile-btn:hover { border-color: var(--accent); box-shadow: 0 2px 8px rgb(27 30 38 / 0.06); }
 .tile-btn:active { transform: scale(0.985); }
 .tile-btn strong { font-size: 0.98rem; }
-.tile-emoji { font-size: 1.7rem; line-height: 1.2; }
+.tile-icon { color: var(--accent); display: inline-flex; margin-bottom: 2px; }
+.tile-btn.test .tile-icon { color: var(--ko); }
+.tile-btn.revision .tile-icon { color: var(--ok); }
+.tile-btn.off .tile-icon { color: var(--muted); }
+.tile-btn.theme.maths .tile-icon { color: var(--maths); }
+.tile-btn.theme.francais .tile-icon { color: var(--francais); }
+.tile-btn.theme.sciences .tile-icon { color: var(--sciences); }
+.tile-btn.theme.shs .tile-icon { color: var(--shs); }
 .tile-sub { color: var(--muted); font-size: 0.8rem; line-height: 1.4; }
 .tile-btn.mission { background: var(--accent-soft); border-color: #cdd7f6; }
 .tile-btn.mission:hover { border-color: var(--accent); }
@@ -291,11 +299,20 @@ input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 2px 
 .recap-line.ko { background: var(--ko-bg); }
 .recap-step .per-chip { margin-left: 6px; }
 .recap-expl { color: var(--muted); font-style: normal; }
+.recap-mark { flex: none; align-self: center; display: inline-flex; }
+.recap-mark.ok { color: var(--ok); }
+.recap-mark.ko { color: var(--ko); }
+.feedback-title { display: inline-flex; gap: 6px; align-items: center; }
+.feedback-title.ok { color: var(--ok); }
+.feedback-title.ko { color: var(--ko); }
 
 /* ── Fiches ──────────────────────────── */
-.theme-head { display: flex; gap: 10px; align-items: center; }
-.theme-emoji { font-size: 1.3rem; }
-.theme-emoji.big { font-size: 1.9rem; }
+.theme-head { display: flex; gap: 12px; align-items: center; }
+.theme-icon { display: inline-flex; color: var(--accent); }
+.fiche.maths .theme-icon { color: var(--maths); }
+.fiche.francais .theme-icon { color: var(--francais); }
+.fiche.sciences .theme-icon { color: var(--sciences); }
+.fiche.shs .theme-icon { color: var(--shs); }
 .fiche-section { border-top: 1px solid var(--line-soft); margin-top: 14px; padding-top: 10px; }
 .fiche-section h2 { color: var(--accent); }
 .fiche.maths .fiche-section h2 { color: var(--maths); }
@@ -346,7 +363,14 @@ input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 2px 
 .prog-step:last-child { border-bottom: none; }
 .prog-step.unseen { opacity: 0.5; }
 .prog-step-text { flex: 1; }
-.mastery { font-size: 0.7rem; }
+.mastery-dot {
+  width: 10px; height: 10px; border-radius: 50%; flex: none; align-self: center;
+  background: var(--line);
+}
+.mastery-dot.ok { background: var(--ok); }
+.mastery-dot.cur { background: var(--cur); }
+.mastery-dot.none { background: var(--line); }
+.mastery-dot.inline { display: inline-block; vertical-align: middle; width: 8px; height: 8px; }
 .badge {
   font-size: 0.68rem; font-weight: 650; border-radius: 4px; padding: 2px 7px; white-space: nowrap;
   border: none; font-family: inherit;

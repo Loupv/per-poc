@@ -15,7 +15,7 @@ import type { ChildProfile } from "../types";
 
 const YEARS = [5, 6, 7, 8];
 
-const MASTERY_ICON = { untested: "⚪", fragile: "🟡", mastered: "🟢" } as const;
+const MASTERY_CLASS = { untested: "none", fragile: "cur", mastered: "ok" } as const;
 const MASTERY_LABEL = { untested: "non évalué", fragile: "fragile", mastered: "maîtrisé" } as const;
 
 const groupLabel = (g: PerGroup) => {
@@ -72,9 +72,7 @@ function GroupBlock({
           const m = stepStatus(child, step.id);
           return (
             <li key={step.id} className={`prog-step ${child.seen[step.id] || !positioning ? "" : "unseen"}`}>
-              <span className="mastery" title={MASTERY_LABEL[m]}>
-                {MASTERY_ICON[m]}
-              </span>
+              <span className={`mastery-dot ${MASTERY_CLASS[m]}`} title={MASTERY_LABEL[m]} />
               <span className="prog-step-text">{step.text}</span>
               {stepKind(step.id) === "observe" ? (
                 canEdit ? (
@@ -134,7 +132,8 @@ function ObjectiveBlock({
         <span className="prog-obj-name">{objective.name}</span>
         <span className="prog-obj-stats muted">
           {positioning && `${stats.seen}/${stats.total} vues · `}
-          {stats.mastered}🟢 {stats.evaluated - stats.mastered}🟡 · {stats.total} étapes
+          {stats.mastered} <span className="mastery-dot ok inline" /> {stats.evaluated - stats.mastered}{" "}
+          <span className="mastery-dot cur inline" /> · {stats.total} étapes
         </span>
       </summary>
       {positioning && canEdit && (
@@ -233,8 +232,10 @@ export function ProgrammeView({
       </div>
 
       <p className="muted small legend">
-        ⚪ non évalué · 🟡 fragile · 🟢 maîtrisé (contrôle réussi ou validation parent) · « testable » =
-        des questions existent déjà dans le POC · « à observer » = production ou manipulation
+        <span className="mastery-dot none inline" /> non évalué ·{" "}
+        <span className="mastery-dot cur inline" /> fragile ·{" "}
+        <span className="mastery-dot ok inline" /> maîtrisé (contrôle réussi ou validation parent) ·
+        « testable » = des questions existent déjà · « à observer » = production ou manipulation
       </p>
 
       {domains.map((d) => (

@@ -1,4 +1,5 @@
 import type { Route } from "../App";
+import { ThemeIcon } from "../components/icons";
 import { QUESTION_STEP } from "../data/stepMap";
 import type { Theme } from "../types";
 
@@ -8,7 +9,6 @@ export function FicheView({ theme, go }: { theme: Theme; go: (r: Route) => void 
       view: "mission",
       mode: "practice",
       title: theme.title,
-      emoji: theme.emoji,
       questions: theme.questions
         .map((question) => ({ question, stepId: QUESTION_STEP[question.id], theme }))
         .filter((mq) => mq.stepId !== undefined),
@@ -16,12 +16,14 @@ export function FicheView({ theme, go }: { theme: Theme; go: (r: Route) => void 
 
   return (
     <div className={`fiche ${theme.domain}`}>
-      <button className="btn ghost back" onClick={() => go({ view: "home" })}>
+      <button className="btn back" onClick={() => go({ view: "home" })}>
         ← Retour
       </button>
       <div className="card">
         <div className="theme-head">
-          <span className="theme-emoji big">{theme.emoji}</span>
+          <span className={`theme-icon ${theme.domain}`}>
+            <ThemeIcon themeId={theme.id} size={30} />
+          </span>
           <div>
             <h1>{theme.title}</h1>
             <p className="muted">
@@ -53,7 +55,7 @@ export function FicheView({ theme, go }: { theme: Theme; go: (r: Route) => void 
 
         <div className="fiche-cta">
           <button className="btn primary big" onClick={launchQuiz}>
-            ▶ Je suis prêt·e, lance le quizz !
+            Je suis prêt·e, lance le quizz !
           </button>
         </div>
       </div>

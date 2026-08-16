@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { IconUser, IconUsers } from "../components/icons";
 import { hashPin, isValidPin } from "../lib/pin";
 import { addChild, setParentPinHash, setRole } from "../store";
 import type { AppStore, Role } from "../types";
@@ -55,7 +56,9 @@ export function OnboardingView({ store }: { store: AppStore }) {
                 }
               }}
             >
-              <span className="role-emoji">🧒</span>
+              <span className="role-icon">
+                <IconUser size={26} />
+              </span>
               <strong>Je suis l'enfant</strong>
               <span className="muted">Missions, quizz et fiches</span>
             </button>
@@ -69,7 +72,9 @@ export function OnboardingView({ store }: { store: AppStore }) {
                 }
               }}
             >
-              <span className="role-emoji">👪</span>
+              <span className="role-icon">
+                <IconUsers size={26} />
+              </span>
               <strong>Je suis un parent</strong>
               <span className="muted">Positionnement, contrôles et suivi</span>
             </button>

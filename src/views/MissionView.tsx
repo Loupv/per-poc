@@ -1,5 +1,6 @@
 import { useState } from "react";
 import type { Route } from "../App";
+import { IconCheck, IconCross } from "../components/icons";
 import { stepInfo, type MissionQuestion } from "../lib/engine";
 import { recordPractice, recordTest } from "../store";
 import type { Question, TestAnswer } from "../types";
@@ -27,7 +28,6 @@ export function MissionView({
   mode,
   planId = null,
   title,
-  emoji,
   questions,
   go,
 }: {
@@ -35,7 +35,6 @@ export function MissionView({
   mode: RunMode;
   planId?: string | null;
   title: string;
-  emoji: string;
   questions: MissionQuestion[];
   go: (r: Route) => void;
 }) {
@@ -49,10 +48,10 @@ export function MissionView({
 
   if (questions.length === 0) {
     return (
-      <div className="card quiz-end">
+      <div className="quiz-end">
         <h1>Rien à tester ici pour l'instant</h1>
         <button className="btn primary" onClick={() => go({ view: "home" })}>
-          🏠 Accueil
+          Accueil
         </button>
       </div>
     );
@@ -90,15 +89,14 @@ export function MissionView({
     const score = outcomes.filter((o) => o.correct).length;
     const ratio = score / questions.length;
     const msg = isTest
-      ? "Contrôle terminé et enregistré ! 📝"
+      ? "Contrôle terminé et enregistré !"
       : ratio >= 0.8
-        ? "Bravo ! 🎉"
+        ? "Bravo !"
         : ratio >= 0.5
-          ? "Bien joué, continue ! 💪"
-          : "Courage, on y retourne ! 🌱";
+          ? "Bien joué, continue !"
+          : "Courage, on y retourne !";
     return (
-      <div className="card quiz-end">
-        <span className="theme-emoji big">{emoji}</span>
+      <div className="quiz-end">
         <h1>{msg}</h1>
         <p className="score-big">
           {score} / {questions.length}
@@ -114,7 +112,9 @@ export function MissionView({
             const info = stepInfo(o.mq.stepId);
             return (
               <div key={i} className={`recap-line ${o.correct ? "ok" : "ko"}`}>
-                <span>{o.correct ? "✅" : "❌"}</span>
+                <span className={`recap-mark ${o.correct ? "ok" : "ko"}`}>
+                  {o.correct ? <IconCheck size={14} /> : <IconCross size={14} />}
+                </span>
                 <span className="recap-step">
                   {o.mq.question.prompt}
                   {!o.correct && <em className="recap-expl"> — {o.mq.question.explanation}</em>}
@@ -126,7 +126,7 @@ export function MissionView({
         </div>
         <div className="row center">
           <button className="btn primary" onClick={() => go({ view: "home" })}>
-            🏠 Accueil
+            Accueil
           </button>
         </div>
       </div>
@@ -138,7 +138,7 @@ export function MissionView({
   return (
     <div className={`quiz ${mq.theme.domain}`}>
       {!isTest && (
-        <button className="btn ghost back" onClick={() => go({ view: "home" })}>
+        <button className="btn back" onClick={() => go({ view: "home" })}>
           ← Quitter
         </button>
       )}
@@ -147,13 +147,13 @@ export function MissionView({
         <div className="quiz-progress-bar" style={{ width: `${(index / questions.length) * 100}%` }} />
       </div>
       <p className="muted quiz-counter">
-        {emoji} {title} · question {index + 1} sur {questions.length}
+        {title} · question {index + 1} sur {questions.length}
         {isTest && " · mode contrôle : les réponses sont corrigées à la fin"}
       </p>
 
       {passage && (
         <details className="passage-details" open={index === 0}>
-          <summary>📖 Relire le texte</summary>
+          <summary>Relire le texte</summary>
           <p>{passage}</p>
         </details>
       )}
@@ -205,10 +205,15 @@ export function MissionView({
         {answered && (
           <div className={`feedback ${isTest ? "neutral" : answered.correct ? "ok" : "ko"}`}>
             {isTest ? (
-              <strong>Réponse enregistrée ✔</strong>
+              <strong className="feedback-title">
+                <IconCheck size={15} /> Réponse enregistrée
+              </strong>
             ) : (
               <>
-                <strong>{answered.correct ? "✅ Juste !" : "❌ Pas tout à fait…"}</strong>
+                <strong className={`feedback-title ${answered.correct ? "ok" : "ko"}`}>
+                  {answered.correct ? <IconCheck size={15} /> : <IconCross size={15} />}
+                  {answered.correct ? "Juste !" : "Pas tout à fait…"}
+                </strong>
                 <p>{q.explanation}</p>
                 <p className="muted small">
                   Étape du PER : {stepInfo(mq.stepId)?.step.text.slice(0, 110)}…{" "}
@@ -220,8 +225,8 @@ export function MissionView({
               {index + 1 < questions.length
                 ? "Question suivante →"
                 : isTest
-                  ? "Terminer le contrôle 🏁"
-                  : "Voir mon score 🏁"}
+                  ? "Terminer le contrôle"
+                  : "Voir mon score"}
             </button>
           </div>
         )}

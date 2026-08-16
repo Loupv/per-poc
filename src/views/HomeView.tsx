@@ -1,4 +1,5 @@
 import type { Route } from "../App";
+import { IconBookOpen, IconClipboardCheck, IconRotate, IconTarget, ThemeIcon } from "../components/icons";
 import { THEMES } from "../data/content";
 import { QUESTION_STEP } from "../data/stepMap";
 import { buildMission, practiceLevel, questionById, type MissionQuestion } from "../lib/engine";
@@ -47,14 +48,14 @@ export function HomeView({ store, child, go }: { store: AppStore; child: ChildPr
               key={p.id}
               className="tile-btn test"
               onClick={() =>
-                go({ view: "mission", mode: "test", planId: p.id, title: p.title, emoji: "📝", questions: qs })
+                go({ view: "mission", mode: "test", planId: p.id, title: p.title, questions: qs })
               }
             >
-              <span className="tile-emoji">📝</span>
-              <strong>Contrôle</strong>
-              <span className="tile-sub">
-                {qs.length} questions · une seule fois, corrigé à la fin
+              <span className="tile-icon">
+                <IconClipboardCheck size={26} />
               </span>
+              <strong>Contrôle</strong>
+              <span className="tile-sub">{qs.length} questions · une seule fois, corrigé à la fin</span>
             </button>
           );
         })}
@@ -67,18 +68,21 @@ export function HomeView({ store, child, go }: { store: AppStore; child: ChildPr
                 view: "mission",
                 mode: "practice",
                 title: `Entraînement — ${child.year}P`,
-                emoji: "🎯",
                 questions: mission,
               })
             }
           >
-            <span className="tile-emoji">🎯</span>
+            <span className="tile-icon">
+              <IconTarget size={26} />
+            </span>
             <strong>Ma mission du jour</strong>
             <span className="tile-sub">{mission.length} questions choisies pour toi</span>
           </button>
         ) : (
           <div className="tile-btn off">
-            <span className="tile-emoji">🎯</span>
+            <span className="tile-icon">
+              <IconTarget size={26} />
+            </span>
             <strong>Ma mission du jour</strong>
             <span className="tile-sub">
               {seenCount === 0
@@ -94,11 +98,11 @@ export function HomeView({ store, child, go }: { store: AppStore; child: ChildPr
             <button
               key={p.id}
               className="tile-btn revision"
-              onClick={() =>
-                go({ view: "mission", mode: "practice", title: p.title, emoji: "📚", questions: qs })
-              }
+              onClick={() => go({ view: "mission", mode: "practice", title: p.title, questions: qs })}
             >
-              <span className="tile-emoji">📚</span>
+              <span className="tile-icon">
+                <IconBookOpen size={26} />
+              </span>
               <strong>Révision préparée</strong>
               <span className="tile-sub">{qs.length} questions · rejouable</span>
             </button>
@@ -113,16 +117,12 @@ export function HomeView({ store, child, go }: { store: AppStore; child: ChildPr
               key={y}
               className="tile-btn past"
               onClick={() =>
-                go({
-                  view: "mission",
-                  mode: "practice",
-                  title: `Retest ${y}P`,
-                  emoji: "🔄",
-                  questions: m,
-                })
+                go({ view: "mission", mode: "practice", title: `Retest ${y}P`, questions: m })
               }
             >
-              <span className="tile-emoji">🔄</span>
+              <span className="tile-icon">
+                <IconRotate size={26} />
+              </span>
               <strong>Retester la {y}P</strong>
               <span className="tile-sub">tout le programme de {y}P</span>
             </button>
@@ -140,10 +140,12 @@ export function HomeView({ store, child, go }: { store: AppStore; child: ChildPr
               key={t.id}
               className={`tile-btn theme ${t.domain}`}
               onClick={() =>
-                go({ view: "mission", mode: "practice", title: t.title, emoji: t.emoji, questions: themeQuestions(t) })
+                go({ view: "mission", mode: "practice", title: t.title, questions: themeQuestions(t) })
               }
             >
-              <span className="tile-emoji">{t.emoji}</span>
+              <span className="tile-icon">
+                <ThemeIcon themeId={t.id} size={24} />
+              </span>
               <strong>{t.title}</strong>
               <span className="tile-sub">
                 {trained}/{stepIds.length} étapes au top

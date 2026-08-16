@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { IconLock } from "../components/icons";
 import { verifyPin } from "../lib/pin";
 import { resetAll } from "../store";
 
@@ -25,7 +26,9 @@ export function PinGate({ pinHash, onUnlock, onCancel }: {
 
   return (
     <div className="card welcome pin-gate">
-      <h1>🔒 Espace parents</h1>
+      <h1 className="pin-title">
+        <IconLock size={18} /> Espace parents
+      </h1>
       <p className="muted">Entre le code PIN parent pour continuer.</p>
       <form
         onSubmit={(e) => {
