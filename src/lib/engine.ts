@@ -203,6 +203,80 @@ export function pickQuestionsForStep(child: ChildProfile, stepId: number, count:
   return picked;
 }
 
+// ── Le chemin : le programme comme sentier de nœuds ─────────────────
+
+export interface PathNode {
+  id: string;
+  label: string;
+  domain: Domain;
+  objectiveCode: string;
+  stepIds: number[];
+  /** done = tout est acquis/entraîné ; current = prochain nœud à travailler. */
+  state: "done" | "current" | "todo";
+  /** Aucune étape du nœud n'est encore vue en classe (affiché estompé). */
+  unseen: boolean;
+}
+
+const NODE_SIZE = 4;
+
+const DOMAIN_ORDER: Domain[] = ["maths", "francais", "sciences", "shs"];
+
+/** Découpe le programme quizzable de l'année en nœuds ordonnés, par matière. */
+export function buildPath(child: ChildProfile): PathNode[] {
+  const nodes: PathNode[] = [];
+  const anySeen = Object.keys(child.seen).length > 0;
+
+  for (const domain of DOMAIN_ORDER) {
+    const objectives = OBJECTIVES.filter((o) => objectiveDomain(o.code) === domain).sort((a, b) =>
+      a.code.localeCompare(b.code, "fr")
+    );
+    for (const objective of objectives) {
+      let chunk: { id: number; label: string }[] = [];
+      const flush = () => {
+        if (chunk.length === 0) return;
+        const stepIds = chunk.map((c) => c.id);
+        const done = stepIds.every(
+          (id) => stepStatus(child, id) === "mastered" || practiceLevel(child, id) === "mastered"
+        );
+        nodes.push({
+          id: `${objective.id}-${nodes.length}`,
+          label: chunk[0].label,
+          domain,
+          objectiveCode: objective.code,
+          stepIds,
+          state: done ? "done" : "todo",
+          unseen: anySeen && !stepIds.some((id) => child.seen[id]),
+        });
+        chunk = [];
+      };
+      for (const group of objective.groups) {
+        const label =
+          (group.path[group.path.length - 1] ?? objective.name).slice(0, 26) +
+          ((group.path[group.path.length - 1] ?? objective.name).length > 26 ? "…" : "");
+        for (const step of group.steps) {
+          if (!stepInYear(step, child.year)) continue;
+          if (!stepHasQuestions(step.id)) continue;
+          if (stepKind(step.id) === "observe") continue;
+          chunk.push({ id: step.id, label });
+          if (chunk.length >= NODE_SIZE) flush();
+        }
+      }
+      flush();
+    }
+  }
+
+  // le nœud « en cours » : premier non terminé (et vu en classe si positionnement fait)
+  const current =
+    nodes.find((n) => n.state !== "done" && !n.unseen) ?? nodes.find((n) => n.state !== "done");
+  if (current) current.state = "current";
+  return nodes;
+}
+
+/** Questions d'un nœud du chemin (mode entraînement). */
+export function nodeQuestions(child: ChildProfile, node: PathNode): MissionQuestion[] {
+  return node.stepIds.flatMap((id) => pickQuestionsForStep(child, id, 2)).slice(0, 8);
+}
+
 // ── Résultats de contrôle par étape (source officielle) ─────────────
 
 export type TestOutcome = "none" | "ok" | "ko";

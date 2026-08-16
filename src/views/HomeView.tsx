@@ -1,19 +1,13 @@
 import type { Route } from "../App";
 import { IconBookOpen, IconClipboardCheck, IconRotate, IconTarget, IconZap, ThemeIcon } from "../components/icons";
+import { Path } from "../components/Path";
 import { THEMES } from "../data/content";
-import { QUESTION_STEP } from "../data/stepMap";
-import { buildMission, practiceLevel, questionById, type MissionQuestion } from "../lib/engine";
+import { buildMission, questionById, type MissionQuestion } from "../lib/engine";
 import { entitlements } from "../lib/plan";
 import { setActiveChild } from "../store";
-import type { AppStore, ChildProfile, Theme } from "../types";
+import type { AppStore, ChildProfile } from "../types";
 
 const YEARS = [5, 6, 7, 8];
-
-function themeQuestions(theme: Theme): MissionQuestion[] {
-  return theme.questions
-    .map((question) => ({ question, stepId: QUESTION_STEP[question.id], theme }))
-    .filter((mq) => mq.stepId !== undefined);
-}
 
 /** Accueil enfant : une grille de grandes cartes, chaque carte = une action. */
 export function HomeView({ store, child, go }: { store: AppStore; child: ChildProfile; go: (r: Route) => void }) {
@@ -138,46 +132,19 @@ export function HomeView({ store, child, go }: { store: AppStore; child: ChildPr
         })}
       </div>
 
-      <h2 className="section-title">Je m'entraîne par thème</h2>
-      <div className="tilegrid themes">
-        {THEMES.map((t) => {
-          const stepIds = [...new Set(t.questions.map((q) => QUESTION_STEP[q.id]).filter(Boolean))];
-          const trained = stepIds.filter((id) => practiceLevel(child, id) === "mastered").length;
-          return (
-            <button
-              key={t.id}
-              className={`tile-btn theme ${t.domain}`}
-              onClick={() =>
-                go({ view: "mission", mode: "practice", title: t.title, questions: themeQuestions(t) })
-              }
-            >
-              <span className="tile-icon">
-                <ThemeIcon themeId={t.id} size={24} />
-              </span>
-              <strong>{t.title}</strong>
-              <span className="tile-sub">
-                {trained}/{stepIds.length} étapes au top
-              </span>
-              <span
-                className="tile-fiche"
-                role="button"
-                tabIndex={0}
-                onClick={(e) => {
-                  e.stopPropagation();
-                  go({ view: "fiche", id: t.id });
-                }}
-                onKeyDown={(e) => {
-                  if (e.key === "Enter" || e.key === " ") {
-                    e.stopPropagation();
-                    go({ view: "fiche", id: t.id });
-                  }
-                }}
-              >
-                voir la fiche
-              </span>
-            </button>
-          );
-        })}
+      <h2 className="section-title">Mon chemin de l'année</h2>
+      <p className="muted small">
+        Le programme, nœud par nœud — tape un rond pour t'entraîner dessus.
+      </p>
+      <Path child={child} go={go} />
+
+      <h2 className="section-title">Mes fiches de révision</h2>
+      <div className="fiche-links">
+        {THEMES.map((t) => (
+          <button key={t.id} className={`btn link fiche-link ${t.domain}`} onClick={() => go({ view: "fiche", id: t.id })}>
+            <ThemeIcon themeId={t.id} size={15} /> {t.title}
+          </button>
+        ))}
       </div>
     </>
   );

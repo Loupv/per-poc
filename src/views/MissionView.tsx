@@ -65,6 +65,8 @@ export function MissionView({
   const [fact, setFact] = useState<string | null>(null);
   const [shownFacts] = useState(() => new Set<string>());
   const [sound, setSound] = useState(soundEnabled());
+  const [phase, setPhase] = useState<"intro" | "run" | "milestone">("intro");
+  const milestoneShown = useRef(false);
 
   const isTest = mode === "test";
   const item = items[index];
@@ -85,12 +87,31 @@ export function MissionView({
     setFinished(true);
   };
 
+  const advance = () => {
+    setIndex((i) => i + 1);
+    setAnswered(null);
+    setInputValue("");
+    setFact(null);
+  };
+
   const next = () => {
     if (index + 1 < items.length) {
-      setIndex(index + 1);
-      setAnswered(null);
-      setInputValue("");
-      setFact(null);
+      // jalon de mi-parcours (entraînement, sessions assez longues)
+      if (
+        !isTest &&
+        !milestoneShown.current &&
+        items.length >= 6 &&
+        index + 1 === Math.ceil(questions.length / 2)
+      ) {
+        milestoneShown.current = true;
+        setPhase("milestone");
+        setTimeout(() => {
+          setPhase("run");
+          advance();
+        }, 1200);
+        return;
+      }
+      advance();
     } else {
       finish(firstOutcomes);
     }
@@ -205,7 +226,51 @@ export function MissionView({
     );
   }
 
+  // Écran d'intro de session
+  if (phase === "intro") {
+    return (
+      <div className="session-screen slide-in">
+        <p className="muted">{isTest ? "Contrôle" : "Entraînement"}</p>
+        <h1>{title}</h1>
+        <p className="muted">
+          {items.length} questions
+          {isTest
+            ? " · une seule tentative, corrigé à la fin"
+            : " · les erreurs reviennent à la fin, jusqu'à réussite"}
+        </p>
+        <button className="btn primary big cta-btn" onClick={() => setPhase("run")} autoFocus>
+          C'est parti !
+        </button>
+        {!isTest && (
+          <button className="btn link" onClick={() => go({ view: "home" })}>
+            Plus tard
+          </button>
+        )}
+      </div>
+    );
+  }
+
+  // Jalon de mi-parcours
+  if (phase === "milestone") {
+    const left = items.length - (index + 1);
+    return (
+      <div className="session-screen pop">
+        <h1>À mi-chemin !</h1>
+        <p className="muted">Plus que {left} question{left > 1 ? "s" : ""} — tu tiens le bon bout.</p>
+      </div>
+    );
+  }
+
   const passage = mq.theme.passage;
+  const numericInput = q.type === "input" && /^[\d'\s]+$/.test((q.accepted ?? [""])[0]);
+
+  const numpadPress = (k: string) => {
+    if (answered) return;
+    if (k === "⌫") setInputValue((v) => v.slice(0, -1));
+    else if (k === "OK") {
+      if (inputValue.trim()) submit(isCorrectInput(q, inputValue));
+    } else setInputValue((v) => (v + k).slice(0, 6));
+  };
 
   return (
     <div className={`quiz focus ${mq.theme.domain}`}>
@@ -276,7 +341,7 @@ export function MissionView({
           </div>
         )}
 
-        {q.type === "input" && (
+        {q.type === "input" && !numericInput && (
           <form
             className="row"
             onSubmit={(e) => {
@@ -290,12 +355,31 @@ export function MissionView({
               placeholder="Ta réponse…"
               disabled={!!answered}
               autoFocus
-              inputMode={/[0-9]/.test((q.accepted ?? [""])[0]) ? "numeric" : "text"}
             />
             <button className="btn primary" type="submit" disabled={!!answered || !inputValue.trim()}>
               Valider
             </button>
           </form>
+        )}
+
+        {q.type === "input" && numericInput && (
+          <>
+            <div className={`numpad-display ${answered ? (answered.correct ? "ok" : "ko") : ""}`}>
+              {inputValue || <span className="muted">…</span>}
+            </div>
+            <div className="numpad">
+              {["1", "2", "3", "4", "5", "6", "7", "8", "9", "⌫", "0", "OK"].map((k) => (
+                <button
+                  key={k}
+                  className={`numpad-key ${k === "OK" ? "ok-key" : ""} ${k === "⌫" ? "del-key" : ""}`}
+                  disabled={!!answered || (k === "OK" && !inputValue.trim())}
+                  onClick={() => numpadPress(k)}
+                >
+                  {k}
+                </button>
+              ))}
+            </div>
+          </>
         )}
 
         {q.type === "multi" && (
