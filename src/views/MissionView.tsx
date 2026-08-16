@@ -2,11 +2,12 @@ import { useEffect, useRef, useState } from "react";
 import type { Route } from "../App";
 import { Figure } from "../components/figures";
 import { correctAnswerText, MatchPairs, MultiChoice, OrderList, SortBuckets } from "../components/formats";
-import { IconCheck, IconCross, IconVolume, IconVolumeOff } from "../components/icons";
+import { IconCheck, IconCross, IconHeadphones, IconVolume, IconVolumeOff } from "../components/icons";
+import { MarmotteSays } from "../components/Marmotte";
 import { YearMap } from "../components/YearMap";
 import { stepInfo, type MissionQuestion } from "../lib/engine";
 import { pickFact } from "../lib/funfacts";
-import { buzz, playCorrect, playEnd, playWrong, setSoundEnabled, soundEnabled } from "../lib/sound";
+import { buzz, canSpeak, playCorrect, playEnd, playWhistle, playWrong, setSoundEnabled, soundEnabled, speak } from "../lib/sound";
 import { recordPractice, recordSession, recordTest } from "../store";
 import type { ChildProfile, Question, TestAnswer } from "../types";
 
@@ -164,6 +165,7 @@ export function MissionView({
         if (f) {
           shownFacts.add(f);
           setFact(f);
+          setTimeout(() => playWhistle(), 380);
         } else setFact(null);
       } else setFact(null);
     }
@@ -174,12 +176,12 @@ export function MissionView({
     const total = firstOutcomes.length;
     const ratio = total ? score / total : 0;
     const msg = isTest
-      ? "Contrôle terminé et enregistré !"
+      ? "Contrôle terminé et enregistré"
       : ratio >= 0.8
-        ? "Bravo !"
+        ? "Sommet atteint !"
         : ratio >= 0.5
-          ? "Bien joué, continue !"
-          : "Chaque erreur retravaillée est une victoire !";
+          ? "Belle étape !"
+          : "Étape terminée — le sentier était raide";
     return (
       <div className="quiz-end">
         <h1>{msg}</h1>
@@ -189,15 +191,16 @@ export function MissionView({
         {isTest ? (
           <p className="muted">
             Le résultat est enregistré pour tes parents — un contrôle ne se refait pas, mais tu peux
-            t'entraîner autant que tu veux !
+            repartir en sortie autant que tu veux !
           </p>
         ) : (
-          retriesUsed > 0 && (
-            <p className="muted">
-              Tu as retravaillé {retriesUsed} question{retriesUsed > 1 ? "s" : ""} jusqu'au bout —
-              c'est comme ça qu'on apprend.
-            </p>
-          )
+          <MarmotteSays pose={ratio >= 0.8 ? "sommet" : "salue"} size={70}>
+            {retriesUsed > 0
+              ? `Tu as repassé ${retriesUsed} fois par les passages difficiles — c'est exactement comme ça qu'on progresse en montagne.`
+              : ratio >= 0.8
+                ? "Beau parcours ! Regarde tout ce qui s'est allumé sur ta carte."
+                : "On avance à son rythme. Le sentier sera plus facile la prochaine fois."}
+          </MarmotteSays>
         )}
         <div className="mission-recap">
           {firstOutcomes.map((o, i) => {
@@ -230,14 +233,13 @@ export function MissionView({
   if (phase === "intro") {
     return (
       <div className="session-screen slide-in">
-        <p className="muted">{isTest ? "Contrôle" : "Entraînement"}</p>
+        <p className="muted">{isTest ? "Contrôle" : "Sortie sur le sentier"}</p>
         <h1>{title}</h1>
-        <p className="muted">
-          {items.length} questions
+        <MarmotteSays pose="salue">
           {isTest
-            ? " · une seule tentative, corrigé à la fin"
-            : " · les erreurs reviennent à la fin, jusqu'à réussite"}
-        </p>
+            ? `${items.length} questions, une seule tentative. Les réponses sont corrigées à l'arrivée.`
+            : `${items.length} questions. Si tu te trompes, on repasse par là avant l'arrivée — c'est le but de la balade.`}
+        </MarmotteSays>
         <button className="btn primary big cta-btn" onClick={() => setPhase("run")} autoFocus>
           C'est parti !
         </button>
@@ -255,8 +257,10 @@ export function MissionView({
     const left = items.length - (index + 1);
     return (
       <div className="session-screen pop">
-        <h1>À mi-chemin !</h1>
-        <p className="muted">Plus que {left} question{left > 1 ? "s" : ""} — tu tiens le bon bout.</p>
+        <h1>Col atteint !</h1>
+        <MarmotteSays pose="sommet" size={70}>
+          Plus que {left} question{left > 1 ? "s" : ""} avant l'arrivée. Ça descend !
+        </MarmotteSays>
       </div>
     );
   }
@@ -312,7 +316,18 @@ export function MissionView({
       )}
 
       <div className="card question-card slide-in" key={index}>
-        <h2>{q.prompt}</h2>
+        <div className="q-head">
+          <h2>{q.prompt}</h2>
+          {canSpeak() && (
+            <button
+              className="icon-btn"
+              title="Écouter la consigne"
+              onClick={() => speak(q.prompt)}
+            >
+              <IconHeadphones size={18} />
+            </button>
+          )}
+        </div>
         {q.figure && <Figure id={q.figure} />}
 
         {q.type === "mcq" && (
@@ -411,7 +426,12 @@ export function MissionView({
                   <p className="correct-answer">Bonne réponse : {correctAnswerText(q)}</p>
                 )}
                 {!answered.correct && <p>{q.explanation}</p>}
-                {fact && <p className="funfact">Le savais-tu ? {fact}</p>}
+                {fact && (
+                  <p className="funfact">
+                    <span className="funfact-label">Trouvaille du sentier</span>
+                    {fact}
+                  </p>
+                )}
                 {answered.correct && !fact && (
                   <p className="muted small">
                     Étape du PER : {stepInfo(mq.stepId)?.step.text.slice(0, 90)}…{" "}

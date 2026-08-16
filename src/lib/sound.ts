@@ -49,6 +49,30 @@ export function playEnd() {
   note(784, 0.24, 0.22);
 }
 
+/** Le sifflet de la marmotte : deux notes aiguës et brèves, comme sur l'alpage. */
+export function playWhistle() {
+  if (!soundEnabled()) return;
+  note(1568, 0, 0.09, "sine", 0.07);
+  note(1976, 0.1, 0.13, "sine", 0.07);
+}
+
+/** Lecture à voix haute d'une consigne (voix du navigateur, français). */
+export function speak(text: string) {
+  try {
+    const synth = window.speechSynthesis;
+    if (!synth) return;
+    synth.cancel();
+    const u = new SpeechSynthesisUtterance(text);
+    u.lang = "fr-CH";
+    u.rate = 0.95;
+    synth.speak(u);
+  } catch {
+    /* synthèse vocale indisponible */
+  }
+}
+
+export const canSpeak = () => typeof window !== "undefined" && "speechSynthesis" in window;
+
 export function buzz(pattern: number | number[]) {
   try {
     navigator.vibrate?.(pattern);

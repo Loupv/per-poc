@@ -1,5 +1,6 @@
 import type { Route } from "../App";
 import { IconBookOpen, IconClipboardCheck, IconRotate, IconTarget, IconZap, ThemeIcon } from "../components/icons";
+import { Marmotte, MarmotteSays } from "../components/Marmotte";
 import { Path } from "../components/Path";
 import { THEMES } from "../data/content";
 import { buildMission, questionById, type MissionQuestion } from "../lib/engine";
@@ -33,6 +34,13 @@ export function HomeView({ store, child, go }: { store: AppStore; child: ChildPr
           </div>
         )}
       </div>
+
+      {seenCount === 0 && (
+        <MarmotteSays pose="salue">
+          Salut ! Je t'attends sur le sentier. Avant de partir, un parent doit préparer l'itinéraire
+          dans l'espace parents — il indique ce que vous avez déjà vu en classe.
+        </MarmotteSays>
+      )}
 
       <div className="tilegrid hero">
         {child.planned.map((p) => {
@@ -69,19 +77,19 @@ export function HomeView({ store, child, go }: { store: AppStore; child: ChildPr
             <span className="tile-icon">
               <IconTarget size={26} />
             </span>
-            <strong>Ma mission du jour</strong>
+            <strong>Ma sortie du jour</strong>
             <span className="tile-sub">{mission.length} questions choisies pour toi</span>
           </button>
         ) : (
           <div className="tile-btn off">
-            <span className="tile-icon">
-              <IconTarget size={26} />
+            <span className="tile-icon sleeping">
+              <Marmotte pose="dort" size={44} />
             </span>
-            <strong>Ma mission du jour</strong>
+            <strong>Ma sortie du jour</strong>
             <span className="tile-sub">
               {seenCount === 0
-                ? "Demande à un parent de régler l'espace parents !"
-                : "Rien à réviser pour l'instant"}
+                ? "La marmotte dort : un parent doit d'abord préparer l'itinéraire."
+                : "Rien à réviser pour l'instant — la marmotte fait la sieste."}
             </span>
           </div>
         )}
@@ -132,9 +140,9 @@ export function HomeView({ store, child, go }: { store: AppStore; child: ChildPr
         })}
       </div>
 
-      <h2 className="section-title">Mon chemin de l'année</h2>
+      <h2 className="section-title">Mon sentier de l'année</h2>
       <p className="muted small">
-        Le programme, nœud par nœud — tape un rond pour t'entraîner dessus.
+        Le programme balisé, étape par étape — tape une balise pour partir en sortie.
       </p>
       <Path child={child} go={go} />
 

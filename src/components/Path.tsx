@@ -55,7 +55,10 @@ export function Path({ child, go }: { child: ChildProfile; go: (r: Route) => voi
                 {node.state === "done" ? (
                   <IconCheck size={22} />
                 ) : (
-                  <span className="path-node-count">{node.stepIds.length}</span>
+                  /* balise de randonnée suisse : blanc-rouge-blanc */
+                  <span className="balise" aria-hidden="true">
+                    <span className="balise-red" />
+                  </span>
                 )}
               </button>
               <span className={`path-label ${node.state === "current" ? "strong" : "muted"}`}>

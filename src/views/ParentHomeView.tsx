@@ -350,7 +350,7 @@ export function ParentHomeView({ store, child, go }: { store: AppStore; child: C
 
       <section className="card">
         <div className="card-head">
-          <h2>Matières</h2>
+          <h2>L'itinéraire de l'année</h2>
           <button
             className="btn link"
             onClick={() => {
@@ -366,8 +366,8 @@ export function ParentHomeView({ store, child, go }: { store: AppStore; child: C
           </button>
         </div>
         <p className="muted small">
-          Indiquez où en est la classe — approximatif, ajustable à tout moment, affinable étape par
-          étape dans le programme.
+          Préparez l'itinéraire : indiquez où en est la classe dans chaque matière — approximatif,
+          ajustable à tout moment, affinable étape par étape dans le programme.
         </p>
         {DOMAINS.map((d) => (
           <MatiereBlock key={d} child={child} domain={d} go={go} />
