@@ -1,6 +1,7 @@
 import { useState } from "react";
 import type { Route } from "../App";
 import { buildTest, DOMAIN_LABEL, globalStats, recommendations } from "../lib/engine";
+import { hashPin, isValidPin, verifyPin } from "../lib/pin";
 import { entitlements, TIER_LABEL, tierFor } from "../lib/plan";
 import {
   addChild,
@@ -10,6 +11,7 @@ import {
   resetAll,
   setActiveChild,
   setChildYear,
+  setParentPinHash,
 } from "../store";
 import type { AppStore, ChildProfile, Domain } from "../types";
 
@@ -134,6 +136,88 @@ function PlanTestForm({ child }: { child: ChildProfile }) {
           ))}
         </div>
       )}
+    </div>
+  );
+}
+
+function PinSettings({ pinHash }: { pinHash: string | null }) {
+  const [current, setCurrent] = useState("");
+  const [pin1, setPin1] = useState("");
+  const [pin2, setPin2] = useState("");
+  const [msg, setMsg] = useState<string | null>(null);
+
+  const clear = () => {
+    setCurrent("");
+    setPin1("");
+    setPin2("");
+  };
+
+  const save = async () => {
+    setMsg(null);
+    if (pinHash && !(await verifyPin(current, pinHash))) return setMsg("Code actuel incorrect.");
+    if (!isValidPin(pin1)) return setMsg("Le code doit faire 4 chiffres.");
+    if (pin1 !== pin2) return setMsg("Les deux codes ne correspondent pas.");
+    setParentPinHash(await hashPin(pin1));
+    clear();
+    setMsg("Code PIN enregistré ✓");
+  };
+
+  const remove = async () => {
+    setMsg(null);
+    if (pinHash && !(await verifyPin(current, pinHash))) return setMsg("Code actuel incorrect.");
+    setParentPinHash(null);
+    clear();
+    setMsg("Code PIN supprimé.");
+  };
+
+  return (
+    <div className="pin-settings">
+      <h3>🔒 Code PIN parent</h3>
+      <p className="muted small">
+        {pinHash
+          ? "Un code protège l'accès à l'espace parents sur cet appareil."
+          : "Aucun code : n'importe qui peut ouvrir l'espace parents. Définissez un code à 4 chiffres (recommandé)."}
+      </p>
+      <div className="row">
+        {pinHash && (
+          <input
+            className="pin-input small"
+            type="password"
+            inputMode="numeric"
+            maxLength={4}
+            placeholder="Code actuel"
+            value={current}
+            onChange={(e) => setCurrent(e.target.value.replace(/\D/g, "").slice(0, 4))}
+          />
+        )}
+        <input
+          className="pin-input small"
+          type="password"
+          inputMode="numeric"
+          maxLength={4}
+          placeholder="Nouveau code"
+          value={pin1}
+          onChange={(e) => setPin1(e.target.value.replace(/\D/g, "").slice(0, 4))}
+        />
+        <input
+          className="pin-input small"
+          type="password"
+          inputMode="numeric"
+          maxLength={4}
+          placeholder="Confirmer"
+          value={pin2}
+          onChange={(e) => setPin2(e.target.value.replace(/\D/g, "").slice(0, 4))}
+        />
+        <button className="btn primary" onClick={save} disabled={pin1.length < 4}>
+          {pinHash ? "Modifier" : "Définir le code"}
+        </button>
+        {pinHash && (
+          <button className="btn ghost" onClick={remove} disabled={current.length < 4}>
+            Supprimer le code
+          </button>
+        )}
+      </div>
+      {msg && <p className={msg.includes("✓") || msg.includes("supprimé") ? "muted small" : "pin-error"}>{msg}</p>}
     </div>
   );
 }
@@ -311,6 +395,7 @@ export function ParentHomeView({ store, child, go }: { store: AppStore; child: C
             </button>
           ))}
         </div>
+        <PinSettings pinHash={store.parentPinHash} />
         <div className="row" style={{ marginTop: 10 }}>
           {store.children.length > 1 && (
             <button

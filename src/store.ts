@@ -29,7 +29,10 @@ interface V2Store {
 const load = (): AppStore => {
   try {
     const raw = localStorage.getItem(KEY);
-    if (raw) return JSON.parse(raw) as AppStore;
+    if (raw) {
+      const parsed = JSON.parse(raw) as AppStore;
+      return { ...parsed, parentPinHash: parsed.parentPinHash ?? null };
+    }
     // Migration depuis la v2 (un seul enfant, entraînement = ancien historique)
     const old = localStorage.getItem(OLD_KEY);
     if (old) {
@@ -41,13 +44,13 @@ const load = (): AppStore => {
           practice: v2.hist ?? {},
           validated: v2.validated ?? {},
         };
-        return { role: v2.role ?? null, activeChildId: c.id, children: [c] };
+        return { role: v2.role ?? null, activeChildId: c.id, children: [c], parentPinHash: null };
       }
     }
   } catch {
     /* stockage corrompu : on repart de zéro */
   }
-  return { role: null, activeChildId: null, children: [] };
+  return { role: null, activeChildId: null, children: [], parentPinHash: null };
 };
 
 let state = load();
@@ -166,8 +169,14 @@ export const recordTest = (childId: string, planId: string | null, title: string
   }));
 };
 
+/** Définit (hash) ou supprime (null) le code PIN parent. */
+export const setParentPinHash = (hash: string | null) => {
+  state = { ...state, parentPinHash: hash };
+  emit();
+};
+
 export const resetAll = () => {
-  state = { role: null, activeChildId: null, children: [] };
+  state = { role: null, activeChildId: null, children: [], parentPinHash: null };
   localStorage.removeItem(OLD_KEY);
   emit();
 };

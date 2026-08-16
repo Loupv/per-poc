@@ -82,4 +82,6 @@ export interface AppStore {
   role: Role | null;
   activeChildId: string | null;
   children: ChildProfile[];
+  /** Hash (SHA-256 salé) du code PIN parent — null si aucun PIN défini. */
+  parentPinHash: string | null;
 }

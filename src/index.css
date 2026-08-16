@@ -261,6 +261,17 @@ input:focus { outline: 2px solid var(--accent); border-color: var(--accent); }
 }
 .tier-badge.inline { vertical-align: middle; margin-left: 6px; }
 
+/* ── PIN parent ──────────────────────── */
+.pin-gate { max-width: 380px; }
+.pin-input {
+  font-size: 1.6rem; letter-spacing: 0.5em; text-align: center; max-width: 180px;
+  min-width: 140px; flex: none;
+}
+.pin-input.small { font-size: 1rem; letter-spacing: 0.2em; max-width: 140px; min-width: 110px; }
+.pin-error { color: var(--ko); font-weight: 650; margin: 8px 0 0; }
+.pin-settings { border-top: 1px dashed var(--line); margin-top: 16px; padding-top: 10px; }
+.pin-settings h3 { margin: 0 0 4px; }
+
 /* ── Programme ───────────────────────── */
 .legend { margin: 10px 0 4px; }
 .prog-domain { margin-top: 24px; }

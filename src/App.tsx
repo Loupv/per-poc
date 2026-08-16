@@ -9,6 +9,7 @@ import { HomeView } from "./views/HomeView";
 import { MissionView } from "./views/MissionView";
 import { OnboardingView } from "./views/OnboardingView";
 import { ParentHomeView } from "./views/ParentHomeView";
+import { PinGate } from "./views/PinGate";
 import { ProgrammeView } from "./views/ProgrammeView";
 
 export type Route =
@@ -27,6 +28,9 @@ export type Route =
 
 export default function App() {
   const [route, setRoute] = useState<Route>({ view: "home" });
+  // Déverrouillage parent : en mémoire seulement — retombe au verrou à chaque
+  // rechargement et à chaque passage en mode enfant.
+  const [unlocked, setUnlocked] = useState(false);
   const store = useStore();
   const child = activeChild(store);
 
@@ -37,8 +41,10 @@ export default function App() {
 
   const onboarded = store.role !== null && child !== null;
   const isParent = store.role === "parent";
+  const locked = isParent && store.parentPinHash !== null && !unlocked;
 
   const switchRole = () => {
+    if (isParent) setUnlocked(false);
     setRole(isParent ? "child" : "parent");
     go({ view: "home" });
   };
@@ -67,6 +73,15 @@ export default function App() {
       <main>
         {!onboarded || !child ? (
           <OnboardingView store={store} />
+        ) : locked ? (
+          <PinGate
+            pinHash={store.parentPinHash!}
+            onUnlock={() => setUnlocked(true)}
+            onCancel={() => {
+              setRole("child");
+              go({ view: "home" });
+            }}
+          />
         ) : (
           <>
             {route.view === "home" &&
