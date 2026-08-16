@@ -1,0 +1,273 @@
+[
+  {
+    "id": "k4890-1", "stepId": 4890, "status": "draft", "type": "input",
+    "prompt": "Écris en chiffres : neuf mille neuf cent nonante-neuf",
+    "accepted": ["9999", "9'999", "9 999"],
+    "explanation": "9'999 : 9 milliers, 9 centaines, 9 dizaines et 9 unités."
+  },
+  {
+    "id": "k4890-2", "stepId": 4890, "status": "draft", "type": "mcq",
+    "prompt": "Quel est le plus grand nombre qu'on peut écrire avec 4 chiffres ?",
+    "choices": ["9'000", "9'909", "9'999", "10'000"],
+    "answerIndex": 2,
+    "explanation": "9'999 : le chiffre 9 partout. 10'000 s'écrit avec 5 chiffres !"
+  },
+  {
+    "id": "k4890-3", "stepId": 4890, "status": "draft", "type": "mcq",
+    "prompt": "Combien valent 10 centaines ?",
+    "choices": ["100", "1'000", "10'000", "110"],
+    "answerIndex": 1,
+    "explanation": "10 paquets de 100 = 1'000, soit un millier."
+  },
+  {
+    "id": "k4892-1", "stepId": 4892, "status": "draft", "type": "mcq",
+    "prompt": "Pour compter rapidement 230 jetons, le plus malin est de…",
+    "choices": ["les compter un par un", "faire des paquets de 10", "les mettre en tas au hasard", "les peser"],
+    "answerIndex": 1,
+    "explanation": "En groupant par 10 (ou par 100), on compte les paquets au lieu de compter chaque jeton."
+  },
+  {
+    "id": "k4892-2", "stepId": 4892, "status": "draft", "type": "input",
+    "prompt": "J'ai 3 paquets de 100 billes et 4 paquets de 10 billes. Combien de billes en tout ?",
+    "accepted": ["340"],
+    "explanation": "3 × 100 = 300 et 4 × 10 = 40, donc 340 billes."
+  },
+  {
+    "id": "k4892-3", "stepId": 4892, "status": "draft", "type": "input",
+    "prompt": "5 boîtes de 100 crayons et 2 crayons seuls : combien de crayons en tout ?",
+    "accepted": ["502"],
+    "explanation": "500 + 2 = 502. Attention : pas de dizaines, donc un 0 au milieu."
+  },
+  {
+    "id": "k4893-1", "stepId": 4893, "status": "draft", "type": "mcq",
+    "prompt": "Un grand bocal est rempli de bonbons. Combien y en a-t-il environ ?",
+    "choices": ["3", "300", "300'000", "3 millions"],
+    "answerIndex": 1,
+    "explanation": "300 est l'ordre de grandeur raisonnable : 3 c'est presque vide, 300'000 ne tiendrait jamais dans un bocal."
+  },
+  {
+    "id": "k4893-2", "stepId": 4893, "status": "draft", "type": "mcq",
+    "prompt": "Le nombre d'élèves d'une classe est le plus proche de…",
+    "choices": ["2", "20", "200", "2'000"],
+    "answerIndex": 1,
+    "explanation": "Une classe compte environ 20 élèves."
+  },
+  {
+    "id": "k4893-3", "stepId": 4893, "status": "draft", "type": "mcq",
+    "prompt": "Pour estimer un grand nombre d'objets sans tout compter, je peux…",
+    "choices": [
+      "compter une petite partie, puis imaginer combien de fois elle se répète",
+      "fermer les yeux et deviner",
+      "compter un objet sur deux",
+      "demander à un adulte"
+    ],
+    "answerIndex": 0,
+    "explanation": "C'est le principe de l'estimation : compter un échantillon puis multiplier."
+  },
+  {
+    "id": "k4894-1", "stepId": 4894, "status": "draft", "type": "input",
+    "prompt": "Tu dois préparer exactement 60 gommettes en rangées de 10. Combien de rangées ?",
+    "accepted": ["6"],
+    "explanation": "6 rangées de 10 = 60 gommettes."
+  },
+  {
+    "id": "k4894-2", "stepId": 4894, "status": "draft", "type": "mcq",
+    "prompt": "Pour préparer exactement 145 perles avec des sachets de 100, des sachets de 10 et des perles seules, il faut…",
+    "choices": [
+      "1 sachet de 100, 4 sachets de 10 et 5 perles seules",
+      "1 sachet de 100 et 45 sachets de 10",
+      "14 sachets de 100 et 5 perles seules",
+      "4 sachets de 100 et 1 sachet de 10"
+    ],
+    "answerIndex": 0,
+    "explanation": "145 = 100 + 40 + 5 : c'est la décomposition en centaines, dizaines et unités."
+  },
+  {
+    "id": "k4894-3", "stepId": 4894, "status": "draft", "type": "input",
+    "prompt": "Combien de paquets de 100 feuilles faut-il pour avoir 700 feuilles ?",
+    "accepted": ["7"],
+    "explanation": "7 × 100 = 700."
+  },
+  {
+    "id": "k4895-1", "stepId": 4895, "status": "draft", "type": "mcq",
+    "prompt": "Je décompte de 10 en 10 : 5'030, puis… ?",
+    "choices": ["5'040", "5'020", "4'930", "5'029"],
+    "answerIndex": 1,
+    "explanation": "Décompter = enlever : 5'030 − 10 = 5'020."
+  },
+  {
+    "id": "k4895-2", "stepId": 4895, "status": "draft", "type": "input",
+    "prompt": "Je compte de 1'000 en 1'000 : 4'200, 5'200, … ?",
+    "accepted": ["6200", "6'200", "6 200"],
+    "explanation": "5'200 + 1'000 = 6'200 : seul le chiffre des milliers change."
+  },
+  {
+    "id": "k4896-1", "stepId": 4896, "status": "draft", "type": "mcq",
+    "prompt": "Existe-t-il un nombre plus grand que tous les autres ?",
+    "choices": ["Oui, c'est un million", "Oui, c'est 10'000", "Non : on peut toujours ajouter 1", "Oui, mais il est secret"],
+    "answerIndex": 2,
+    "explanation": "Quel que soit le nombre, on peut toujours lui ajouter 1 : les nombres ne s'arrêtent jamais."
+  },
+  {
+    "id": "k4896-2", "stepId": 4896, "status": "draft", "type": "input",
+    "prompt": "9'999 + 1 = ?",
+    "accepted": ["10000", "10'000", "10 000"],
+    "explanation": "Après 9'999 vient 10'000 : dix milliers, un nombre à 5 chiffres."
+  },
+  {
+    "id": "k4896-3", "stepId": 4896, "status": "draft", "type": "mcq",
+    "prompt": "Après dix mille (10'000), les nombres…",
+    "choices": ["s'arrêtent", "recommencent à zéro", "continuent sans fin", "deviennent négatifs"],
+    "answerIndex": 2,
+    "explanation": "Les nombres continuent toujours : cent mille, un million, un milliard…"
+  },
+  {
+    "id": "k4898-1", "stepId": 4898, "status": "draft", "type": "mcq",
+    "prompt": "Range du plus petit au plus grand : 7'080, 7'800, 7'008",
+    "choices": [
+      "7'008 < 7'080 < 7'800",
+      "7'080 < 7'008 < 7'800",
+      "7'800 < 7'080 < 7'008",
+      "7'008 < 7'800 < 7'080"
+    ],
+    "answerIndex": 0,
+    "explanation": "Même nombre de milliers (7) : on compare les centaines — 0, 0 et 8 — puis les dizaines."
+  },
+  {
+    "id": "k4900-1", "stepId": 4900, "status": "draft", "type": "mcq",
+    "prompt": "Sur une ligne graduée, quel nombre se trouve juste au milieu entre 400 et 500 ?",
+    "choices": ["405", "440", "450", "490"],
+    "answerIndex": 2,
+    "explanation": "Le milieu entre 400 et 500 est 450 : à 50 de chaque côté."
+  },
+  {
+    "id": "k4900-2", "stepId": 4900, "status": "draft", "type": "mcq",
+    "prompt": "Sur une bande graduée de 10 en 10, quelle graduation vient juste après 890 ?",
+    "choices": ["891", "895", "900", "990"],
+    "answerIndex": 2,
+    "explanation": "890 + 10 = 900."
+  },
+  {
+    "id": "k4900-3", "stepId": 4900, "status": "draft", "type": "mcq",
+    "prompt": "Sur une droite des nombres, où se place 3'500 ?",
+    "choices": [
+      "Au milieu entre 3'000 et 4'000",
+      "Juste avant 3'000",
+      "Juste après 4'000",
+      "Au milieu entre 2'000 et 3'000"
+    ],
+    "answerIndex": 0,
+    "explanation": "3'500, c'est 3'000 plus la moitié de 1'000 : pile entre 3'000 et 4'000."
+  },
+  {
+    "id": "k4902-1", "stepId": 4902, "status": "draft", "type": "input",
+    "prompt": "Quel nombre est plus grand de 100 que 2'950 ?",
+    "accepted": ["3050", "3'050", "3 050"],
+    "explanation": "2'950 + 100 = 3'050 : attention au passage du millier !"
+  },
+  {
+    "id": "k4902-2", "stepId": 4902, "status": "draft", "type": "input",
+    "prompt": "Quel nombre est plus petit de 1'000 que 6'420 ?",
+    "accepted": ["5420", "5'420", "5 420"],
+    "explanation": "6'420 − 1'000 = 5'420 : seul le chiffre des milliers change."
+  },
+  {
+    "id": "k4904-1", "stepId": 4904, "status": "draft", "type": "mcq",
+    "prompt": "Dans 3'472, combien y a-t-il de dizaines EN TOUT ?",
+    "choices": ["7", "47", "347", "3'472"],
+    "answerIndex": 2,
+    "explanation": "3'472 = 347 dizaines et 2 unités. (Le chiffre des dizaines est 7, mais le nombre de dizaines est 347 !)"
+  },
+  {
+    "id": "k4904-2", "stepId": 4904, "status": "draft", "type": "mcq",
+    "prompt": "Dans 5'689, combien y a-t-il de centaines en tout ?",
+    "choices": ["6", "56", "568", "89"],
+    "answerIndex": 1,
+    "explanation": "5'689 = 56 centaines et 89 unités restantes."
+  },
+  {
+    "id": "k4904-3", "stepId": 4904, "status": "draft", "type": "mcq",
+    "prompt": "Dans 8'214, combien y a-t-il de milliers en tout ?",
+    "choices": ["8", "82", "821", "2"],
+    "answerIndex": 0,
+    "explanation": "8'214 contient 8 milliers complets."
+  },
+  {
+    "id": "k4906-1", "stepId": 4906, "status": "draft", "type": "input",
+    "prompt": "Dans 1'260, combien y a-t-il de dizaines en tout ?",
+    "accepted": ["126"],
+    "explanation": "1'260 = 126 dizaines exactement (126 × 10 = 1'260)."
+  },
+  {
+    "id": "k4906-2", "stepId": 4906, "status": "draft", "type": "mcq",
+    "prompt": "Dans 907, combien y a-t-il de dizaines en tout ?",
+    "choices": ["9", "90", "97", "0"],
+    "answerIndex": 1,
+    "explanation": "907 = 90 dizaines et 7 unités. Le 0 au milieu ne veut pas dire zéro dizaine en tout !"
+  },
+  {
+    "id": "k4906-3", "stepId": 4906, "status": "draft", "type": "input",
+    "prompt": "Dans 4'400, combien y a-t-il de centaines en tout ?",
+    "accepted": ["44"],
+    "explanation": "4'400 = 44 centaines (44 × 100 = 4'400)."
+  },
+  {
+    "id": "k4908-1", "stepId": 4908, "status": "draft", "type": "input",
+    "prompt": "Combien de pièces de 10 centimes faut-il pour faire 250 centimes ?",
+    "accepted": ["25"],
+    "explanation": "250 = 25 dizaines : il faut 25 pièces de 10 centimes."
+  },
+  {
+    "id": "k4908-2", "stepId": 4908, "status": "draft", "type": "input",
+    "prompt": "Avec 1'300 feuilles, combien de paquets de 100 feuilles complets peut-on faire ?",
+    "accepted": ["13"],
+    "explanation": "1'300 = 13 centaines : 13 paquets complets."
+  },
+  {
+    "id": "k4908-3", "stepId": 4908, "status": "draft", "type": "mcq",
+    "prompt": "Dans 2'056, combien y a-t-il de dizaines en tout ?",
+    "choices": ["5", "20", "205", "2'056"],
+    "answerIndex": 2,
+    "explanation": "2'056 = 205 dizaines et 6 unités."
+  },
+  {
+    "id": "k4910-1", "stepId": 4910, "status": "draft", "type": "mcq",
+    "prompt": "« Six mille trente » = 6'000 + … ?",
+    "choices": ["3", "30", "300", "13"],
+    "answerIndex": 1,
+    "explanation": "Six mille trente = 6'000 + 30 = 6'030. Pas de centaines !"
+  },
+  {
+    "id": "k4910-2", "stepId": 4910, "status": "draft", "type": "input",
+    "prompt": "Que vaut 7'000 + 500 + 8 ?",
+    "accepted": ["7508", "7'508", "7 508"],
+    "explanation": "7 milliers, 5 centaines, 0 dizaine et 8 unités : 7'508."
+  },
+  {
+    "id": "k4912-1", "stepId": 4912, "status": "draft", "type": "input",
+    "prompt": "Écris en chiffres : quatre mille septante-deux",
+    "accepted": ["4072", "4'072", "4 072"],
+    "explanation": "Quatre mille = 4'000, septante-deux = 72 : 4'072 (avec un 0 aux centaines)."
+  },
+  {
+    "id": "k4917-1", "stepId": 4917, "status": "draft", "type": "mcq",
+    "prompt": "En chiffres romains, XII vaut…",
+    "choices": ["7", "12", "22", "112"],
+    "answerIndex": 1,
+    "explanation": "X = 10 et II = 2, donc XII = 12."
+  },
+  {
+    "id": "k4917-2", "stepId": 4917, "status": "draft", "type": "mcq",
+    "prompt": "Comment s'écrit 9 en chiffres romains ?",
+    "choices": ["VIIII", "IX", "XI", "VX"],
+    "answerIndex": 1,
+    "explanation": "IX = « un avant dix » = 9. Le I placé avant le X se soustrait."
+  },
+  {
+    "id": "k4917-3", "stepId": 4917, "status": "draft", "type": "mcq",
+    "prompt": "Sur une horloge à chiffres romains, VI correspond à…",
+    "choices": ["4", "6", "11", "51"],
+    "answerIndex": 1,
+    "explanation": "V = 5 et I = 1, donc VI = 6."
+  }
+]

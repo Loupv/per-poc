@@ -1,0 +1,163 @@
+[
+  {
+    "id": "k4803-1", "stepId": 4803, "status": "draft", "type": "mcq",
+    "prompt": "Quelle figure a 4 côtés égaux, mais pas forcément d'angles droits ?",
+    "choices": ["Le losange", "Le rectangle", "Le triangle", "Le cercle"],
+    "answerIndex": 0,
+    "explanation": "Le losange a 4 côtés égaux. Si en plus ses angles sont droits, alors c'est un carré !"
+  },
+  {
+    "id": "k4805-1", "stepId": 4805, "status": "draft", "type": "mcq",
+    "prompt": "On colle deux triangles rectangles identiques par leur grand côté. Quelle figure peut-on obtenir ?",
+    "choices": ["Un rectangle", "Un cercle", "Un triangle plus petit", "Une droite"],
+    "answerIndex": 0,
+    "explanation": "Deux triangles rectangles identiques assemblés par leur grand côté forment un rectangle."
+  },
+  {
+    "id": "k4805-2", "stepId": 4805, "status": "draft", "type": "mcq",
+    "prompt": "On coupe un rectangle le long d'une diagonale. Qu'obtient-on ?",
+    "choices": ["Deux carrés", "Deux triangles", "Deux rectangles", "Un losange"],
+    "answerIndex": 1,
+    "explanation": "La diagonale partage le rectangle en deux triangles identiques."
+  },
+  {
+    "id": "k4805-3", "stepId": 4805, "status": "draft", "type": "mcq",
+    "prompt": "Avec quelles pièces peut-on recouvrir exactement un grand carré, sans trou ni dépassement ?",
+    "choices": ["4 petits carrés identiques", "3 cercles", "2 cercles et un triangle", "5 triangles de formes différentes"],
+    "answerIndex": 0,
+    "explanation": "4 petits carrés identiques recomposent exactement un grand carré. Les cercles laissent toujours des trous."
+  },
+  {
+    "id": "k4810-1", "stepId": 4810, "status": "draft", "type": "mcq",
+    "prompt": "Les deux rails d'une voie de train bien droite sont…",
+    "choices": ["parallèles", "perpendiculaires", "sécants", "courbes"],
+    "answerIndex": 0,
+    "explanation": "Ils gardent toujours le même écart et ne se croisent jamais : ils sont parallèles."
+  },
+  {
+    "id": "k4812-1", "stepId": 4812, "status": "draft", "type": "mcq",
+    "prompt": "Combien de faces a un cube ?",
+    "choices": ["4", "6", "8", "12"],
+    "answerIndex": 1,
+    "explanation": "Un cube a 6 faces carrées identiques — comme un dé à jouer."
+  },
+  {
+    "id": "k4812-2", "stepId": 4812, "status": "draft", "type": "mcq",
+    "prompt": "Quel solide a 6 faces rectangulaires, comme une boîte à chaussures ?",
+    "choices": ["La pyramide", "Le cube", "Le parallélépipède rectangle", "Le cylindre"],
+    "answerIndex": 2,
+    "explanation": "Le parallélépipède rectangle, c'est la forme d'une boîte : 6 faces rectangulaires."
+  },
+  {
+    "id": "k4812-3", "stepId": 4812, "status": "draft", "type": "mcq",
+    "prompt": "Quel solide a une base carrée et une pointe au sommet ?",
+    "choices": ["Le cube", "La pyramide", "Le parallélépipède rectangle", "La boule"],
+    "answerIndex": 1,
+    "explanation": "La pyramide : ses faces triangulaires se rejoignent en une pointe, comme les pyramides d'Égypte."
+  },
+  {
+    "id": "k4814-1", "stepId": 4814, "status": "draft", "type": "mcq",
+    "prompt": "Combien de sommets (coins) a un cube ?",
+    "choices": ["6", "8", "10", "12"],
+    "answerIndex": 1,
+    "explanation": "Un cube a 8 sommets : 4 en bas et 4 en haut."
+  },
+  {
+    "id": "k4814-2", "stepId": 4814, "status": "draft", "type": "mcq",
+    "prompt": "Combien d'arêtes a un cube ?",
+    "choices": ["6", "8", "10", "12"],
+    "answerIndex": 3,
+    "explanation": "12 arêtes : 4 en bas, 4 en haut et 4 verticales."
+  },
+  {
+    "id": "k4814-3", "stepId": 4814, "status": "draft", "type": "mcq",
+    "prompt": "Un dé à jouer a la forme d'un…",
+    "choices": ["cube", "cylindre", "parallélépipède rectangle", "cône"],
+    "answerIndex": 0,
+    "explanation": "Le dé est un cube : 6 faces carrées identiques, une par nombre de 1 à 6."
+  },
+  {
+    "id": "k4822-1", "stepId": 4822, "status": "draft", "type": "mcq",
+    "prompt": "Quand on fait glisser une figure sans la tourner (translation), qu'est-ce qui change ?",
+    "choices": ["Sa forme", "Sa taille", "Sa position", "Ses couleurs"],
+    "answerIndex": 2,
+    "explanation": "Seule la position change : la figure reste exactement la même, juste déplacée."
+  },
+  {
+    "id": "k4822-2", "stepId": 4822, "status": "draft", "type": "mcq",
+    "prompt": "Après une symétrie axiale (effet miroir), la taille de la figure…",
+    "choices": ["double", "diminue", "reste exactement la même", "dépend de l'axe"],
+    "answerIndex": 2,
+    "explanation": "La symétrie retourne la figure comme un miroir, mais toutes les longueurs sont conservées."
+  },
+  {
+    "id": "k4822-3", "stepId": 4822, "status": "draft", "type": "mcq",
+    "prompt": "Quelle transformation donne une figure retournée, comme dans un miroir ?",
+    "choices": ["La translation", "La symétrie axiale", "L'agrandissement", "Le coloriage"],
+    "answerIndex": 1,
+    "explanation": "C'est la symétrie axiale : la figure est « retournée » de l'autre côté de l'axe."
+  },
+  {
+    "id": "k4824-1", "stepId": 4824, "status": "draft", "type": "mcq",
+    "prompt": "Après une translation, la forme de la figure est…",
+    "choices": ["exactement la même", "retournée", "plus grande", "déformée"],
+    "answerIndex": 0,
+    "explanation": "Une translation fait seulement glisser la figure : forme et taille ne changent pas."
+  },
+  {
+    "id": "k4824-2", "stepId": 4824, "status": "draft", "type": "mcq",
+    "prompt": "Dans une symétrie axiale, un point et son image sont…",
+    "choices": ["à la même distance de l'axe", "toujours collés à l'axe", "à des distances différentes de l'axe", "au même endroit"],
+    "answerIndex": 0,
+    "explanation": "L'axe joue le rôle du miroir : le point et son image sont à égale distance, de part et d'autre."
+  },
+  {
+    "id": "k4824-3", "stepId": 4824, "status": "draft", "type": "mcq",
+    "prompt": "Qu'est-ce qui ne change JAMAIS dans une translation ou une symétrie axiale ?",
+    "choices": ["La position de la figure", "Les longueurs des côtés", "Le sens de la figure", "L'endroit de la feuille"],
+    "answerIndex": 1,
+    "explanation": "Ces transformations conservent les longueurs (et les angles) : la figure n'est ni agrandie ni déformée."
+  },
+  {
+    "id": "k4827-1", "stepId": 4827, "status": "draft", "type": "mcq",
+    "prompt": "Combien d'axes de symétrie a un carré ?",
+    "choices": ["0", "1", "2", "4"],
+    "answerIndex": 3,
+    "explanation": "4 axes : deux passant par les milieux des côtés, et les deux diagonales."
+  },
+  {
+    "id": "k4835-1", "stepId": 4835, "status": "draft", "type": "mcq",
+    "prompt": "Pour expliquer un chemin à un ami, quelle consigne est la plus claire ?",
+    "choices": ["« Va par là-bas »", "« Avance de 2 rues, puis tourne à droite »", "« C'est assez loin »", "« C'est vers les voitures »"],
+    "answerIndex": 1,
+    "explanation": "Une bonne consigne d'itinéraire donne des distances et des directions précises."
+  },
+  {
+    "id": "k4835-2", "stepId": 4835, "status": "draft", "type": "mcq",
+    "prompt": "Sur un quadrillage, que signifie le code « → → ↑ » ?",
+    "choices": ["2 cases à droite puis 1 case en haut", "2 cases en haut puis 1 à droite", "3 cases à droite", "1 case à droite puis 2 en haut"],
+    "answerIndex": 0,
+    "explanation": "Chaque flèche = un déplacement d'une case : deux fois à droite, puis une fois en haut."
+  },
+  {
+    "id": "k4837-1", "stepId": 4837, "status": "draft", "type": "mcq",
+    "prompt": "Tu notes un itinéraire avec des flèches. Que signifie « ↑ ↑ → » ?",
+    "choices": ["2 cases en haut puis 1 case à droite", "2 cases à droite puis 1 en haut", "3 cases en haut", "1 case en haut puis 2 à droite"],
+    "answerIndex": 0,
+    "explanation": "On lit les flèches dans l'ordre : haut, haut, droite."
+  },
+  {
+    "id": "k4837-2", "stepId": 4837, "status": "draft", "type": "mcq",
+    "prompt": "Quel repère est le plus fiable pour décrire un itinéraire ?",
+    "choices": ["« Tourne près de la voiture rouge »", "« Tourne à la fontaine »", "« Tourne où il y avait un chien »", "« Tourne quand tu es fatigué »"],
+    "answerIndex": 1,
+    "explanation": "La fontaine ne bouge pas ! Un bon repère est fixe et permanent."
+  },
+  {
+    "id": "k4837-3", "stepId": 4837, "status": "draft", "type": "mcq",
+    "prompt": "Pour revenir en arrière sur le chemin « → → ↑ », quel est le code du retour ?",
+    "choices": ["↓ ← ←", "→ → ↑", "↑ → →", "← ← ↓"],
+    "answerIndex": 0,
+    "explanation": "On refait le chemin à l'envers : d'abord redescendre (↓), puis deux cases à gauche (← ←)."
+  }
+]

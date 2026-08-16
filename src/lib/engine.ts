@@ -1,3 +1,4 @@
+import { BANK } from "../data/bank";
 import classification from "../data/classification.json";
 import per from "../data/per.json";
 import { THEMES } from "../data/content";
@@ -80,13 +81,41 @@ export interface MissionQuestion {
   theme: Theme;
 }
 
-export const ALL_QUESTIONS: MissionQuestion[] = THEMES.flatMap((theme) =>
+// Thèmes synthétiques pour les questions de la banque (couleur du domaine, pas de fiche)
+const bankTheme = (d: Domain): Theme => ({
+  id: `bank-${d}`,
+  domain: d,
+  emoji: "🧮",
+  title: DOMAIN_LABEL[d],
+  subtitle: "",
+  perCode: "",
+  attentes: [],
+  fiche: [],
+  questions: [],
+});
+
+const BANK_THEME: Record<Domain, Theme> = {
+  maths: bankTheme("maths"),
+  francais: bankTheme("francais"),
+  sciences: bankTheme("sciences"),
+  shs: bankTheme("shs"),
+};
+
+const THEME_QUESTIONS: MissionQuestion[] = THEMES.flatMap((theme) =>
   theme.questions.map((question) => ({
     question,
     stepId: QUESTION_STEP[question.id],
     theme,
   }))
 ).filter((mq) => mq.stepId !== undefined);
+
+const BANK_QUESTIONS: MissionQuestion[] = BANK.map((q) => {
+  const info = STEP_INDEX.get(q.stepId);
+  const domain = info ? objectiveDomain(info.objective.code) : "maths";
+  return { question: q, stepId: q.stepId, theme: BANK_THEME[domain] };
+}).filter((mq) => STEP_INDEX.has(mq.stepId));
+
+export const ALL_QUESTIONS: MissionQuestion[] = [...THEME_QUESTIONS, ...BANK_QUESTIONS];
 
 const QUESTION_BY_ID = new Map(ALL_QUESTIONS.map((mq) => [mq.question.id, mq]));
 export const questionById = (id: string) => QUESTION_BY_ID.get(id);

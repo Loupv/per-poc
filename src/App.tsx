@@ -116,7 +116,11 @@ export default function App() {
       <footer className="footer">
         POC — référentiel complet du Plan d'études romand (PER, cycle 2), 618 étapes officielles.
         Données PER © CIIP, via l'API publique per.ciip.ch. Démo sans compte, progression enregistrée
-        sur cet appareil.
+        sur cet appareil.{" "}
+        <a href="mailto:loup.vuarnesson@allhere.org?subject=Feedback%20POC%20r%C3%A9visions%20PER">
+          Un avis, un bug ? Écrivez-nous
+        </a>
+        .
       </footer>
     </div>
   );
