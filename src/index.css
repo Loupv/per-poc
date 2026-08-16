@@ -182,6 +182,28 @@ input:focus { outline: 2px solid var(--accent); border-color: var(--accent); }
 .attentes ul { line-height: 1.5; }
 .attentes li { margin: 8px 0; }
 
+/* ── Onboarding & rôles ──────────────── */
+.role-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 18px; }
+.role-card {
+  font: inherit; background: var(--card); border: 2px solid var(--line); border-radius: var(--radius);
+  padding: 22px 16px; cursor: pointer; display: flex; flex-direction: column; gap: 6px;
+  align-items: center; text-align: center;
+}
+.role-card:hover { border-color: var(--accent); background: #f7f6ff; }
+.role-emoji { font-size: 2.4rem; }
+.role-switch { background: #f1efff; border-color: #d9d3ff; }
+
+/* ── Espace parents ──────────────────── */
+.tiles { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 14px; margin: 16px 0; }
+.tile {
+  font: inherit; text-align: left; cursor: pointer; display: flex; flex-direction: column; gap: 6px;
+  border: 1px solid var(--line);
+}
+.tile:hover { border-color: var(--accent); }
+.tile-emoji { font-size: 1.8rem; }
+.profile-card { margin-top: 8px; }
+.profile-card .year-chip { padding: 7px 14px; min-height: 38px; }
+
 /* ── Mission & années ────────────────── */
 .mission-card { border-left: 5px solid var(--accent); margin-top: 8px; }
 .mission-head { display: flex; gap: 14px; align-items: flex-start; margin-bottom: 12px; }

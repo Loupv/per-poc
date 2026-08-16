@@ -1,5 +1,5 @@
 import { useSyncExternalStore } from "react";
-import type { AppStore } from "./types";
+import type { AppStore, Role } from "./types";
 
 const KEY = "per-poc-store-v2";
 const HIST_MAX = 5;
@@ -9,12 +9,12 @@ const load = (): AppStore => {
     const raw = localStorage.getItem(KEY);
     if (raw) {
       const parsed = JSON.parse(raw) as AppStore;
-      return { ...parsed, validated: parsed.validated ?? {} };
+      return { ...parsed, validated: parsed.validated ?? {}, role: parsed.role ?? null };
     }
   } catch {
     /* stockage corrompu : on repart de zéro */
   }
-  return { child: null, seen: {}, hist: {}, validated: {} };
+  return { role: null, child: null, seen: {}, hist: {}, validated: {} };
 };
 
 let state = load();
@@ -27,6 +27,11 @@ const emit = () => {
 
 export const setChild = (name: string, year: number) => {
   state = { ...state, child: { name, year } };
+  emit();
+};
+
+export const setRole = (role: Role) => {
+  state = { ...state, role };
   emit();
 };
 
@@ -61,7 +66,7 @@ export const setValidated = (stepId: number, validated: boolean) => {
 };
 
 export const resetAll = () => {
-  state = { child: null, seen: {}, hist: {}, validated: {} };
+  state = { role: null, child: null, seen: {}, hist: {}, validated: {} };
   emit();
 };
 

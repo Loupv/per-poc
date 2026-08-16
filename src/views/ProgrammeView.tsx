@@ -29,11 +29,13 @@ function GroupBlock({
   store,
   year,
   positioning,
+  canEdit,
 }: {
   group: PerGroup;
   store: AppStore;
   year: number;
   positioning: boolean;
+  canEdit: boolean;
 }) {
   const steps = group.steps.filter((s) => stepInYear(s, year));
   if (steps.length === 0) return null;
@@ -44,7 +46,7 @@ function GroupBlock({
   return (
     <div className="prog-group">
       <div className="prog-group-head">
-        {positioning ? (
+        {positioning && canEdit ? (
           <label className="seen-toggle">
             <input
               type="checkbox"
@@ -56,6 +58,10 @@ function GroupBlock({
             />
             <span>Vu en classe</span>
           </label>
+        ) : positioning ? (
+          <span className="seen-toggle muted">
+            {allSeen ? "✓ vu en classe" : someSeen ? "en partie vu" : "pas encore vu"}
+          </span>
         ) : (
           <span className="seen-toggle muted">tout testable</span>
         )}
@@ -71,19 +77,25 @@ function GroupBlock({
               </span>
               <span className="prog-step-text">{step.text}</span>
               {stepKind(step.id) === "observe" ? (
-                <button
-                  className={`badge observe ${store.validated[step.id] ? "validated" : ""}`}
-                  title="Étape non testable en quizz (production, manipulation…) : un parent valide quand l'enfant sait le faire"
-                  onClick={() => setValidated(step.id, !store.validated[step.id])}
-                >
-                  {store.validated[step.id] ? "✓ validé" : "à observer"}
-                </button>
+                canEdit ? (
+                  <button
+                    className={`badge observe ${store.validated[step.id] ? "validated" : ""}`}
+                    title="Étape non testable en quizz (production, manipulation…) : un parent valide quand l'enfant sait le faire"
+                    onClick={() => setValidated(step.id, !store.validated[step.id])}
+                  >
+                    {store.validated[step.id] ? "✓ validé" : "à observer"}
+                  </button>
+                ) : (
+                  <span className={`badge observe ${store.validated[step.id] ? "validated" : ""}`}>
+                    {store.validated[step.id] ? "✓ validé" : "à observer"}
+                  </span>
+                )
               ) : stepHasQuestions(step.id) ? (
                 <span className="badge testable">testable</span>
               ) : (
                 <span className="badge soon">bientôt</span>
               )}
-              {positioning && (
+              {positioning && canEdit && (
                 <input
                   type="checkbox"
                   className="step-seen"
@@ -105,11 +117,13 @@ function ObjectiveBlock({
   store,
   year,
   positioning,
+  canEdit,
 }: {
   objective: PerObjective;
   store: AppStore;
   year: number;
   positioning: boolean;
+  canEdit: boolean;
 }) {
   const stats = objectiveStats(store, objective, year);
   if (stats.total === 0) return null;
@@ -123,7 +137,7 @@ function ObjectiveBlock({
           {stats.mastered}🟢 {stats.tested - stats.mastered}🟡 · {stats.total} étapes
         </span>
       </summary>
-      {positioning && (
+      {positioning && canEdit && (
         <div className="row obj-bulk">
           <button
             className="btn ghost small-btn"
@@ -150,7 +164,7 @@ function ObjectiveBlock({
         </div>
       )}
       {objective.groups.map((g) => (
-        <GroupBlock key={g.id} group={g} store={store} year={year} positioning={positioning} />
+        <GroupBlock key={g.id} group={g} store={store} year={year} positioning={positioning} canEdit={canEdit} />
       ))}
       {objective.groups.some((g) => g.attentes.length > 0) && (
         <details className="attentes">
@@ -172,10 +186,12 @@ export function ProgrammeView({
   store,
   go,
   initialYear,
+  canEdit,
 }: {
   store: AppStore;
   go: (r: Route) => void;
   initialYear?: number;
+  canEdit: boolean;
 }) {
   const childYear = store.child?.year ?? 6;
   const [year, setYear] = useState(initialYear ?? childYear);
@@ -190,11 +206,13 @@ export function ProgrammeView({
       <h1>Le programme, étape par étape</h1>
       <p className="muted">
         Toutes les progressions d'apprentissage officielles du PER.{" "}
-        {positioning ? (
+        {positioning && canEdit ? (
           <>
             Pour l'année en cours ({childYear}P), cochez ce qui a <strong>déjà été vu en classe</strong> :
             les missions ne testent que ces étapes.
           </>
+        ) : positioning ? (
+          <>Année en cours ({childYear}P). Le positionnement se fait dans l'espace parents.</>
         ) : (
           <>Année {year < childYear ? "précédente" : "à venir"} : tout le programme est consultable et testable.</>
         )}
@@ -222,7 +240,7 @@ export function ProgrammeView({
         <section key={d}>
           <h2 className="prog-domain">{d}</h2>
           {OBJECTIVES.filter((o) => o.domain === d).map((o) => (
-            <ObjectiveBlock key={o.id} objective={o} store={store} year={year} positioning={positioning} />
+            <ObjectiveBlock key={o.id} objective={o} store={store} year={year} positioning={positioning} canEdit={canEdit} />
           ))}
         </section>
       ))}

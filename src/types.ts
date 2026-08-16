@@ -35,7 +35,11 @@ export interface StepHistory {
   lastAt: string;
 }
 
+export type Role = "child" | "parent";
+
 export interface AppStore {
+  /** Mode actif sur cet appareil (commutable : l'appareil passe de main en main). */
+  role: Role | null;
   child: { name: string; year: number } | null;
   /** stepId -> vu en classe (positionnement parent, année en cours). */
   seen: Record<number, boolean>;

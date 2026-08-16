@@ -162,6 +162,24 @@ export interface ObjectiveStats {
   validated: number;
 }
 
+export function globalStats(store: AppStore, year: number): ObjectiveStats {
+  return OBJECTIVES.reduce(
+    (acc, o) => {
+      const s = objectiveStats(store, o, year);
+      return {
+        total: acc.total + s.total,
+        seen: acc.seen + s.seen,
+        tested: acc.tested + s.tested,
+        mastered: acc.mastered + s.mastered,
+        withQuestions: acc.withQuestions + s.withQuestions,
+        observe: acc.observe + s.observe,
+        validated: acc.validated + s.validated,
+      };
+    },
+    { total: 0, seen: 0, tested: 0, mastered: 0, withQuestions: 0, observe: 0, validated: 0 }
+  );
+}
+
 export function objectiveStats(store: AppStore, objective: PerObjective, year: number): ObjectiveStats {
   const s: ObjectiveStats = {
     total: 0, seen: 0, tested: 0, mastered: 0, withQuestions: 0, observe: 0, validated: 0,

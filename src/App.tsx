@@ -1,11 +1,13 @@
 import { useState } from "react";
 import { themeById } from "./data/content";
 import type { MissionQuestion } from "./lib/engine";
-import { useStore } from "./store";
+import { setRole, useStore } from "./store";
 import { DashboardView } from "./views/DashboardView";
 import { FicheView } from "./views/FicheView";
 import { HomeView } from "./views/HomeView";
 import { MissionView } from "./views/MissionView";
+import { OnboardingView } from "./views/OnboardingView";
+import { ParentHomeView } from "./views/ParentHomeView";
 import { ProgrammeView } from "./views/ProgrammeView";
 
 export type Route =
@@ -24,38 +26,60 @@ export default function App() {
     window.scrollTo(0, 0);
   };
 
+  const onboarded = store.role !== null && store.child !== null;
+  const isParent = store.role === "parent";
+
+  const switchRole = () => {
+    setRole(isParent ? "child" : "parent");
+    go({ view: "home" });
+  };
+
   return (
     <div className="app">
       <header className="topbar">
         <button className="brand" onClick={() => go({ view: "home" })}>
           <span className="brand-badge">{store.child ? `${store.child.year}P` : "PER"}</span> Mes révisions
         </button>
-        <nav className="topnav">
-          <button
-            className={`nav-parent ${route.view === "programme" ? "active" : ""}`}
-            onClick={() => go({ view: "programme" })}
-          >
-            🗺️ Programme
-          </button>
-          <button
-            className={`nav-parent ${route.view === "dashboard" ? "active" : ""}`}
-            onClick={() => go({ view: "dashboard" })}
-          >
-            👪 Parents
-          </button>
-        </nav>
+        {onboarded && (
+          <nav className="topnav">
+            <button
+              className={`nav-parent ${route.view === "programme" ? "active" : ""}`}
+              onClick={() => go({ view: "programme" })}
+            >
+              🗺️ Programme
+            </button>
+            <button className="nav-parent role-switch" onClick={switchRole}>
+              {isParent ? "🧒 Mode enfant" : "👪 Espace parents"}
+            </button>
+          </nav>
+        )}
       </header>
 
       <main>
-        {route.view === "home" && <HomeView store={store} go={go} />}
-        {route.view === "fiche" && themeById(route.id) && (
-          <FicheView theme={themeById(route.id)!} go={go} />
+        {!onboarded ? (
+          <OnboardingView store={store} />
+        ) : (
+          <>
+            {route.view === "home" &&
+              (isParent ? <ParentHomeView store={store} go={go} /> : <HomeView store={store} go={go} />)}
+            {route.view === "fiche" && themeById(route.id) && (
+              <FicheView theme={themeById(route.id)!} go={go} />
+            )}
+            {route.view === "mission" && (
+              <MissionView
+                key={route.title}
+                title={route.title}
+                emoji={route.emoji}
+                questions={route.questions}
+                go={go}
+              />
+            )}
+            {route.view === "programme" && (
+              <ProgrammeView store={store} go={go} initialYear={route.year} canEdit={isParent} />
+            )}
+            {route.view === "dashboard" && <DashboardView store={store} go={go} />}
+          </>
         )}
-        {route.view === "mission" && (
-          <MissionView key={route.title} title={route.title} emoji={route.emoji} questions={route.questions} go={go} />
-        )}
-        {route.view === "programme" && <ProgrammeView store={store} go={go} initialYear={route.year} />}
-        {route.view === "dashboard" && <DashboardView store={store} go={go} />}
       </main>
 
       <footer className="footer">

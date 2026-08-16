@@ -1,9 +1,7 @@
-import { useState } from "react";
 import type { Route } from "../App";
 import { THEMES } from "../data/content";
 import { QUESTION_STEP } from "../data/stepMap";
 import { buildMission, stepMastery, type MissionQuestion } from "../lib/engine";
-import { setChild } from "../store";
 import type { AppStore, Theme } from "../types";
 
 const YEARS = [5, 6, 7, 8];
@@ -49,53 +47,9 @@ function ThemeCard({ theme, store, go }: { theme: Theme; store: AppStore; go: (r
   );
 }
 
+/** Accueil enfant : mission du jour, retest des années précédentes, entraînement, fiches. */
 export function HomeView({ store, go }: { store: AppStore; go: (r: Route) => void }) {
-  const [name, setName] = useState("");
-  const [year, setYear] = useState(6);
-
-  if (!store.child) {
-    return (
-      <div className="card welcome">
-        <h1>Salut ! 👋</h1>
-        <p>Ici, tu peux réviser le programme de l'école et montrer tes progrès.</p>
-        <form
-          onSubmit={(e) => {
-            e.preventDefault();
-            if (name.trim()) setChild(name.trim(), year);
-          }}
-        >
-          <label htmlFor="child-name">Comment tu t'appelles ?</label>
-          <div className="row">
-            <input
-              id="child-name"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              placeholder="Ton prénom"
-              autoFocus
-            />
-          </div>
-          <label className="year-label">En quelle année es-tu ?</label>
-          <div className="row year-row">
-            {YEARS.map((y) => (
-              <button
-                key={y}
-                type="button"
-                className={`year-chip ${year === y ? "selected" : ""}`}
-                onClick={() => setYear(y)}
-              >
-                {y}P
-              </button>
-            ))}
-          </div>
-          <button className="btn primary big" type="submit" disabled={!name.trim()}>
-            C'est parti !
-          </button>
-        </form>
-      </div>
-    );
-  }
-
-  const child = store.child;
+  const child = store.child!;
   const seenCount = Object.keys(store.seen).length;
   const mission = buildMission(store, { kind: "current" });
   const pastYears = YEARS.filter((y) => y < child.year);
@@ -111,13 +65,12 @@ export function HomeView({ store, go }: { store: AppStore; go: (r: Route) => voi
             <h2>Ma mission du jour — {child.year}P</h2>
             {seenCount === 0 ? (
               <p className="muted">
-                Avant de commencer, un parent doit indiquer dans le{" "}
-                <strong>Programme</strong> ce qui a déjà été vu en classe cette année.
+                Demande à un parent d'indiquer dans l'<strong>espace parents</strong> ce que tu as
+                déjà vu en classe : ta mission sera prête juste après !
               </p>
             ) : mission.length === 0 ? (
               <p className="muted">
-                Rien à tester pour l'instant sur les étapes vues en classe — reviens après le
-                prochain positionnement !
+                Rien à tester pour l'instant sur les étapes vues en classe — reviens bientôt !
               </p>
             ) : (
               <p className="muted">
@@ -139,7 +92,7 @@ export function HomeView({ store, go }: { store: AppStore; go: (r: Route) => voi
             </button>
           )}
           <button className="btn ghost" onClick={() => go({ view: "programme" })}>
-            🗺️ {seenCount === 0 ? "Faire le positionnement" : "Voir le programme"}
+            🗺️ Voir le programme
           </button>
         </div>
       </div>
