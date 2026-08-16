@@ -84,19 +84,24 @@ const fractionLabel = (f: number) => {
   return "tout le programme est vu";
 };
 
-/** Une matière = un bloc : curseur de positionnement, état, actions. */
+const LEVELS = [
+  { f: 0, label: "—", title: "Pas encore commencé" },
+  { f: 0.25, label: "¼", title: "Environ un quart du programme vu" },
+  { f: 0.5, label: "½", title: "Environ la moitié du programme vue" },
+  { f: 0.75, label: "¾", title: "Environ les trois quarts vus" },
+  { f: 1, label: "Tout", title: "Tout le programme est vu" },
+];
+
+/** Une matière = un bloc : positionnement segmenté, état, actions. */
 function MatiereBlock({ child, domain, go }: { child: ChildProfile; domain: Domain; go: (r: Route) => void }) {
   const s = domainStats(child, domain, child.year);
   const current = s.total === 0 ? 0 : (s.total - s.toPosition) / s.total;
-  const [value, setValue] = useState<number | null>(null);
-  const shown = value ?? current;
   const date = new Date().toLocaleDateString("fr-CH");
 
   const commit = (f: number) => {
     const { see, unsee } = expressSelection(domain, child.year, f);
     setSeen(child.id, unsee, false);
     setSeen(child.id, see, true);
-    setValue(null);
   };
 
   const testPreview = buildTest(child, domain);
@@ -107,20 +112,20 @@ function MatiereBlock({ child, domain, go }: { child: ChildProfile; domain: Doma
       <div className="row matiere-head">
         <span className={`domain-dot ${domain}`} />
         <strong className="matiere-name">{DOMAIN_LABEL[domain]}</strong>
-        <span className="muted small express-value">{fractionLabel(shown)}</span>
+        <span className="muted small express-value">{fractionLabel(current)}</span>
+        <span className="segmented" role="group" aria-label={`Avancement en ${DOMAIN_LABEL[domain]}`}>
+          {LEVELS.map(({ f, label, title }) => (
+            <button
+              key={f}
+              className={Math.abs(current - f) <= 0.125 ? "on" : ""}
+              title={title}
+              onClick={() => commit(f)}
+            >
+              {label}
+            </button>
+          ))}
+        </span>
       </div>
-      <input
-        type="range"
-        className="express-slider"
-        min={0}
-        max={100}
-        step={5}
-        value={Math.round(shown * 100)}
-        aria-label={`Avancement en ${DOMAIN_LABEL[domain]}`}
-        onChange={(e) => setValue(Number(e.target.value) / 100)}
-        onPointerUp={(e) => commit(Number((e.target as HTMLInputElement).value) / 100)}
-        onKeyUp={(e) => commit(Number((e.target as HTMLInputElement).value) / 100)}
-      />
       <StatusBar stats={s} />
       <div className="row matiere-foot">
         <span className="muted small">
@@ -361,7 +366,8 @@ export function ParentHomeView({ store, child, go }: { store: AppStore; child: C
           </button>
         </div>
         <p className="muted small">
-          Glissez pour indiquer où en est la classe — approximatif, ajustable à tout moment.
+          Indiquez où en est la classe — approximatif, ajustable à tout moment, affinable étape par
+          étape dans le programme.
         </p>
         {DOMAINS.map((d) => (
           <MatiereBlock key={d} child={child} domain={d} go={go} />
