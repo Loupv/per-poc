@@ -41,4 +41,6 @@ export interface AppStore {
   seen: Record<number, boolean>;
   /** stepId -> historique des réponses. */
   hist: Record<number, StepHistory>;
+  /** stepId -> date de validation parent (étapes « à observer » : il/elle sait le faire). */
+  validated: Record<number, string>;
 }

@@ -1,7 +1,17 @@
+import classification from "../data/classification.json";
 import per from "../data/per.json";
 import { THEMES } from "../data/content";
 import { QUESTION_STEP } from "../data/stepMap";
 import type { AppStore, Question, Theme } from "../types";
+
+// ── Classification quiz / à observer ────────────────────────────────
+
+const OBSERVE_STEPS = new Set<number>((classification as { observe: number[] }).observe);
+
+export type StepKind = "quiz" | "observe";
+
+export const stepKind = (stepId: number): StepKind =>
+  OBSERVE_STEPS.has(stepId) ? "observe" : "quiz";
 
 // ── Index du référentiel PER ────────────────────────────────────────
 
@@ -75,6 +85,7 @@ export const stepHasQuestions = (stepId: number) => QUESTIONS_BY_STEP.has(stepId
 export type Mastery = "untested" | "fragile" | "mastered";
 
 export const stepMastery = (store: AppStore, stepId: number): Mastery => {
+  if (store.validated[stepId]) return "mastered"; // validé par un parent (étape "à observer")
   const h = store.hist[stepId];
   if (!h || h.r.length === 0) return "untested";
   const r = h.r;
@@ -147,16 +158,24 @@ export interface ObjectiveStats {
   tested: number;
   mastered: number;
   withQuestions: number;
+  observe: number;
+  validated: number;
 }
 
 export function objectiveStats(store: AppStore, objective: PerObjective, year: number): ObjectiveStats {
-  const s: ObjectiveStats = { total: 0, seen: 0, tested: 0, mastered: 0, withQuestions: 0 };
+  const s: ObjectiveStats = {
+    total: 0, seen: 0, tested: 0, mastered: 0, withQuestions: 0, observe: 0, validated: 0,
+  };
   for (const group of objective.groups)
     for (const step of group.steps) {
       if (!stepInYear(step, year)) continue;
       s.total++;
       if (store.seen[step.id]) s.seen++;
       if (QUESTIONS_BY_STEP.has(step.id)) s.withQuestions++;
+      if (stepKind(step.id) === "observe") {
+        s.observe++;
+        if (store.validated[step.id]) s.validated++;
+      }
       const m = stepMastery(store, step.id);
       if (m !== "untested") s.tested++;
       if (m === "mastered") s.mastered++;

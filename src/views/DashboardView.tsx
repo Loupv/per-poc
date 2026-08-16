@@ -93,7 +93,10 @@ export function DashboardView({ store, go }: { store: AppStore; go: (r: Route) =
             </div>
           </div>
           <p className="muted small">
-            {s.withQuestions} étapes sur {s.total} sont testables dans ce POC.
+            {s.withQuestions} étapes sur {s.total} sont testables en quizz dans ce POC
+            {s.observe > 0 &&
+              ` · ${s.observe} étapes « à observer » (production, manipulation), dont ${s.validated} validées par un parent`}
+            .
           </p>
         </div>
       ))}

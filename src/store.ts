@@ -7,11 +7,14 @@ const HIST_MAX = 5;
 const load = (): AppStore => {
   try {
     const raw = localStorage.getItem(KEY);
-    if (raw) return JSON.parse(raw) as AppStore;
+    if (raw) {
+      const parsed = JSON.parse(raw) as AppStore;
+      return { ...parsed, validated: parsed.validated ?? {} };
+    }
   } catch {
     /* stockage corrompu : on repart de zéro */
   }
-  return { child: null, seen: {}, hist: {} };
+  return { child: null, seen: {}, hist: {}, validated: {} };
 };
 
 let state = load();
@@ -48,8 +51,17 @@ export const recordAnswer = (stepId: number, correct: boolean) => {
   emit();
 };
 
+/** Validation parent d'une étape « à observer » : il/elle sait le faire. */
+export const setValidated = (stepId: number, validated: boolean) => {
+  const next = { ...state.validated };
+  if (validated) next[stepId] = new Date().toISOString();
+  else delete next[stepId];
+  state = { ...state, validated: next };
+  emit();
+};
+
 export const resetAll = () => {
-  state = { child: null, seen: {}, hist: {} };
+  state = { child: null, seen: {}, hist: {}, validated: {} };
   emit();
 };
 

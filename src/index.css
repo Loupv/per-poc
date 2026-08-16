@@ -242,6 +242,12 @@ input:focus { outline: 2px solid var(--accent); border-color: var(--accent); }
 }
 .badge.testable { background: var(--ok-bg); color: var(--ok); }
 .badge.soon { background: #eef0f6; color: var(--muted); }
+.badge.observe {
+  background: #efeaff; color: #6d5bd0; border: none; cursor: pointer; font: inherit;
+  font-size: 0.72rem; font-weight: 700;
+}
+.badge.observe:hover { background: #e2daff; }
+.badge.observe.validated { background: var(--ok-bg); color: var(--ok); }
 .step-seen { min-width: 16px; width: 16px; height: 16px; flex: none; accent-color: var(--accent); }
 
 /* ── Dashboard barres ────────────────── */

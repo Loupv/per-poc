@@ -5,11 +5,12 @@ import {
   objectiveStats,
   stepHasQuestions,
   stepInYear,
+  stepKind,
   stepMastery,
   type PerGroup,
   type PerObjective,
 } from "../lib/engine";
-import { setSeen } from "../store";
+import { setSeen, setValidated } from "../store";
 import type { AppStore } from "../types";
 
 const YEARS = [5, 6, 7, 8];
@@ -69,7 +70,15 @@ function GroupBlock({
                 {MASTERY_ICON[m]}
               </span>
               <span className="prog-step-text">{step.text}</span>
-              {stepHasQuestions(step.id) ? (
+              {stepKind(step.id) === "observe" ? (
+                <button
+                  className={`badge observe ${store.validated[step.id] ? "validated" : ""}`}
+                  title="Étape non testable en quizz (production, manipulation…) : un parent valide quand l'enfant sait le faire"
+                  onClick={() => setValidated(step.id, !store.validated[step.id])}
+                >
+                  {store.validated[step.id] ? "✓ validé" : "à observer"}
+                </button>
+              ) : stepHasQuestions(step.id) ? (
                 <span className="badge testable">testable</span>
               ) : (
                 <span className="badge soon">bientôt</span>
@@ -204,7 +213,9 @@ export function ProgrammeView({
       </div>
 
       <p className="muted small legend">
-        ⚪ non testé · 🟡 fragile · 🟢 maîtrisé · « testable » = des questions existent déjà dans le POC
+        ⚪ non testé · 🟡 fragile · 🟢 maîtrisé · « testable » = des questions existent déjà dans le
+        POC · « à observer » = production ou manipulation, cliquez pour valider quand l'enfant sait
+        le faire
       </p>
 
       {domains.map((d) => (
