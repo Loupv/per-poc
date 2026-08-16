@@ -54,10 +54,10 @@
       "4 petits carrés identiques",
       "3 cercles",
       "2 cercles et un triangle",
-      "5 triangles de formes différentes"
+      "4 cercles identiques"
     ],
     "answerIndex": 0,
-    "explanation": "4 petits carrés identiques recomposent exactement un grand carré. Les cercles laissent toujours des trous."
+    "explanation": "4 petits carrés identiques recomposent exactement un grand carré. Les cercles, eux, laissent toujours des trous entre eux."
   },
   {
     "id": "k4810-1",
@@ -94,15 +94,15 @@
     "stepId": 4812,
     "status": "draft",
     "type": "mcq",
-    "prompt": "Quel solide a 6 faces rectangulaires, comme une boîte à chaussures ?",
+    "prompt": "Comment s'appelle le solide qui a la forme d'une boîte à chaussures ?",
     "choices": [
       "La pyramide à base carrée",
-      "Le cube aux six faces carrées",
+      "Le cube",
       "Le parallélépipède rectangle",
-      "Le cylindre et ses deux disques"
+      "Le cylindre"
     ],
     "answerIndex": 2,
-    "explanation": "Le parallélépipède rectangle, c'est la forme d'une boîte : 6 faces rectangulaires."
+    "explanation": "Le parallélépipède rectangle : 6 faces rectangulaires, avec une longueur, une largeur et une hauteur différentes. (Le cube en est un cas particulier, où tout est égal.)"
   },
   {
     "id": "k4812-3",

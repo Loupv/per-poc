@@ -109,10 +109,19 @@ export const FIGURES: Record<string, ReactNode> = {
     </F>
   ),
   pyramide: (
+    /* pyramide à base carrée en perspective cavalière : les 4 sommets de la base
+       sont bien présents (le 4e est caché, en pointillés). */
     <F>
-      <path d="M80 15 L120 85 L40 85 Z" fill={fill} />
-      <path d="M80 15 L98 78 L120 85" strokeWidth="1.8" />
-      <path d="M40 85 L98 78" strokeWidth="1.8" strokeDasharray="4 4" />
+      {/* silhouette visible : sommet, avant-gauche, avant-droit, arrière-droit */}
+      <path d="M80 14 L34 86 L104 86 L126 70 Z" fill={fill} />
+      {/* arête vers le sommet arrière-droit */}
+      <path d="M80 14 L126 70" />
+      {/* arêtes cachées vers le sommet arrière-gauche */}
+      <g strokeWidth="1.6" strokeDasharray="4 4" opacity="0.75">
+        <path d="M80 14 L56 70" />
+        <path d="M56 70 L34 86" />
+        <path d="M56 70 L126 70" />
+      </g>
     </F>
   ),
   pave: (
