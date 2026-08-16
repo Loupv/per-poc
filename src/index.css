@@ -1,32 +1,103 @@
 :root {
-  --bg: #ffffff;
-  --ink: #1b1e26;
-  --muted: #72757e;
-  --line: #e9eaee;
-  --line-soft: #f2f3f6;
-  --accent: #3b5bdb;
-  --accent-soft: #eef1fc;
-  --ok: #166534;
-  --ok-bg: #eaf6ef;
-  --ko: #d64545;
-  --ko-bg: #fbeeee;
-  --cur: #d19000;
-  --cur-bg: #fbf4e3;
-  --maths: #c94f4f;
-  --francais: #c79000;
-  --sciences: #14827f;
-  --shs: #35873f;
+  /* Palette « carte topographique suisse » : papier bistre pâle, encre ardoise,
+     bleu alpin, et le rouge des balises de sentier. */
+  --paper: #f3f1ec;
+  --paper-deep: #eae7df;
+  --contour: #d9d2c2;
+  --surface: #ffffff;
+  --surface-2: #fbfaf7;
+  --ink: #23262d;
+  --muted: #6f7480;
+  --line: #e2ded4;
+  --line-soft: #efece4;
+  --accent: #2f4e9e;
+  --accent-soft: #e7ecf8;
+  --accent-ink: #ffffff;
+  --balise: #d8232a;
+  --ok: #1c6b40;
+  --ok-bg: #e6f2ea;
+  --ko: #c0392f;
+  --ko-bg: #fbeceb;
+  --cur: #b57d16;
+  --cur-bg: #fbf3e2;
+  --maths: #b8483f;
+  --francais: #b8871a;
+  --sciences: #157a76;
+  --shs: #3a7a44;
+  --fur: #8a6a45;
+  --fur-bg: #f7f2e9;
+  --fur-line: #e8ddc9;
+  --observe: #6b4fae;
+  --observe-bg: #efeafb;
+  --shadow: 0 1px 2px rgb(35 38 45 / 0.05), 0 6px 16px -8px rgb(35 38 45 / 0.14);
+  --bg: var(--paper);
+  --card: var(--surface);
   --r: 10px;
   --r-sm: 7px;
   font-family: "Avenir Next", "Segoe UI", system-ui, -apple-system, sans-serif;
   font-size: 15px;
   color: var(--ink);
-  background: var(--bg);
+  background: var(--surface);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Mode sombre : nuit en montagne — ardoise profonde, mêmes repères colorés. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #14161a;
+    --paper-deep: #0f1114;
+    --contour: #23272e;
+    --surface: #1b1e24;
+    --surface-2: #20242b;
+    --ink: #e8e6e1;
+    --muted: #9aa0ab;
+    --line: #2c313a;
+    --line-soft: #23272e;
+    --accent: #7d9ae8;
+    --accent-soft: #1e2740;
+    --accent-ink: #12141a;
+    --balise: #e8534f;
+    --ok: #5fbb85;
+    --ok-bg: #16281f;
+    --ko: #e2756a;
+    --ko-bg: #2c1c1a;
+    --cur: #d8a33f;
+    --cur-bg: #2a2113;
+    --maths: #d8756b;
+    --francais: #d4a53c;
+    --sciences: #4fada8;
+    --shs: #6cae76;
+    --fur: #c2a279;
+    --fur-bg: #22201b;
+    --fur-line: #332e25;
+    --observe: #a48ee0;
+    --observe-bg: #241e33;
+    --shadow: 0 1px 2px rgb(0 0 0 / 0.4), 0 6px 18px -8px rgb(0 0 0 / 0.6);
+  }
 }
 
 * { box-sizing: border-box; }
 html, body { margin: 0; padding: 0; }
-body { background: var(--bg); min-height: 100vh; }
+body {
+  background: var(--bg);
+  min-height: 100vh;
+  /* courbes de niveau : anneaux concentriques très pâles, comme sur une carte */
+  background-image:
+    repeating-radial-gradient(circle at 12% 18%, transparent 0 26px, var(--contour) 26px 27px, transparent 27px 54px),
+    repeating-radial-gradient(circle at 88% 72%, transparent 0 32px, var(--contour) 32px 33px, transparent 33px 66px);
+  background-attachment: fixed;
+  opacity: 1;
+}
+body::before {
+  /* voile qui atténue la texture pour garder le texte parfaitement lisible */
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: var(--paper);
+  opacity: 0.9;
+  pointer-events: none;
+  z-index: -1;
+}
 
 .app { max-width: 780px; margin: 0 auto; padding: 0 18px 40px; }
 
@@ -50,7 +121,7 @@ h3 { font-size: 0.9rem; font-weight: 650; margin: 0; }
 }
 .brand:hover { background: var(--line-soft); }
 .brand-badge {
-  background: var(--ink); color: white; border-radius: 5px;
+  background: var(--ink); color: var(--paper); border-radius: 5px;
   padding: 2px 7px; font-size: 0.8rem; font-weight: 700;
 }
 .topnav { display: flex; gap: 4px; }
@@ -63,6 +134,10 @@ h3 { font-size: 0.9rem; font-weight: 650; margin: 0; }
 
 /* ── Sections (parent) & boîtes ──────── */
 .card { padding: 16px 0 10px; border-top: 1px solid var(--line); margin: 4px 0; }
+/* les surfaces « posées » (tuiles, questions, écrans) se détachent du papier */
+.tile-btn, .question-card, .welcome, .pin-gate, .quiz-end, .role-card, .marmotte-says {
+  box-shadow: var(--shadow);
+}
 .card:first-of-type { border-top: none; }
 .card-head { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; }
 
@@ -71,10 +146,10 @@ h3 { font-size: 0.9rem; font-weight: 650; margin: 0; }
   font: inherit; font-size: 0.9rem; font-weight: 550; border-radius: var(--r-sm); cursor: pointer;
   padding: 8px 14px; border: 1px solid transparent; min-height: 38px; background: none;
 }
-.btn.primary { background: var(--accent); color: #fff; }
-.btn.primary:hover { background: #3450c4; }
+.btn.primary { background: var(--accent); color: var(--accent-ink); }
+.btn.primary:hover { filter: brightness(1.12); }
 .btn.primary:disabled { opacity: 0.4; cursor: default; }
-.btn.ghost { border-color: var(--line); color: var(--ink); background: var(--bg); }
+.btn.ghost { border-color: var(--line); color: var(--ink); background: var(--surface); }
 .btn.ghost:hover { border-color: var(--accent); color: var(--accent); }
 .btn.ghost:disabled { opacity: 0.45; cursor: default; }
 .btn.link {
@@ -97,14 +172,15 @@ h3 { font-size: 0.9rem; font-weight: 650; margin: 0; }
 
 input {
   font: inherit; font-size: 0.92rem; padding: 8px 12px; border: 1px solid var(--line);
-  border-radius: var(--r-sm); min-width: 170px; flex: 1; min-height: 38px; background: var(--bg);
+  border-radius: var(--r-sm); min-width: 170px; flex: 1; min-height: 38px;
+  background: var(--surface); color: var(--ink);
 }
 input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 2px var(--accent-soft); }
 
 /* ── Onboarding (boîte) ──────────────── */
 .welcome {
   max-width: 430px; margin: 40px auto; border: 1px solid var(--line) !important;
-  border-radius: var(--r); padding: 22px 24px !important;
+  border-radius: var(--r); padding: 22px 24px !important; background: var(--surface);
 }
 .steps-dots { display: flex; gap: 6px; margin-bottom: 14px; }
 .dot { width: 22px; height: 3px; border-radius: 2px; background: var(--line); }
@@ -112,9 +188,9 @@ input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 2px 
 .wizard-nav { margin-top: 18px; justify-content: flex-end; }
 .role-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 14px; }
 .role-card {
-  font: inherit; border: 1px solid var(--line); border-radius: var(--r); background: var(--bg);
+  font: inherit; border: 1px solid var(--line); border-radius: var(--r); background: var(--surface);
   padding: 18px 14px; cursor: pointer; display: flex; flex-direction: column; gap: 4px;
-  align-items: flex-start; text-align: left;
+  align-items: flex-start; text-align: left; color: var(--ink);
 }
 .role-card:hover { border-color: var(--accent); }
 .role-icon { color: var(--accent); }
@@ -129,12 +205,12 @@ input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 2px 
 .tilegrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 12px; margin: 14px 0; }
 .tilegrid.hero { grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); }
 .tile-btn {
-  position: relative; font: inherit; text-align: left; cursor: pointer;
-  border: 1px solid var(--line); border-radius: var(--r); background: var(--bg);
+  position: relative; font: inherit; text-align: left; cursor: pointer; color: var(--ink);
+  border: 1px solid var(--line); border-radius: var(--r); background: var(--surface);
   padding: 16px; min-height: 120px; display: flex; flex-direction: column; gap: 4px;
   transition: transform 0.06s, border-color 0.1s, box-shadow 0.1s;
 }
-.tile-btn:hover { border-color: var(--accent); box-shadow: 0 2px 8px rgb(27 30 38 / 0.06); }
+.tile-btn:hover { border-color: var(--accent); transform: translateY(-1px); }
 .tile-btn:active { transform: scale(0.985); }
 .tile-btn strong { font-size: 0.98rem; }
 .tile-icon { color: var(--accent); display: inline-flex; margin-bottom: 2px; }
@@ -146,11 +222,11 @@ input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 2px 
 .tile-btn.theme.sciences .tile-icon { color: var(--sciences); }
 .tile-btn.theme.shs .tile-icon { color: var(--shs); }
 .tile-sub { color: var(--muted); font-size: 0.8rem; line-height: 1.4; }
-.tile-btn.mission { background: var(--accent-soft); border-color: #cdd7f6; }
+.tile-btn.mission { background: var(--accent-soft); border-color: var(--accent); }
 .tile-btn.mission:hover { border-color: var(--accent); }
-.tile-btn.test { background: var(--ko-bg); border-color: #f0d3d3; }
+.tile-btn.test { background: var(--ko-bg); border-color: var(--ko); }
 .tile-btn.test:hover { border-color: var(--ko); }
-.tile-btn.revision { background: var(--ok-bg); border-color: #d2e8da; }
+.tile-btn.revision { background: var(--ok-bg); border-color: var(--ok); }
 .tile-btn.revision:hover { border-color: var(--ok); }
 .tile-btn.past:hover { border-color: var(--accent); }
 .tile-btn.off { cursor: default; opacity: 0.75; background: var(--line-soft); border-style: dashed; }
@@ -185,15 +261,15 @@ input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 2px 
 }
 .segmented button {
   font: inherit; font-size: 0.8rem; font-weight: 600; padding: 5px 11px; min-height: 30px;
-  border: none; border-left: 1px solid var(--line); background: var(--bg); cursor: pointer;
+  border: none; border-left: 1px solid var(--line); background: var(--surface); cursor: pointer;
   color: var(--muted);
 }
 .segmented button:first-child { border-left: none; }
 .segmented button:hover { color: var(--accent); background: var(--accent-soft); }
-.segmented button.on { background: var(--ink); color: #fff; }
+.segmented button.on { background: var(--ink); color: var(--paper); }
 
 /* ── Barres & graphiques ─────────────── */
-.statusbar { display: flex; gap: 2px; background: #e9eaee; border-radius: 3px; overflow: hidden; margin: 7px 0; }
+.statusbar { display: flex; gap: 2px; background: var(--line); border-radius: 3px; overflow: hidden; margin: 7px 0; }
 .statusbar-seg { height: 100%; border-radius: 1px; }
 .seg-dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 2px; }
 .seg-dot.ok { background: var(--ok); }
@@ -232,11 +308,11 @@ input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 2px 
 .per-chip.big { font-size: 0.8rem; padding: 4px 9px; }
 .year-chip {
   font: inherit; font-size: 0.85rem; font-weight: 600; padding: 7px 13px;
-  border-radius: 999px; border: 1px solid var(--line); background: var(--bg);
+  border-radius: 999px; border: 1px solid var(--line); background: var(--surface);
   cursor: pointer; min-height: 34px; color: var(--ink);
 }
 .year-chip:hover { border-color: var(--accent); }
-.year-chip.selected { background: var(--ink); color: #fff; border-color: var(--ink); }
+.year-chip.selected { background: var(--ink); color: var(--paper); border-color: var(--ink); }
 .year-label { display: block; margin: 14px 0 6px; font-weight: 600; font-size: 0.9rem; }
 .year-row { margin-bottom: 12px; }
 
@@ -257,7 +333,7 @@ input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 2px 
 }
 .quiz-cta {
   position: fixed; left: 0; right: 0; bottom: 0; padding: 12px 18px 18px;
-  background: linear-gradient(transparent, var(--bg) 35%); display: flex; justify-content: center;
+  background: linear-gradient(transparent, var(--paper) 45%); display: flex; justify-content: center;
   z-index: 5;
 }
 .quiz-cta { gap: 10px; align-items: center; }
@@ -295,19 +371,20 @@ input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 2px 
 }
 .numpad-key {
   font: inherit; font-size: 1.25rem; font-weight: 650; min-height: 52px;
-  border: 1px solid var(--line); border-radius: var(--r-sm); background: var(--bg); cursor: pointer;
+  border: 1px solid var(--line); border-radius: var(--r-sm); background: var(--surface);
+  cursor: pointer; color: var(--ink);
 }
 .numpad-key:hover:not(:disabled) { border-color: var(--accent); background: var(--accent-soft); }
 .numpad-key:active { transform: scale(0.96); }
 .numpad-key:disabled { opacity: 0.4; cursor: default; }
-.numpad-key.ok-key { background: var(--accent); color: #fff; border-color: var(--accent); }
+.numpad-key.ok-key { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
 .numpad-key.del-key { color: var(--muted); }
 
 /* ── La marmotte ─────────────────────── */
-.marmotte { color: #8a6a45; display: block; }
+.marmotte { color: var(--fur); display: block; }
 .marmotte-says {
   display: flex; gap: 12px; align-items: flex-start; text-align: left;
-  background: #faf7f2; border: 1px solid #efe6d8; border-radius: var(--r);
+  background: var(--fur-bg); border: 1px solid var(--fur-line); border-radius: var(--r);
   padding: 12px 14px; margin: 14px auto; max-width: 480px;
 }
 .marmotte-holder { flex: none; align-self: center; }
@@ -319,12 +396,12 @@ input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 2px 
   35% { transform: translateY(-4px) rotate(-4deg); }
   70% { transform: translateY(-2px) rotate(3deg); }
 }
-.tile-icon.sleeping .marmotte { color: #a99a86; }
+.tile-icon.sleeping .marmotte { color: var(--muted); }
 
 /* trouvaille du sentier */
 .funfact-label {
   display: block; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.06em;
-  text-transform: uppercase; color: #a8791f; margin-bottom: 3px;
+  text-transform: uppercase; color: var(--cur); margin-bottom: 3px;
 }
 
 /* figures dans les questions */
@@ -350,23 +427,39 @@ input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 2px 
 .path-domain.francais .path-domain-icon { color: var(--francais); }
 .path-domain.sciences .path-domain-icon { color: var(--sciences); }
 .path-domain.shs .path-domain-icon { color: var(--shs); }
-.path-row { display: flex; gap: 12px; align-items: center; margin: 10px 0; transition: transform 0.2s; }
+.path-row {
+  display: flex; gap: 12px; align-items: center; margin: 14px 0;
+  transition: transform 0.2s; position: relative;
+}
+/* le tracé du sentier, en pointillés, d'une balise à la suivante */
+.path-node::after {
+  content: "";
+  position: absolute;
+  top: 100%; left: 50%;
+  width: 0;
+  height: var(--trail-len, 0px);
+  border-left: 3px dotted var(--contour);
+  transform-origin: top center;
+  transform: translateX(-1.5px) rotate(var(--trail-angle, 0deg));
+  pointer-events: none;
+}
+.path-node { position: relative; }
 .path-node {
   width: 52px; height: 52px; border-radius: 50%; flex: none; cursor: pointer;
-  border: 2.5px solid var(--line); background: var(--bg); font: inherit;
+  border: 2.5px solid var(--line); background: var(--surface); font: inherit;
   display: inline-flex; align-items: center; justify-content: center;
   color: var(--muted); font-weight: 700; transition: transform 0.1s;
 }
 .path-node:hover { transform: scale(1.06); }
 .path-node:active { transform: scale(0.97); }
-.path-node.done { color: #fff; border-color: transparent; }
+.path-node.done { color: var(--surface); border-color: transparent; }
 .path-node.done.maths { background: var(--maths); }
 .path-node.done.francais { background: var(--francais); }
 .path-node.done.sciences { background: var(--sciences); }
 .path-node.done.shs { background: var(--shs); }
 .path-node.current {
   width: 62px; height: 62px; border-width: 3px; color: var(--ink);
-  box-shadow: 0 3px 10px rgb(27 30 38 / 0.12);
+  box-shadow: var(--shadow);
 }
 .path-node.current.maths { border-color: var(--maths); }
 .path-node.current.francais { border-color: var(--francais); }
@@ -375,8 +468,8 @@ input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 2px 
 .path-node.unseen { opacity: 0.4; border-style: dashed; }
 /* balise de randonnée suisse : bande blanc-rouge-blanc */
 .balise {
-  width: 15px; height: 22px; border-radius: 2px; background: #fff;
-  border: 1px solid var(--line); display: flex; flex-direction: column; justify-content: center;
+  width: 15px; height: 22px; border-radius: 2px; background: #f4f1ea;
+  border: 1px solid rgb(0 0 0 / 0.12); display: flex; flex-direction: column; justify-content: center;
   overflow: hidden;
 }
 .balise-red { display: block; height: 7px; background: #d8232a; }
@@ -416,12 +509,14 @@ input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 2px 
 .question-card {
   border: 1px solid var(--line) !important; border-radius: var(--r);
   padding: 18px 20px !important; border-top: 1px solid var(--line) !important;
+  background: var(--surface);
 }
 .question-card h2 { font-size: 1.05rem; line-height: 1.45; }
 .choices { display: grid; gap: 8px; margin-top: 12px; }
 .choice {
   font: inherit; font-size: 0.95rem; text-align: left; padding: 11px 14px; min-height: 42px;
-  border: 1px solid var(--line); border-radius: var(--r-sm); background: var(--bg); cursor: pointer;
+  border: 1px solid var(--line); border-radius: var(--r-sm); background: var(--surface);
+  cursor: pointer; color: var(--ink);
 }
 .choice:hover:not(:disabled) { border-color: var(--accent); background: var(--accent-soft); }
 .choice.correct { border-color: var(--ok); background: var(--ok-bg); font-weight: 650; }
@@ -441,7 +536,8 @@ input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 2px 
 .choice.multi.picked .checkmark, .checkmark.on { background: var(--accent); border-color: var(--accent); }
 .chip {
   font: inherit; font-size: 0.9rem; padding: 8px 13px; min-height: 38px;
-  border: 1px solid var(--line); border-radius: 999px; background: var(--bg); cursor: pointer;
+  border: 1px solid var(--line); border-radius: 999px; background: var(--surface);
+  cursor: pointer; color: var(--ink);
 }
 .chip:hover:not(:disabled) { border-color: var(--accent); }
 .chip.active { border-color: var(--accent); background: var(--accent-soft); font-weight: 650; }
@@ -464,18 +560,18 @@ input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 2px 
 .bucket {
   border: 1.5px dashed var(--line); border-radius: var(--r-sm); padding: 10px 12px;
   min-height: 76px; display: flex; flex-direction: column; gap: 6px; font: inherit;
-  background: var(--bg); text-align: left;
+  background: var(--surface); text-align: left; color: var(--ink);
 }
 .bucket.ready { border-color: var(--accent); background: var(--accent-soft); cursor: pointer; }
 .bucket-items { display: flex; gap: 5px; flex-wrap: wrap; }
 .correct-answer { font-weight: 600; margin: 6px 0 0; }
 .funfact {
-  background: #fdf6e3; border-left: 3px solid var(--cur); border-radius: 4px;
+  background: var(--cur-bg); border-left: 3px solid var(--cur); border-radius: 4px;
   padding: 8px 12px; margin: 8px 0 0; font-size: 0.9rem; line-height: 1.45;
 }
 
 /* ── Mode éclair ─────────────────────── */
-.tile-btn.eclair-tile { background: var(--cur-bg); border-color: #f0e0b8; }
+.tile-btn.eclair-tile { background: var(--cur-bg); border-color: var(--cur); }
 .tile-btn.eclair-tile:hover { border-color: var(--cur); }
 .eclair-bar { background: var(--cur) !important; }
 .eclair-prompt { font-size: 1.6rem !important; display: flex; gap: 10px; align-items: center; }
@@ -495,7 +591,7 @@ input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 2px 
   width: 7px; height: 7px; border-radius: 50%; background: var(--line);
   transition: transform 0.2s;
 }
-.ydot.touched { background: #c9cdd6; }
+.ydot.touched { background: var(--muted); opacity: 0.5; }
 .ydot.lit.maths { background: var(--maths); }
 .ydot.lit.francais { background: var(--francais); }
 .ydot.lit.sciences { background: var(--sciences); }
@@ -543,7 +639,7 @@ input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 2px 
 
 .quiz-end {
   text-align: center; margin: 20px auto; padding: 28px 18px !important; max-width: 640px;
-  border: 1px solid var(--line) !important; border-radius: var(--r);
+  border: 1px solid var(--line) !important; border-radius: var(--r); background: var(--surface);
 }
 .score-big { font-size: 2rem; font-weight: 700; margin: 6px 0 14px; }
 .mission-recap { text-align: left; margin: 8px auto 16px; }
@@ -633,8 +729,8 @@ input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 2px 
 }
 .badge.testable { background: var(--ok-bg); color: var(--ok); }
 .badge.soon { background: var(--line-soft); color: var(--muted); }
-.badge.observe { background: #efeafb; color: #6b4fae; cursor: pointer; }
-button.badge.observe:hover { background: #e4dbf7; }
+.badge.observe { background: var(--observe-bg); color: var(--observe); cursor: pointer; }
+button.badge.observe:hover { background: var(--observe-bg); filter: brightness(0.96); }
 .badge.observe.validated { background: var(--ok-bg); color: var(--ok); }
 .step-seen { min-width: 14px; width: 14px; height: 14px; flex: none; accent-color: var(--accent); }
 
@@ -646,7 +742,7 @@ button.badge.observe:hover { background: #e4dbf7; }
 /* ── Tiers & PIN ─────────────────────── */
 .tier-badge {
   font-size: 0.68rem; font-weight: 650; letter-spacing: 0.03em;
-  background: var(--line-soft); color: #6b4fae;
+  background: var(--line-soft); color: var(--observe);
   border-radius: 4px; padding: 2px 7px; white-space: nowrap;
 }
 .tier-badge.inline { vertical-align: middle; margin-left: 6px; }
@@ -654,6 +750,7 @@ button.badge.observe:hover { background: #e4dbf7; }
 .pin-gate {
   max-width: 340px; text-align: center; margin: 48px auto;
   border: 1px solid var(--line) !important; border-radius: var(--r); padding: 24px !important;
+  background: var(--surface);
 }
 .pin-input {
   font-size: 1.4rem; letter-spacing: 0.5em; text-align: center; max-width: 170px;

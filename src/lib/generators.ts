@@ -5,6 +5,7 @@
 
 import type { Question } from "../types";
 import { fmt, toWords } from "./frenchNumbers";
+import { GENERATORS_FR } from "./generatorsFr";
 import { CHARACTERS, pick, universeOfToday } from "./universe";
 
 const ri = (min: number, max: number) => min + Math.floor(Math.random() * (max - min + 1));
@@ -230,6 +231,8 @@ export const GENERATORS: Generator[] = [
     },
   },
 ];
+
+GENERATORS.push(...GENERATORS_FR);
 
 export const GENERATORS_BY_STEP = new Map<number, Generator[]>();
 for (const g of GENERATORS) {

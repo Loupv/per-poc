@@ -16,6 +16,8 @@ const DOMAIN_THEME_ICON: Record<Domain, string> = {
 
 // décalages latéraux cycliques, façon sentier
 const OFFSETS = [0, 52, 0, -52];
+/** Écart vertical entre deux balises (marge + hauteur du nœud), en pixels. */
+const ROW_GAP = 80;
 
 export function Path({ child, go }: { child: ChildProfile; go: (r: Route) => void }) {
   const nodes = buildPath(child);
@@ -31,6 +33,12 @@ export function Path({ child, go }: { child: ChildProfile; go: (r: Route) => voi
           i = 0;
         }
         const offset = OFFSETS[i % OFFSETS.length];
+        // segment pointillé vers la balise suivante (sauf en fin de matière)
+        const nextNode = nodes[nodes.indexOf(node) + 1];
+        const sameDomain = nextNode && nextNode.domain === node.domain;
+        const dx = sameDomain ? OFFSETS[(i + 1) % OFFSETS.length] - offset : 0;
+        const trailLen = sameDomain ? Math.hypot(dx, ROW_GAP) : 0;
+        const trailAngle = sameDomain ? (Math.atan2(dx, ROW_GAP) * 180) / Math.PI : 0;
         i++;
         return (
           <div key={node.id}>
@@ -44,6 +52,12 @@ export function Path({ child, go }: { child: ChildProfile; go: (r: Route) => voi
             )}
             <div className="path-row" style={{ transform: `translateX(${offset}px)` }}>
               <button
+                style={
+                  {
+                    "--trail-len": `${trailLen}px`,
+                    "--trail-angle": `${-trailAngle}deg`,
+                  } as React.CSSProperties
+                }
                 className={`path-node ${node.domain} ${node.state} ${node.unseen ? "unseen" : ""}`}
                 title={node.unseen ? `${node.label} — pas encore vu en classe` : node.label}
                 onClick={() => {
