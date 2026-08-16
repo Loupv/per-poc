@@ -73,9 +73,10 @@ export function MissionView({
     setOutcomes((o) => [...o, { mq, correct }]);
     if (!isTest) {
       recordPractice(childId, mq.stepId, correct, mq.question.id);
-      // « Le savais-tu ? » : de temps en temps, après une bonne réponse
+      // « Le savais-tu ? » : de temps en temps, après une bonne réponse — toujours
+      // lié à l'étape qui vient d'être travaillée
       if (correct && Math.random() < 0.35) {
-        const f = pickFact(mq.theme.domain, shownFacts);
+        const f = pickFact(mq.stepId, shownFacts);
         if (f) {
           shownFacts.add(f);
           setFact(f);
