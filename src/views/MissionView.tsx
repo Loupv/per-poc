@@ -3,9 +3,11 @@ import type { Route } from "../App";
 import { Figure } from "../components/figures";
 import { correctAnswerText, MatchPairs, MultiChoice, OrderList, SortBuckets } from "../components/formats";
 import { IconCheck, IconCross } from "../components/icons";
+import { YearMap } from "../components/YearMap";
 import { stepInfo, type MissionQuestion } from "../lib/engine";
+import { pickFact } from "../lib/funfacts";
 import { recordPractice, recordSession, recordTest } from "../store";
-import type { Question, TestAnswer } from "../types";
+import type { ChildProfile, Question, TestAnswer } from "../types";
 
 const normalize = (s: string) =>
   s.toLowerCase().replace(/['\s ]/g, "").replace(/,/g, ".");
@@ -26,25 +28,28 @@ interface Outcome {
  * résultat enregistré en une fois (immuable), le contrôle planifié est consommé.
  */
 export function MissionView({
-  childId,
+  child,
   mode,
   planId = null,
   title,
   questions,
   go,
 }: {
-  childId: string;
+  child: ChildProfile;
   mode: RunMode;
   planId?: string | null;
   title: string;
   questions: MissionQuestion[];
   go: (r: Route) => void;
 }) {
+  const childId = child.id;
   const [index, setIndex] = useState(0);
   const [outcomes, setOutcomes] = useState<Outcome[]>([]);
   const [answered, setAnswered] = useState<null | { correct: boolean; picked?: number }>(null);
   const [inputValue, setInputValue] = useState("");
   const [finished, setFinished] = useState(false);
+  const [fact, setFact] = useState<string | null>(null);
+  const [shownFacts] = useState(() => new Set<string>());
 
   const isTest = mode === "test";
 
@@ -66,7 +71,17 @@ export function MissionView({
     if (answered) return;
     setAnswered({ correct, picked });
     setOutcomes((o) => [...o, { mq, correct }]);
-    if (!isTest) recordPractice(childId, mq.stepId, correct, mq.question.id);
+    if (!isTest) {
+      recordPractice(childId, mq.stepId, correct, mq.question.id);
+      // « Le savais-tu ? » : de temps en temps, après une bonne réponse
+      if (correct && Math.random() < 0.35) {
+        const f = pickFact(mq.theme.domain, shownFacts);
+        if (f) {
+          shownFacts.add(f);
+          setFact(f);
+        } else setFact(null);
+      } else setFact(null);
+    }
   };
 
   const next = (allOutcomes: Outcome[]) => {
@@ -129,6 +144,7 @@ export function MissionView({
             );
           })}
         </div>
+        {!isTest && <YearMap child={child} workedStepIds={new Set(outcomes.map((o) => o.mq.stepId))} />}
         <div className="row center">
           <button className="btn primary" onClick={() => go({ view: "home" })}>
             Accueil
@@ -246,6 +262,9 @@ export function MissionView({
                   </p>
                 )}
                 <p>{q.explanation}</p>
+                {answered.correct && fact && (
+                  <p className="funfact">Le savais-tu ? {fact}</p>
+                )}
                 <p className="muted small">
                   Étape du PER : {stepInfo(mq.stepId)?.step.text.slice(0, 110)}…{" "}
                   <span className="per-chip">{stepInfo(mq.stepId)?.objective.code}</span>

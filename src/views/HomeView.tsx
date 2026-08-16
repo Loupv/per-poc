@@ -1,5 +1,5 @@
 import type { Route } from "../App";
-import { IconBookOpen, IconClipboardCheck, IconRotate, IconTarget, ThemeIcon } from "../components/icons";
+import { IconBookOpen, IconClipboardCheck, IconRotate, IconTarget, IconZap, ThemeIcon } from "../components/icons";
 import { THEMES } from "../data/content";
 import { QUESTION_STEP } from "../data/stepMap";
 import { buildMission, practiceLevel, questionById, type MissionQuestion } from "../lib/engine";
@@ -108,6 +108,14 @@ export function HomeView({ store, child, go }: { store: AppStore; child: ChildPr
             </button>
           );
         })}
+
+        <button className="tile-btn eclair-tile" onClick={() => go({ view: "eclair" })}>
+          <span className="tile-icon">
+            <IconZap size={26} />
+          </span>
+          <strong>Mode éclair</strong>
+          <span className="tile-sub">60 secondes de calcul rapide — à toi de jouer</span>
+        </button>
 
         {pastYears.map((y) => {
           const m = buildMission(child, { kind: "pastYear", year: y });

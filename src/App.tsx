@@ -4,6 +4,7 @@ import type { MissionQuestion } from "./lib/engine";
 import { activeChild, setRole, useStore } from "./store";
 import type { RunMode } from "./views/MissionView";
 import { DashboardView } from "./views/DashboardView";
+import { EclairView } from "./views/EclairView";
 import { FicheView } from "./views/FicheView";
 import { HomeView } from "./views/HomeView";
 import { MissionView } from "./views/MissionView";
@@ -22,6 +23,7 @@ export type Route =
       title: string;
       questions: MissionQuestion[];
     }
+  | { view: "eclair" }
   | { view: "programme"; year?: number }
   | { view: "dashboard" };
 
@@ -95,7 +97,7 @@ export default function App() {
             {route.view === "mission" && (
               <MissionView
                 key={`${route.mode}-${route.title}`}
-                childId={child.id}
+                child={child}
                 mode={route.mode}
                 planId={route.planId ?? null}
                 title={route.title}
@@ -103,6 +105,7 @@ export default function App() {
                 go={go}
               />
             )}
+            {route.view === "eclair" && <EclairView childId={child.id} go={go} />}
             {route.view === "programme" && (
               <ProgrammeView child={child} go={go} initialYear={route.year} canEdit={isParent} />
             )}

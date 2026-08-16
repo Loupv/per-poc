@@ -3,6 +3,7 @@ import classification from "../data/classification.json";
 import per from "../data/per.json";
 import { THEMES } from "../data/content";
 import { QUESTION_STEP } from "../data/stepMap";
+import { GENERATORS, GENERATORS_BY_STEP } from "./generators";
 import type { ChildProfile, Domain, Question, Theme } from "../types";
 
 // ── Classification quiz / à observer ────────────────────────────────
@@ -118,7 +119,21 @@ const BANK_QUESTIONS: MissionQuestion[] = BANK.map((q) => {
 export const ALL_QUESTIONS: MissionQuestion[] = [...THEME_QUESTIONS, ...BANK_QUESTIONS];
 
 const QUESTION_BY_ID = new Map(ALL_QUESTIONS.map((mq) => [mq.question.id, mq]));
-export const questionById = (id: string) => QUESTION_BY_ID.get(id);
+const GENERATOR_BY_ID = new Map(GENERATORS.map((g) => [g.id, g]));
+
+const wrapGenerated = (stepId: number, q: Question): MissionQuestion => {
+  const info = STEP_INDEX.get(stepId);
+  const domain = info ? objectiveDomain(info.objective.code) : "maths";
+  return { question: q, stepId, theme: BANK_THEME[domain] };
+};
+
+/** Résout une question par id — les ids de gabarits produisent une instance fraîche. */
+export const questionById = (id: string): MissionQuestion | undefined => {
+  const staticQ = QUESTION_BY_ID.get(id);
+  if (staticQ) return staticQ;
+  const gen = GENERATOR_BY_ID.get(id);
+  return gen ? wrapGenerated(gen.stepId, shuffleQuestion(gen.make())) : undefined;
+};
 
 const QUESTIONS_BY_STEP = new Map<number, MissionQuestion[]>();
 for (const mq of ALL_QUESTIONS) {
@@ -127,7 +142,66 @@ for (const mq of ALL_QUESTIONS) {
   QUESTIONS_BY_STEP.set(mq.stepId, list);
 }
 
-export const stepHasQuestions = (stepId: number) => QUESTIONS_BY_STEP.has(stepId);
+export const stepHasQuestions = (stepId: number) =>
+  QUESTIONS_BY_STEP.has(stepId) || GENERATORS_BY_STEP.has(stepId);
+
+// ── Mélange des choix (anti « c'est toujours le 2e ») ───────────────
+
+export function shuffleQuestion(q: Question): Question {
+  if ((q.type !== "mcq" && q.type !== "multi") || !q.choices) return q;
+  const idx = q.choices.map((_, i) => i);
+  for (let i = idx.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [idx[i], idx[j]] = [idx[j], idx[i]];
+  }
+  const out: Question = { ...q, choices: idx.map((i) => q.choices![i]) };
+  if (q.choiceFigures) {
+    out.choiceFigures = idx.map((i) => q.choiceFigures![i]);
+    // les lettres A-D restent des étiquettes de position
+    out.choices = q.choices.slice(0, idx.length);
+  }
+  if (q.type === "mcq") out.answerIndex = idx.indexOf(q.answerIndex!);
+  else out.correctIndices = (q.correctIndices ?? []).map((c) => idx.indexOf(c));
+  return out;
+}
+
+// ── Sélection avec fraîcheur ────────────────────────────────────────
+
+const WEEK = 7 * 24 * 3600 * 1000;
+
+/**
+ * Choisit `count` questions pour une étape : les gabarits génératifs sont
+ * privilégiés (toujours inédits) ; les questions figées passent par la mémoire
+ * de fraîcheur — ratées récemment d'abord, puis jamais vues, puis les plus anciennes.
+ */
+export function pickQuestionsForStep(child: ChildProfile, stepId: number, count: number): MissionQuestion[] {
+  const gens = GENERATORS_BY_STEP.get(stepId) ?? [];
+  const recentFails = new Set(
+    child.mistakes.filter((m) => Date.now() - Date.parse(m.at) < WEEK).map((m) => m.q)
+  );
+  const statics = [...(QUESTIONS_BY_STEP.get(stepId) ?? [])].sort((a, b) => {
+    const fa = recentFails.has(a.question.id) ? 0 : 1;
+    const fb = recentFails.has(b.question.id) ? 0 : 1;
+    if (fa !== fb) return fa - fb;
+    const sa = child.qSeen[a.question.id] ?? "";
+    const sb = child.qSeen[b.question.id] ?? "";
+    return sa.localeCompare(sb); // jamais vu ("") d'abord, puis les plus anciennes
+  });
+
+  const picked: MissionQuestion[] = [];
+  let si = 0;
+  for (let i = 0; i < count; i++) {
+    const useGen = gens.length > 0 && (si >= statics.length || Math.random() < 0.6);
+    if (useGen) {
+      const g = gens[Math.floor(Math.random() * gens.length)];
+      picked.push(wrapGenerated(stepId, shuffleQuestion(g.make())));
+    } else if (si < statics.length) {
+      const mq = statics[si++];
+      picked.push({ ...mq, question: shuffleQuestion(mq.question) });
+    } else break;
+  }
+  return picked;
+}
 
 // ── Résultats de contrôle par étape (source officielle) ─────────────
 
@@ -183,7 +257,7 @@ export function buildMission(child: ChildProfile, mode: MissionMode): MissionQue
   const candidates: { stepId: number; level: Mastery; lastAt: string }[] = [];
   for (const [stepId, info] of STEP_INDEX) {
     if (!stepInYear(info.step, year)) continue;
-    if (!QUESTIONS_BY_STEP.has(stepId)) continue;
+    if (!stepHasQuestions(stepId)) continue;
     if (mode.kind === "current" && !child.seen[stepId]) continue;
     candidates.push({
       stepId,
@@ -201,8 +275,7 @@ export function buildMission(child: ChildProfile, mode: MissionMode): MissionQue
   const picked: MissionQuestion[] = [];
   for (const c of ordered) {
     if (picked.length >= MISSION_SIZE) break;
-    const pool = shuffle(QUESTIONS_BY_STEP.get(c.stepId)!);
-    for (const mq of pool.slice(0, 2)) {
+    for (const mq of pickQuestionsForStep(child, c.stepId, 2)) {
       if (picked.length >= MISSION_SIZE) break;
       picked.push(mq);
     }
@@ -223,7 +296,7 @@ export function buildTest(child: ChildProfile, domain: Domain | "toutes"): Missi
   const candidates: { stepId: number; prio: number }[] = [];
   for (const [stepId, info] of STEP_INDEX) {
     if (!stepInYear(info.step, child.year)) continue;
-    if (!QUESTIONS_BY_STEP.has(stepId)) continue;
+    if (!stepHasQuestions(stepId)) continue;
     if (domain !== "toutes" && objectiveDomain(info.objective.code) !== domain) continue;
     if (Object.keys(child.seen).length > 0 && !child.seen[stepId]) continue;
     const t = testOutcome(child, stepId);
@@ -235,7 +308,8 @@ export function buildTest(child: ChildProfile, domain: Domain | "toutes"): Missi
   const picked: MissionQuestion[] = [];
   for (const c of ordered) {
     if (picked.length >= TEST_SIZE) break;
-    picked.push(shuffle(QUESTIONS_BY_STEP.get(c.stepId)!)[0]);
+    const qs = pickQuestionsForStep(child, c.stepId, 1);
+    if (qs.length) picked.push(qs[0]);
   }
   return picked;
 }
@@ -261,7 +335,7 @@ export function recommendations(child: ChildProfile, limit = 5): Recommendations
       t === "none" &&
       p === "untested" &&
       child.seen[stepId] &&
-      QUESTIONS_BY_STEP.has(stepId) &&
+      stepHasQuestions(stepId) &&
       out.toPractice.length < limit
     )
       out.toPractice.push(info);
@@ -292,7 +366,7 @@ export function objectiveStats(child: ChildProfile, objective: PerObjective, yea
       if (!stepInYear(step, year)) continue;
       s.total++;
       if (child.seen[step.id]) s.seen++;
-      if (QUESTIONS_BY_STEP.has(step.id)) s.withQuestions++;
+      if (stepHasQuestions(step.id)) s.withQuestions++;
       if (stepKind(step.id) === "observe") {
         s.observe++;
         if (child.validated[step.id]) s.validated++;
@@ -379,7 +453,7 @@ export function buildRevision(child: ChildProfile, domain: Domain | "toutes"): M
   const candidates: { stepId: number; prio: number }[] = [];
   for (const [stepId, info] of STEP_INDEX) {
     if (!stepInYear(info.step, child.year)) continue;
-    if (!QUESTIONS_BY_STEP.has(stepId)) continue;
+    if (!stepHasQuestions(stepId)) continue;
     if (domain !== "toutes" && objectiveDomain(info.objective.code) !== domain) continue;
     if (Object.keys(child.seen).length > 0 && !child.seen[stepId]) continue;
     const t = testOutcome(child, stepId);
@@ -391,7 +465,8 @@ export function buildRevision(child: ChildProfile, domain: Domain | "toutes"): M
   const picked: MissionQuestion[] = [];
   for (const c of ordered) {
     if (picked.length >= MISSION_SIZE) break;
-    picked.push(shuffle(QUESTIONS_BY_STEP.get(c.stepId)!)[0]);
+    const qs = pickQuestionsForStep(child, c.stepId, 1);
+    if (qs.length) picked.push(qs[0]);
   }
   return picked;
 }

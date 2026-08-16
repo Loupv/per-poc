@@ -99,6 +99,8 @@ export interface ChildProfile {
   mistakes: Mistake[];
   /** Séances d'entraînement terminées. */
   sessions: PracticeSession[];
+  /** questionId -> dernière fois vue (mémoire de fraîcheur anti-répétition). */
+  qSeen: Record<string, string>;
 }
 
 /** Une faute : question ratée, avec son contexte. */

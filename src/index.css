@@ -310,6 +310,40 @@ input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 2px 
 .bucket.ready { border-color: var(--accent); background: var(--accent-soft); cursor: pointer; }
 .bucket-items { display: flex; gap: 5px; flex-wrap: wrap; }
 .correct-answer { font-weight: 600; margin: 6px 0 0; }
+.funfact {
+  background: #fdf6e3; border-left: 3px solid var(--cur); border-radius: 4px;
+  padding: 8px 12px; margin: 8px 0 0; font-size: 0.9rem; line-height: 1.45;
+}
+
+/* ── Mode éclair ─────────────────────── */
+.tile-btn.eclair-tile { background: var(--cur-bg); border-color: #f0e0b8; }
+.tile-btn.eclair-tile:hover { border-color: var(--cur); }
+.eclair-bar { background: var(--cur) !important; }
+.eclair-prompt { font-size: 1.6rem !important; display: flex; gap: 10px; align-items: center; }
+.eclair-choices { grid-template-columns: 1fr 1fr; }
+.eclair-choices .choice { text-align: center; font-size: 1.15rem; font-weight: 650; min-height: 52px; }
+.eclair-card.flash-ok { border-color: var(--ok) !important; }
+.eclair-card.flash-ko { border-color: var(--ko) !important; }
+.flash-mark.ok { color: var(--ok); }
+.flash-mark.ko { color: var(--ko); }
+
+/* ── Carte de l'année ────────────────── */
+.yearmap { text-align: left; margin: 16px auto 10px; max-width: 620px; }
+.yearmap-row { display: flex; gap: 10px; align-items: baseline; margin: 6px 0; }
+.yearmap-label { width: 80px; flex: none; text-align: right; }
+.yearmap-dots { display: flex; flex-wrap: wrap; gap: 3px; flex: 1; }
+.ydot {
+  width: 7px; height: 7px; border-radius: 50%; background: var(--line);
+  transition: transform 0.2s;
+}
+.ydot.touched { background: #c9cdd6; }
+.ydot.lit.maths { background: var(--maths); }
+.ydot.lit.francais { background: var(--francais); }
+.ydot.lit.sciences { background: var(--sciences); }
+.ydot.lit.shs { background: var(--shs); }
+.ydot.worked { transform: scale(1.5); box-shadow: 0 0 0 2px var(--accent-soft); }
+.ydot.worked:not(.lit) { background: var(--accent); }
+.yearmap-caption { margin-top: 8px; }
 .chip.draggable { cursor: grab; }
 .chip.draggable:active { cursor: grabbing; }
 

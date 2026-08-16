@@ -19,6 +19,7 @@ const emptyChild = (name: string, year: number): ChildProfile => ({
   revisions: [],
   mistakes: [],
   sessions: [],
+  qSeen: {},
 });
 
 const MISTAKES_MAX = 200;
@@ -45,6 +46,7 @@ const load = (): AppStore => {
           revisions: c.revisions ?? [],
           mistakes: c.mistakes ?? [],
           sessions: c.sessions ?? [],
+          qSeen: c.qSeen ?? {},
         })),
       };
     }
@@ -144,6 +146,7 @@ export const recordPractice = (childId: string, stepId: number, correct: boolean
       ...c,
       practice: { ...c.practice, [stepId]: { r, lastAt: new Date().toISOString() } },
       mistakes,
+      qSeen: { ...c.qSeen, [questionId]: new Date().toISOString() },
     };
   });
 };
@@ -217,6 +220,7 @@ export const recordTest = (childId: string, planId: string | null, title: string
         .filter((a) => !a.correct)
         .map((a) => ({ q: a.questionId, s: a.stepId, at, mode: "test" as const })),
     ].slice(-MISTAKES_MAX),
+    qSeen: { ...c.qSeen, ...Object.fromEntries(answers.map((a) => [a.questionId, at])) },
   }));
 };
 
