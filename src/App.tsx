@@ -43,6 +43,8 @@ export default function App() {
   const onboarded = store.role !== null && child !== null;
   const isParent = store.role === "parent";
   const locked = isParent && store.parentPinHash !== null && !unlocked;
+  // Mode focus : pendant une session, tout l'habillage disparaît
+  const focus = onboarded && !locked && (route.view === "mission" || route.view === "eclair");
 
   const switchRole = () => {
     if (isParent) setUnlocked(false);
@@ -51,7 +53,8 @@ export default function App() {
   };
 
   return (
-    <div className="app">
+    <div className={`app ${focus ? "focus-mode" : ""}`}>
+      {!focus && (
       <header className="topbar">
         <button className="brand" onClick={() => go({ view: "home" })}>
           <span className="brand-badge">{child ? `${child.year}P` : "PER"}</span> Mes révisions
@@ -70,6 +73,7 @@ export default function App() {
           </nav>
         )}
       </header>
+      )}
 
       <main>
         {!onboarded || !child ? (
@@ -114,6 +118,7 @@ export default function App() {
         )}
       </main>
 
+      {!focus && (
       <footer className="footer">
         POC — référentiel complet du Plan d'études romand (PER, cycle 2), 618 étapes officielles.
         Données PER © CIIP, via l'API publique per.ciip.ch. Démo sans compte, progression enregistrée
@@ -123,6 +128,7 @@ export default function App() {
         </a>
         .
       </footer>
+      )}
     </div>
   );
 }

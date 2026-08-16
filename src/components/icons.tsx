@@ -154,6 +154,22 @@ export const IconZap = (p: IconProps) => (
   </Svg>
 );
 
+export const IconVolume = (p: IconProps) => (
+  <Svg {...p}>
+    <path d="M11 5 6 9H2v6h4l5 4V5z" />
+    <path d="M15.5 8.5a5 5 0 0 1 0 7" />
+    <path d="M18.5 5.5a9.5 9.5 0 0 1 0 13" />
+  </Svg>
+);
+
+export const IconVolumeOff = (p: IconProps) => (
+  <Svg {...p}>
+    <path d="M11 5 6 9H2v6h4l5 4V5z" />
+    <path d="m16 9 5 5" />
+    <path d="m21 9-5 5" />
+  </Svg>
+);
+
 export const IconCheck = (p: IconProps) => (
   <Svg {...p}>
     <path d="M20 6 9 17l-5-5" />

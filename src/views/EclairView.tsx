@@ -5,6 +5,7 @@ import { useEffect, useRef, useState } from "react";
 import type { Route } from "../App";
 import { IconCheck, IconCross } from "../components/icons";
 import { ECLAIR_STEP, makeEclairQuestion } from "../lib/generators";
+import { buzz, playCorrect, playEnd, playWrong } from "../lib/sound";
 import { recordPractice, recordSession } from "../store";
 import type { Question } from "../types";
 
@@ -28,12 +29,20 @@ export function EclairView({ childId, go }: { childId: string; go: (r: Route) =>
     if (done && !recorded.current && total > 0) {
       recorded.current = true;
       recordSession(childId, "Mode éclair", good, total);
+      playEnd();
     }
   }, [done, childId, good, total]);
 
   const answer = (i: number) => {
     if (done) return;
     const correct = i === q.answerIndex;
+    if (correct) {
+      playCorrect();
+      buzz(10);
+    } else {
+      playWrong();
+      buzz([0, 40]);
+    }
     recordPractice(childId, ECLAIR_STEP[q.id] ?? 4955, correct, q.id);
     setGood((g) => g + (correct ? 1 : 0));
     setTotal((t) => t + 1);
